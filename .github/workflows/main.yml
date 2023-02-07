@@ -1,0 +1,11 @@
+name: Test and Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  include:
+    - path: test.yml
+    - path: deploy.yml
