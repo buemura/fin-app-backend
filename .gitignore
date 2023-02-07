@@ -1,7 +1,6 @@
 node_modules
 dist/
 pnpm-lock.json
-package-lock.json
 yarn.lock
 
 # Keep environment variables out of version control
