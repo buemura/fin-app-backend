@@ -1,8 +1,8 @@
-import { Router, Request, Response } from "express";
-import { UserRepository } from "@repositories";
-import { UserService } from "@services/user-service";
-import { UserController } from "@controllers/user-controller";
-import { ensureAuthentication } from "@middlewares/auth-middleware";
+import { Router, type Request, type Response } from "express";
+import { UserRepository } from "../repositories";
+import { UserService } from "../services/user-service";
+import { UserController } from "../controllers/user-controller";
+import { ensureAuthentication } from "../middlewares/auth-middleware";
 
 const router = Router();
 
@@ -10,15 +10,18 @@ const userRepository = new UserRepository();
 const userService = new UserService(userRepository);
 const userController = new UserController(userService);
 
-function getUserDetails(request: Request, response: Response) {
+async function getUserDetails(
+  request: Request,
+  response: Response
+): Promise<Response> {
   return userController.getUserDetails(request, response);
 }
 
-function signIn(request: Request, response: Response) {
+async function signIn(request: Request, response: Response): Promise<Response> {
   return userController.signIn(request, response);
 }
 
-function signUp(request: Request, response: Response) {
+async function signUp(request: Request, response: Response): Promise<Response> {
   return userController.signIn(request, response);
 }
 

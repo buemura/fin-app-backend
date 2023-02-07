@@ -1,9 +1,13 @@
 import { randomUUID } from "crypto";
-import { CreateUserProps, UpdateUserProps, UserProps } from "@dtos/user";
-import { UserRepository } from "@repositories/interfaces/user-repository";
+import { type UserRepository } from "../../interfaces/user-repository";
+import {
+  type CreateUserProps,
+  type UpdateUserProps,
+  type UserProps,
+} from "../../../dtos/user";
 
 export class InMemoryUserRepository implements UserRepository {
-  private users: UserProps[] = [
+  private readonly users: UserProps[] = [
     {
       id: "user-1",
       name: "john",
@@ -40,10 +44,10 @@ export class InMemoryUserRepository implements UserRepository {
       id: randomUUID(),
       name: data.name,
       email: data.email,
-      password: data.password || "",
+      password: data.password ?? "",
       isExternal: data.isExternal,
-      externalId: data.externalId || "",
-      imageUrl: data.imageUrl || "",
+      externalId: data.externalId ?? "",
+      imageUrl: data.imageUrl ?? "",
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -58,8 +62,8 @@ export class InMemoryUserRepository implements UserRepository {
       return null;
     }
 
-    user.name = data.name || user.name;
-    user.email = data.email || user.email;
+    user.name = data.name ?? user.name;
+    user.email = data.email ?? user.email;
 
     return user;
   }

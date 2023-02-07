@@ -1,28 +1,33 @@
-import { IExpenseRepository, IUserRepository } from "@repositories";
-import { logger } from "@helpers/logger";
-import { AppError } from "@utils/app-error";
+import { logger } from "../helpers/logger";
+import { AppError } from "../utils/app-error";
+import { type IExpenseRepository, type IUserRepository } from "../repositories";
+import { type ExpenseProps } from "../dtos/expense";
 
-type FindUserExpensesProps = {
+interface FindUserExpensesProps {
   userId: string;
-};
+}
 
-type CreateExpenseProps = {
+interface CreateExpenseProps {
   userId: string;
   title: string;
   imageUrl?: string;
-};
+}
 
-type UpdateExpenseProps = {
+interface UpdateExpenseProps {
   expenseId: string;
   title?: string;
   imageUrl?: string;
   isPaid?: boolean;
   isActive?: boolean;
-};
+}
 
-type DeleteExpenseProps = {
+interface DeleteExpenseProps {
   expenseId: string;
-};
+}
+
+interface UpdateAllExpensesResponseProps {
+  message: string;
+}
 
 export class ExpenseService {
   constructor(
@@ -30,7 +35,7 @@ export class ExpenseService {
     private readonly expenseRepository: IExpenseRepository
   ) {}
 
-  async findByUser({ userId }: FindUserExpensesProps) {
+  async findByUser({ userId }: FindUserExpensesProps): Promise<ExpenseProps[]> {
     logger.info(`Find user ${userId} expenses`);
 
     if (!userId) {
@@ -46,7 +51,7 @@ export class ExpenseService {
     return result;
   }
 
-  async createExpense(data: CreateExpenseProps) {
+  async createExpense(data: CreateExpenseProps): Promise<ExpenseProps> {
     logger.info(`Create expenses`);
 
     const userExists = await this.userRepository.findById(data.userId);
@@ -58,7 +63,7 @@ export class ExpenseService {
     return result;
   }
 
-  async updateExpense(data: UpdateExpenseProps) {
+  async updateExpense(data: UpdateExpenseProps): Promise<ExpenseProps | null> {
     logger.info(`Update expenses`);
 
     const expenseExists = await this.expenseRepository.findById(data.expenseId);
@@ -70,7 +75,7 @@ export class ExpenseService {
     return result;
   }
 
-  async updateAllExpenses() {
+  async updateAllExpenses(): Promise<UpdateAllExpensesResponseProps> {
     logger.info(`Update all expenses`);
 
     await this.expenseRepository.updateAll();
@@ -80,7 +85,7 @@ export class ExpenseService {
     };
   }
 
-  async deleteExpense(data: DeleteExpenseProps) {
+  async deleteExpense(data: DeleteExpenseProps): Promise<ExpenseProps | null> {
     logger.info(`Delete expenses`);
 
     const expenseExists = await this.expenseRepository.findById(data.expenseId);

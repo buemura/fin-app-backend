@@ -1,13 +1,13 @@
 import jwt from "jsonwebtoken";
-import { NextFunction, Request, Response } from "express";
-import { handleHttpErrorResponse } from "@helpers/handle-http-error-response";
-import { AppError } from "@utils/app-error";
+import { type NextFunction, type Request, type Response } from "express";
+import { handleHttpErrorResponse } from "../helpers/handle-http-error-response";
+import { AppError } from "../utils/app-error";
 
 export function ensureAuthentication(
   request: Request,
   response: Response,
   next: NextFunction
-) {
+): null | Response {
   try {
     const authorization = request.headers.authorization;
     if (!authorization) {
@@ -20,12 +20,13 @@ export function ensureAuthentication(
     }
 
     try {
-      jwt.verify(token, process.env.TOKEN_SECRET || "");
+      jwt.verify(token, process.env.TOKEN_SECRET ?? "");
     } catch (error) {
       throw new AppError("Invalid authorization token", 401);
     }
 
-    return next();
+    next();
+    return null;
   } catch (err: any) {
     return handleHttpErrorResponse(response, err);
   }

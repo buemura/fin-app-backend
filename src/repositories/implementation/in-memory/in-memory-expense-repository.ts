@@ -1,13 +1,13 @@
 import { randomUUID } from "crypto";
+import { type ExpenseRepository } from "../../interfaces/expense-repository";
 import {
-  ExpenseProps,
-  CreateExpenseProps,
-  UpdateExpenseProps,
-} from "@dtos/expense";
-import { ExpenseRepository } from "@repositories/interfaces/expense-repository";
+  type ExpenseProps,
+  type CreateExpenseProps,
+  type UpdateExpenseProps,
+} from "../../../dtos/expense";
 
 export class InMemoryExpenseRepository implements ExpenseRepository {
-  private expenses: ExpenseProps[] = [
+  private readonly expenses: ExpenseProps[] = [
     {
       id: "expense-1",
       userId: "user-1",
@@ -44,7 +44,7 @@ export class InMemoryExpenseRepository implements ExpenseRepository {
       title: data.title,
       isPaid: false,
       isActive: true,
-      imageUrl: data.imageUrl || "",
+      imageUrl: data.imageUrl ?? "",
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -61,18 +61,19 @@ export class InMemoryExpenseRepository implements ExpenseRepository {
       return null;
     }
 
-    expense.title = data?.title || expense.title;
-    expense.imageUrl = data?.imageUrl || expense.imageUrl;
-    expense.isPaid = data?.isPaid || expense.isPaid;
-    expense.isActive = data?.isActive || expense.isActive;
+    expense.title = data?.title ?? expense.title;
+    expense.imageUrl = data?.imageUrl ?? expense.imageUrl;
+    expense.isPaid = data?.isPaid ?? expense.isPaid;
+    expense.isActive = data?.isActive ?? expense.isActive;
 
     return expense;
   }
 
   async updateAll(): Promise<void> {
-    this.expenses.map((expense) => {
-      expense.isPaid = false;
-    });
+    this.expenses.map((expense) => ({
+      ...expense,
+      isPaid: false,
+    }));
   }
 
   async delete(id: string): Promise<ExpenseProps | null> {

@@ -1,7 +1,10 @@
-import { Response } from "express";
-import { AppError } from "@utils/app-error";
+import { type Response } from "express";
+import { AppError } from "../utils/app-error";
 
-export function handleHttpErrorResponse(response: Response, error: Error) {
+export function handleHttpErrorResponse(
+  response: Response,
+  error: Error
+): Response {
   if (error instanceof AppError) {
     return response.status(error.statusCode).send({
       status: "error",

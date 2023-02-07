@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
-import { handleHttpErrorResponse } from "@helpers/handle-http-error-response";
-import { handleHttpResponse } from "@helpers/handle-http-response";
-import { ExpenseService } from "@services/expense-service";
+import { type Request, type Response } from "express";
+import { handleHttpErrorResponse } from "../helpers/handle-http-error-response";
+import { handleHttpResponse } from "../helpers/handle-http-response";
+import { type ExpenseService } from "../services/expense-service";
 
 export class ExpenseController {
   constructor(private readonly expenseService: ExpenseService) {}

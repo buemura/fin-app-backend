@@ -1,12 +1,15 @@
-import { Request, Response } from "express";
-import { handleHttpErrorResponse } from "@helpers/handle-http-error-response";
-import { handleHttpResponse } from "@helpers/handle-http-response";
-import { AccountService } from "@services/account-service";
+import { type Request, type Response } from "express";
+import { handleHttpErrorResponse } from "../helpers/handle-http-error-response";
+import { handleHttpResponse } from "../helpers/handle-http-response";
+import { type AccountService } from "../services/account-service";
 
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 
-  async getAccountById(request: Request, response: Response) {
+  async getAccountById(
+    request: Request,
+    response: Response
+  ): Promise<Response> {
     const { id } = request.params;
 
     try {
@@ -17,7 +20,10 @@ export class AccountController {
     }
   }
 
-  async getAccountsByUserId(request: Request, response: Response) {
+  async getAccountsByUserId(
+    request: Request,
+    response: Response
+  ): Promise<Response> {
     const { userId } = request.params;
 
     try {
@@ -28,7 +34,7 @@ export class AccountController {
     }
   }
 
-  async createAccount(request: Request, response: Response) {
+  async createAccount(request: Request, response: Response): Promise<Response> {
     const { userId, name, balance, icon } = request.body;
 
     try {
@@ -44,7 +50,7 @@ export class AccountController {
     }
   }
 
-  async updateAccount(request: Request, response: Response) {
+  async updateAccount(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
     const { name, balance, icon } = request.body;
 
@@ -61,7 +67,7 @@ export class AccountController {
     }
   }
 
-  async deleteAccount(request: Request, response: Response) {
+  async deleteAccount(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
     try {

@@ -1,8 +1,8 @@
-import { Router, Request, Response } from "express";
-import { ExpenseController } from "@controllers/expense-controller";
-import { ensureAuthentication } from "@middlewares/auth-middleware";
-import { ExpenseRepository, UserRepository } from "@repositories";
-import { ExpenseService } from "@services/expense-service";
+import { Router, type Request, type Response } from "express";
+import { ExpenseController } from "../controllers/expense-controller";
+import { ensureAuthentication } from "../middlewares/auth-middleware";
+import { ExpenseRepository, UserRepository } from "../repositories";
+import { ExpenseService } from "../services/expense-service";
 
 const router = Router();
 
@@ -11,23 +11,38 @@ const expenseRepository = new ExpenseRepository();
 const expenseService = new ExpenseService(userRepository, expenseRepository);
 const expenseController = new ExpenseController(expenseService);
 
-function findByUserId(request: Request, response: Response) {
+async function findByUserId(
+  request: Request,
+  response: Response
+): Promise<Response> {
   return expenseController.findByUserId(request, response);
 }
 
-function createExpense(request: Request, response: Response) {
+async function createExpense(
+  request: Request,
+  response: Response
+): Promise<Response> {
   return expenseController.createExpense(request, response);
 }
 
-function updateAllExpense(request: Request, response: Response) {
+async function updateAllExpense(
+  request: Request,
+  response: Response
+): Promise<Response> {
   return expenseController.updateAllExpense(request, response);
 }
 
-function updateExpense(request: Request, response: Response) {
+async function updateExpense(
+  request: Request,
+  response: Response
+): Promise<Response> {
   return expenseController.updateExpense(request, response);
 }
 
-function deleteExpense(request: Request, response: Response) {
+async function deleteExpense(
+  request: Request,
+  response: Response
+): Promise<Response> {
   return expenseController.deleteExpense(request, response);
 }
 

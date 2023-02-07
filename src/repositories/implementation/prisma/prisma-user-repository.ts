@@ -1,9 +1,13 @@
 import { PrismaClient } from "@prisma/client";
-import { CreateUserProps, UpdateUserProps, UserProps } from "@dtos/user";
-import { UserRepository } from "@repositories/interfaces/user-repository";
+import { type UserRepository } from "../../interfaces/user-repository";
+import {
+  type CreateUserProps,
+  type UpdateUserProps,
+  type UserProps,
+} from "../../../dtos/user";
 
 export class PrismaUserRepository implements UserRepository {
-  private userRespository;
+  private readonly userRespository;
 
   constructor() {
     const prisma = new PrismaClient();

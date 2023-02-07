@@ -1,13 +1,13 @@
 import { PrismaClient } from "@prisma/client";
+import { type ExpenseRepository } from "../../interfaces/expense-repository";
 import {
-  ExpenseProps,
-  CreateExpenseProps,
-  UpdateExpenseProps,
-} from "@dtos/expense";
-import { ExpenseRepository } from "@repositories/interfaces/expense-repository";
+  type ExpenseProps,
+  type CreateExpenseProps,
+  type UpdateExpenseProps,
+} from "../../../dtos/expense";
 
 export class PrismaExpenseRepository implements ExpenseRepository {
-  private expenseRespository;
+  private readonly expenseRespository;
 
   constructor() {
     const prisma = new PrismaClient();

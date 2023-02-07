@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
+import { type Request, type Response } from "express";
 
-import { UserService } from "@services/user-service";
-import { handleHttpResponse } from "@helpers/handle-http-response";
-import { handleHttpErrorResponse } from "@helpers/handle-http-error-response";
+import { type UserService } from "../services/user-service";
+import { handleHttpResponse } from "../helpers/handle-http-response";
+import { handleHttpErrorResponse } from "../helpers/handle-http-error-response";
 
 export class UserController {
   constructor(private readonly userService: UserService) {}

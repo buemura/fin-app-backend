@@ -1,13 +1,13 @@
 import { PrismaClient } from "@prisma/client";
-import { AccountRepository } from "@repositories/interfaces/account-repository";
+import { type AccountRepository } from "../../interfaces/account-repository";
 import {
-  AccountProps,
-  CreateAccountProps,
-  UpdateAccountProps,
-} from "@dtos/account";
+  type AccountProps,
+  type CreateAccountProps,
+  type UpdateAccountProps,
+} from "../../../dtos/account";
 
 export class PrismaAccountRepository implements AccountRepository {
-  private accountRespository;
+  private readonly accountRespository;
 
   constructor() {
     const prisma = new PrismaClient();
@@ -31,8 +31,8 @@ export class PrismaAccountRepository implements AccountRepository {
       data: {
         userId: data.userId,
         name: data.name,
-        balance: data.balance || 0,
-        icon: data.icon || "",
+        balance: data.balance ?? 0,
+        icon: data.icon ?? "",
       },
     });
   }

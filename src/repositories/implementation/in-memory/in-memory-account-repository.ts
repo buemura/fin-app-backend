@@ -1,10 +1,10 @@
 import { randomUUID } from "crypto";
+import { type AccountRepository } from "../../interfaces/account-repository";
 import {
-  AccountProps,
-  CreateAccountProps,
-  UpdateAccountProps,
-} from "@dtos/account";
-import { AccountRepository } from "@repositories/interfaces/account-repository";
+  type AccountProps,
+  type CreateAccountProps,
+  type UpdateAccountProps,
+} from "../../../dtos/account";
 
 export class InMemoryAccountRepository implements AccountRepository {
   private accounts: AccountProps[] = [
@@ -41,8 +41,8 @@ export class InMemoryAccountRepository implements AccountRepository {
       id: randomUUID(),
       userId: data.userId,
       name: data.name,
-      balance: data.balance || 0,
-      icon: data?.icon || "",
+      balance: data.balance ?? 0,
+      icon: data?.icon ?? "",
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -60,9 +60,9 @@ export class InMemoryAccountRepository implements AccountRepository {
       return null;
     }
 
-    account.name = data?.name || account.name;
-    account.balance = data?.balance || account.balance;
-    account.icon = data?.icon || account.icon;
+    account.name = data?.name ?? account.name;
+    account.balance = data?.balance ?? account.balance;
+    account.icon = data?.icon ?? account.icon;
 
     return account;
   }

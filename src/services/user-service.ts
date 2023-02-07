@@ -1,28 +1,35 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { logger } from "@helpers/logger";
-import { IUserRepository } from "@repositories";
-import { AppError } from "@utils/app-error";
+import { logger } from "../helpers/logger";
+import { AppError } from "../utils/app-error";
+import { type IUserRepository } from "../repositories";
+import { type UserProps } from "../dtos/user";
 
-type GetUserDetailsProps = {
+interface GetUserDetailsProps {
   userId: string;
-};
+}
 
-type SignUpProps = {
+interface SignUpProps {
   name: string;
   email: string;
   password: string;
-};
+}
 
-type SignInProps = {
+interface SignInProps {
   email: string;
   password: string;
-};
+}
+
+interface SignInResponseProps {
+  message: string;
+  accessToken: string;
+  user: Omit<UserProps, "password">;
+}
 
 export class UserService {
   constructor(private readonly userRepository: IUserRepository) {}
 
-  async getUserDetails({ userId }: GetUserDetailsProps) {
+  async getUserDetails({ userId }: GetUserDetailsProps): Promise<UserProps> {
     logger.info(`Getting user ${userId} details`);
 
     if (!userId) {
@@ -37,7 +44,7 @@ export class UserService {
     return user;
   }
 
-  async signUpUser({ name, email, password }: SignUpProps) {
+  async signUpUser({ name, email, password }: SignUpProps): Promise<UserProps> {
     logger.info(`Sign up user`);
 
     if (!name || !email || !password) {
@@ -62,7 +69,10 @@ export class UserService {
     return this.userRepository.create(newUser);
   }
 
-  async signInUser({ email, password }: SignInProps) {
+  async signInUser({
+    email,
+    password,
+  }: SignInProps): Promise<SignInResponseProps> {
     logger.info(`Sign in user`);
 
     if (!email || !password) {
@@ -74,7 +84,7 @@ export class UserService {
       throw new AppError("User not registered");
     }
 
-    const match = await bcrypt.compare(password, user.password || "");
+    const match = await bcrypt.compare(password, user.password ?? "");
     if (!match) {
       throw new AppError("Invalid credentials", 401);
     }

@@ -1,4 +1,4 @@
-import { Expense } from "@prisma/client";
+import { type Expense } from "@prisma/client";
 
 export interface ExpenseProps extends Expense {}
 

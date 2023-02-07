@@ -1,8 +1,8 @@
-import { Router, Request, Response } from "express";
-import { AccountController } from "@controllers/account-controller";
-import { ensureAuthentication } from "@middlewares/auth-middleware";
-import { UserRepository, AccountRepository } from "@repositories";
-import { AccountService } from "@services/account-service";
+import { Router, type Request, type Response } from "express";
+import { AccountController } from "../controllers/account-controller";
+import { ensureAuthentication } from "../middlewares/auth-middleware";
+import { UserRepository, AccountRepository } from "../repositories";
+import { AccountService } from "../services/account-service";
 
 const router = Router();
 
@@ -11,23 +11,38 @@ const accountRepository = new AccountRepository();
 const accountService = new AccountService(userRepository, accountRepository);
 const accountController = new AccountController(accountService);
 
-function getAccountById(request: Request, response: Response) {
+async function getAccountById(
+  request: Request,
+  response: Response
+): Promise<Response> {
   return accountController.getAccountById(request, response);
 }
 
-function getAccountsByUserId(request: Request, response: Response) {
+async function getAccountsByUserId(
+  request: Request,
+  response: Response
+): Promise<Response> {
   return accountController.getAccountsByUserId(request, response);
 }
 
-function createAccount(request: Request, response: Response) {
+async function createAccount(
+  request: Request,
+  response: Response
+): Promise<Response> {
   return accountController.createAccount(request, response);
 }
 
-function updateAccount(request: Request, response: Response) {
+async function updateAccount(
+  request: Request,
+  response: Response
+): Promise<Response> {
   return accountController.updateAccount(request, response);
 }
 
-function deleteAccount(request: Request, response: Response) {
+async function deleteAccount(
+  request: Request,
+  response: Response
+): Promise<Response> {
   return accountController.deleteAccount(request, response);
 }
 

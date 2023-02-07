@@ -1,37 +1,37 @@
-import { IUserRepository, IAccountRepository } from "@repositories";
-import { AccountProps } from "@dtos/account";
-import { AppError } from "@utils/app-error";
+import { AppError } from "../utils/app-error";
+import { type AccountProps } from "../dtos/account";
+import { type IUserRepository, type IAccountRepository } from "../repositories";
 
-type getAccountsByIdProps = {
+interface getAccountsByIdProps {
   id: string;
-};
+}
 
-type getAccountsByUserIdProps = {
+interface getAccountsByUserIdProps {
   userId: string;
-};
+}
 
-type getAccountsByUserIdResponse = {
+interface GetAccountsByUserIdResponse {
   accounts: AccountProps[];
   totalBalance: number;
-};
+}
 
-type createAccountProps = {
+interface createAccountProps {
   userId: string;
   name: string;
   balance: number;
   icon?: string;
-};
+}
 
-type updateAccountProps = {
+interface updateAccountProps {
   id: string;
   name?: string;
   balance?: number;
   icon?: string;
-};
+}
 
-type deleteAccountProps = {
+interface deleteAccountProps {
   id: string;
-};
+}
 
 export class AccountService {
   constructor(
@@ -51,7 +51,7 @@ export class AccountService {
 
   async getAccountsByUserId({
     userId,
-  }: getAccountsByUserIdProps): Promise<getAccountsByUserIdResponse> {
+  }: getAccountsByUserIdProps): Promise<GetAccountsByUserIdResponse> {
     if (!userId) {
       throw new AppError("Missing required parameter");
     }
@@ -69,7 +69,12 @@ export class AccountService {
     return { accounts, totalBalance: Number(totalBalance) };
   }
 
-  async createAccount({ userId, name, balance, icon }: createAccountProps) {
+  async createAccount({
+    userId,
+    name,
+    balance,
+    icon,
+  }: createAccountProps): Promise<AccountProps> {
     if (!userId || !name || !balance) {
       throw new AppError("Missing required parameter");
     }
@@ -87,7 +92,12 @@ export class AccountService {
     });
   }
 
-  async updateAccount({ id, name, balance, icon }: updateAccountProps) {
+  async updateAccount({
+    id,
+    name,
+    balance,
+    icon,
+  }: updateAccountProps): Promise<AccountProps | null> {
     if (!id) {
       throw new AppError("Missing required parameter");
     }
@@ -104,7 +114,9 @@ export class AccountService {
     });
   }
 
-  async deleteAccount({ id }: deleteAccountProps) {
+  async deleteAccount({
+    id,
+  }: deleteAccountProps): Promise<AccountProps | null> {
     if (!id) {
       throw new AppError("Missing required parameter");
     }
