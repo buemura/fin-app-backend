@@ -8,6 +8,12 @@ const router = Router();
 
 router.use("/api", userRouter, expenseRouter, accountRouter);
 
+router.get("/", (_request: Request, response: Response) => {
+  return response.send({
+    message: "Access api through /api endpoint",
+  });
+});
+
 router.get("/api/health", (_request: Request, response: Response) => {
   return response.send({
     message: "API is up and running",
