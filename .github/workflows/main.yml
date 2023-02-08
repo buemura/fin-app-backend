@@ -11,10 +11,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 16
 
@@ -31,10 +31,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: 16
 
@@ -43,11 +43,3 @@ jobs:
 
       - name: Deploy to Vercel
         run: npx vercel --prod --token $VERCEL_TOKEN
-
-      - name: Notify on success
-        if: always()
-        uses: actions/slack/send-message@v2
-        with:
-          channel: #general
-          text: Deployment to Vercel successful! 🎉
-          color: good
