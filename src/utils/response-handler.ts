@@ -1,5 +1,5 @@
 import { type Response } from "express";
-import { AppError } from "../utils/app-error";
+import { AppError } from "./app-error";
 
 export function handleHttpResponse(
   response: Response,

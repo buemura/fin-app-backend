@@ -3,7 +3,7 @@ import { type AccountService } from "../services/account-service";
 import {
   handleHttpResponse,
   handleHttpErrorResponse,
-} from "../helpers/response-handler";
+} from "../utils/response-handler";
 
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}

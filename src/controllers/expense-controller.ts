@@ -3,7 +3,7 @@ import { type ExpenseService } from "../services/expense-service";
 import {
   handleHttpResponse,
   handleHttpErrorResponse,
-} from "../helpers/response-handler";
+} from "../utils/response-handler";
 
 export class ExpenseController {
   constructor(private readonly expenseService: ExpenseService) {}

@@ -4,7 +4,7 @@ import { type UserService } from "../services/user-service";
 import {
   handleHttpResponse,
   handleHttpErrorResponse,
-} from "../helpers/response-handler";
+} from "../utils/response-handler";
 
 export class UserController {
   constructor(private readonly userService: UserService) {}

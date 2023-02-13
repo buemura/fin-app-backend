@@ -1,5 +1,5 @@
 import { type Response } from "express";
-import { handleHttpErrorResponse } from "../../src/helpers/response-handler";
+import { handleHttpErrorResponse } from "../../src/utils/response-handler";
 import { AppError } from "../../src/utils/app-error";
 
 describe("Handle http error response test", () => {
