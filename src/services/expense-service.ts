@@ -1,7 +1,7 @@
 import { logger } from "../helpers/logger";
 import { AppError } from "../utils/app-error";
 import { type IExpenseRepository, type IUserRepository } from "../repositories";
-import { type ExpenseProps } from "../dtos/expense";
+import { type ExpenseProps } from "../interfaces/expense";
 
 interface FindUserExpensesProps {
   userId: string;

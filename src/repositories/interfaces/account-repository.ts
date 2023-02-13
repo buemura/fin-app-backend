@@ -2,7 +2,7 @@ import {
   type AccountProps,
   type CreateAccountProps,
   type UpdateAccountProps,
-} from "../../dtos/account";
+} from "../../interfaces/account";
 
 export abstract class AccountRepository {
   abstract findById(id: string): Promise<AccountProps | null>;

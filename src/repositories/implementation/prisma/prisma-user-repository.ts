@@ -4,7 +4,7 @@ import {
   type CreateUserProps,
   type UpdateUserProps,
   type UserProps,
-} from "../../../dtos/user";
+} from "../../../interfaces/user";
 
 export class PrismaUserRepository implements UserRepository {
   private readonly userRespository;

@@ -2,7 +2,7 @@ import {
   type UserProps,
   type CreateUserProps,
   type UpdateUserProps,
-} from "../../dtos/user";
+} from "../../interfaces/user";
 
 export abstract class UserRepository {
   abstract findById(id: string): Promise<UserProps | null>;

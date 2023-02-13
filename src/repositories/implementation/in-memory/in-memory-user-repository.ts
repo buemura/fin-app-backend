@@ -4,7 +4,7 @@ import {
   type CreateUserProps,
   type UpdateUserProps,
   type UserProps,
-} from "../../../dtos/user";
+} from "../../../interfaces/user";
 
 export class InMemoryUserRepository implements UserRepository {
   private readonly users: UserProps[] = [

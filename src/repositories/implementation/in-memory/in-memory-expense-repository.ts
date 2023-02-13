@@ -4,7 +4,7 @@ import {
   type ExpenseProps,
   type CreateExpenseProps,
   type UpdateExpenseProps,
-} from "../../../dtos/expense";
+} from "../../../interfaces/expense";
 
 export class InMemoryExpenseRepository implements ExpenseRepository {
   private readonly expenses: ExpenseProps[] = [

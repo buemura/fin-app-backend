@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { logger } from "../helpers/logger";
 import { AppError } from "../utils/app-error";
 import { type IUserRepository } from "../repositories";
-import { type UserProps } from "../dtos/user";
+import { type UserProps } from "../interfaces/user";
 
 interface GetUserDetailsProps {
   userId: string;

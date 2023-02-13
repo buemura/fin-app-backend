@@ -2,7 +2,7 @@ import {
   type ExpenseProps,
   type CreateExpenseProps,
   type UpdateExpenseProps,
-} from "../../dtos/expense";
+} from "../../interfaces/expense";
 
 export abstract class ExpenseRepository {
   abstract findById(id: string): Promise<ExpenseProps | null>;

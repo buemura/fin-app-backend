@@ -4,7 +4,7 @@ import {
   type AccountProps,
   type CreateAccountProps,
   type UpdateAccountProps,
-} from "../../../dtos/account";
+} from "../../../interfaces/account";
 
 export class PrismaAccountRepository implements AccountRepository {
   private readonly accountRespository;

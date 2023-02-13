@@ -1,5 +1,5 @@
 import { AppError } from "../utils/app-error";
-import { type AccountProps } from "../dtos/account";
+import { type AccountProps } from "../interfaces/account";
 import { type IUserRepository, type IAccountRepository } from "../repositories";
 
 interface getAccountsByIdProps {

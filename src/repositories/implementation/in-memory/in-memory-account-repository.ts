@@ -4,7 +4,7 @@ import {
   type AccountProps,
   type CreateAccountProps,
   type UpdateAccountProps,
-} from "../../../dtos/account";
+} from "../../../interfaces/account";
 
 export class InMemoryAccountRepository implements AccountRepository {
   private accounts: AccountProps[] = [
