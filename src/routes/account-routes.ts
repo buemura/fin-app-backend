@@ -3,12 +3,18 @@ import { AccountController } from "../controllers/account-controller";
 import { ensureAuthentication } from "../middlewares/auth-middleware";
 import { UserRepository, AccountRepository } from "../repositories";
 import { AccountService } from "../services/account-service";
+import { RedisService } from "../services/redis-service";
 
 const router = Router();
 
 const userRepository = new UserRepository();
 const accountRepository = new AccountRepository();
-const accountService = new AccountService(userRepository, accountRepository);
+const redisService = new RedisService();
+const accountService = new AccountService(
+  userRepository,
+  accountRepository,
+  redisService
+);
 const accountController = new AccountController(accountService);
 
 async function getAccountById(

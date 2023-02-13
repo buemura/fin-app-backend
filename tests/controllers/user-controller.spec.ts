@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 import { UserController } from "../../src/controllers/user-controller";
 import { UserService } from "../../src/services/user-service";
-import { InMemoryUserRepository } from "../../src/repositories";
+import { InMemoryUserRepository } from "../__mocks__/repositories";
 
 describe("User controller test suite", () => {
   let request: Request;

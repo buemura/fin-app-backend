@@ -9,6 +9,12 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*",
+    "tests/__mocks__/repositories/in-memory-account-repository.ts",
+    "tests/__mocks__/repositories/in-memory-account-repository.ts",
+    "tests/__mocks__/repositories/in-memory-expense-repository.ts",
+    "tests/__mocks__/repositories/in-memory-user-repository.ts"
+  ],
   "exclude": ["node_modules"]
 }

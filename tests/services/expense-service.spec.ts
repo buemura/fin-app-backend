@@ -1,8 +1,9 @@
 import { ExpenseService } from "../../src/services/expense-service";
+import { RedisService } from "../__mocks__/services/RedisSerivce";
 import {
   InMemoryUserRepository,
   InMemoryExpenseRepository,
-} from "../../src/repositories";
+} from "../__mocks__/repositories";
 
 describe("Expense service test suite", () => {
   let expenseService: ExpenseService;
@@ -10,7 +11,12 @@ describe("Expense service test suite", () => {
   beforeEach(() => {
     const userRepository = new InMemoryUserRepository();
     const expenseRepository = new InMemoryExpenseRepository();
-    expenseService = new ExpenseService(userRepository, expenseRepository);
+    const redisService = new RedisService();
+    expenseService = new ExpenseService(
+      userRepository,
+      expenseRepository,
+      redisService
+    );
   });
 
   describe("Find Expenses by User Id", () => {

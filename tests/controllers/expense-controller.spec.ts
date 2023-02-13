@@ -5,7 +5,8 @@ import { ExpenseService } from "../../src/services/expense-service";
 import {
   InMemoryUserRepository,
   InMemoryExpenseRepository,
-} from "../../src/repositories";
+} from "../__mocks__/repositories";
+import { RedisService } from "../__mocks__/services/RedisSerivce";
 
 describe("Expense controller test suite", () => {
   let request: Request;
@@ -27,7 +28,12 @@ describe("Expense controller test suite", () => {
 
     const userRepository = new InMemoryUserRepository();
     const expenseRepository = new InMemoryExpenseRepository();
-    expenseService = new ExpenseService(userRepository, expenseRepository);
+    const redisService = new RedisService();
+    expenseService = new ExpenseService(
+      userRepository,
+      expenseRepository,
+      redisService
+    );
     expenseController = new ExpenseController(expenseService);
   });
 
