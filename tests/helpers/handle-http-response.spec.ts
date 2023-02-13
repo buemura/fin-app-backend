@@ -1,5 +1,5 @@
-import { Response } from "express";
-import { handleHttpResponse } from "../../src/helpers/handle-http-response";
+import { type Response } from "express";
+import { handleHttpResponse } from "../../src/helpers/response-handler";
 
 describe("Handle http response test", () => {
   let response: Response;

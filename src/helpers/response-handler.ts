@@ -1,6 +1,21 @@
 import { type Response } from "express";
 import { AppError } from "../utils/app-error";
 
+export function handleHttpResponse(
+  response: Response,
+  statusCode: number,
+  data: any
+): Response {
+  const statusMessage = statusCode < 400 ? "success" : "failure";
+
+  const responseObject = {
+    status: statusMessage,
+    data,
+  };
+
+  return response.status(statusCode).send(responseObject);
+}
+
 export function handleHttpErrorResponse(
   response: Response,
   error: Error

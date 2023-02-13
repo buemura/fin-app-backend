@@ -1,7 +1,9 @@
 import { type Request, type Response } from "express";
-import { handleHttpErrorResponse } from "../helpers/handle-http-error-response";
-import { handleHttpResponse } from "../helpers/handle-http-response";
 import { type ExpenseService } from "../services/expense-service";
+import {
+  handleHttpResponse,
+  handleHttpErrorResponse,
+} from "../helpers/response-handler";
 
 export class ExpenseController {
   constructor(private readonly expenseService: ExpenseService) {}

@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { type NextFunction, type Request, type Response } from "express";
-import { handleHttpErrorResponse } from "../helpers/handle-http-error-response";
 import { AppError } from "../utils/app-error";
+import { handleHttpErrorResponse } from "../helpers/response-handler";
 
 export function ensureAuthentication(
   request: Request,

@@ -1,8 +1,10 @@
 import { type Request, type Response } from "express";
 
 import { type UserService } from "../services/user-service";
-import { handleHttpResponse } from "../helpers/handle-http-response";
-import { handleHttpErrorResponse } from "../helpers/handle-http-error-response";
+import {
+  handleHttpResponse,
+  handleHttpErrorResponse,
+} from "../helpers/response-handler";
 
 export class UserController {
   constructor(private readonly userService: UserService) {}
