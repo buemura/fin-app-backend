@@ -1,5 +1,6 @@
 import { logger } from "../utils/logger";
 import { AppError } from "../utils/app-error";
+import { RedisCache } from "../utils/redis-cache";
 import { type IExpenseRepository, type IUserRepository } from "../repositories";
 import { type ExpenseProps } from "../interfaces/expense";
 
@@ -30,6 +31,9 @@ interface UpdateAllExpensesResponseProps {
 }
 
 export class ExpenseService {
+  private readonly expenseKey: string = process.env.REDIS_EXPENSES_KEY ?? "";
+  private readonly redisCache: RedisCache = new RedisCache();
+
   constructor(
     private readonly userRepository: IUserRepository,
     private readonly expenseRepository: IExpenseRepository
@@ -47,8 +51,18 @@ export class ExpenseService {
       throw new AppError("User does not exists");
     }
 
-    const result = await this.expenseRepository.findByUserId(userId);
-    return result;
+    let expenses = await this.redisCache.get<ExpenseProps[]>(this.expenseKey);
+    if (!expenses) {
+      logger.info(`No cache found`);
+      expenses = await this.expenseRepository.findByUserId(userId);
+
+      logger.info(`Creating cache for expenses`);
+      await this.redisCache.save(this.expenseKey, expenses);
+      return expenses;
+    }
+
+    expenses = expenses.filter((expense) => expense.userId === userId);
+    return expenses;
   }
 
   async createExpense(data: CreateExpenseProps): Promise<ExpenseProps> {
@@ -60,6 +74,9 @@ export class ExpenseService {
     }
 
     const result = await this.expenseRepository.create(data);
+
+    await this.redisCache.remove(this.expenseKey);
+
     return result;
   }
 
@@ -72,6 +89,9 @@ export class ExpenseService {
     }
 
     const result = await this.expenseRepository.update(data);
+
+    await this.redisCache.remove(this.expenseKey);
+
     return result;
   }
 
@@ -94,6 +114,9 @@ export class ExpenseService {
     }
 
     const result = await this.expenseRepository.delete(data.expenseId);
+
+    await this.redisCache.remove(this.expenseKey);
+
     return result;
   }
 }
