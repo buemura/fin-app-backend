@@ -30,6 +30,8 @@ jobs:
     if: success()
     steps:
       - uses: actions/checkout@v3
+      - name: Build application
+        run: npx prisma generate
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Pull Vercel Environment Information
