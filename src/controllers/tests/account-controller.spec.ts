@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 
-import { AccountController } from "../../src/controllers/account-controller";
-import { AccountService } from "../../src/services/account-service";
+import { AccountController } from "../account-controller";
+import { AccountService } from "../../services/account-service";
 import {
   InMemoryUserRepository,
   InMemoryAccountRepository,
-} from "../__mocks__/repositories";
-import { RedisService } from "../__mocks__/services/RedisSerivce";
+} from "../../../tests/__mocks__/repositories";
+import { RedisService } from "../../../tests/__mocks__/services/RedisSerivce";
 
 describe("Account controller test suite", () => {
   let request: Request;

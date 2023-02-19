@@ -1,9 +1,9 @@
 import {
   InMemoryAccountRepository,
   InMemoryUserRepository,
-} from "../__mocks__/repositories";
-import { RedisService } from "../__mocks__/services/RedisSerivce";
-import { AccountService } from "../../src/services/account-service";
+} from "../../../tests/__mocks__/repositories";
+import { RedisService } from "../../../tests/__mocks__/services/RedisSerivce";
+import { AccountService } from "../account-service";
 
 describe("Account service test suite", () => {
   let accountService: AccountService;

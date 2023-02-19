@@ -1,9 +1,9 @@
-import { ExpenseService } from "../../src/services/expense-service";
-import { RedisService } from "../__mocks__/services/RedisSerivce";
+import { ExpenseService } from "../expense-service";
+import { RedisService } from "../../../tests/__mocks__/services/RedisSerivce";
 import {
   InMemoryUserRepository,
   InMemoryExpenseRepository,
-} from "../__mocks__/repositories";
+} from "../../../tests/__mocks__/repositories";
 
 describe("Expense service test suite", () => {
   let expenseService: ExpenseService;

@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 
-import { ExpenseController } from "../../src/controllers/expense-controller";
-import { ExpenseService } from "../../src/services/expense-service";
+import { ExpenseController } from "../expense-controller";
+import { ExpenseService } from "../../services/expense-service";
 import {
   InMemoryUserRepository,
   InMemoryExpenseRepository,
-} from "../__mocks__/repositories";
-import { RedisService } from "../__mocks__/services/RedisSerivce";
+} from "../../../tests/__mocks__/repositories";
+import { RedisService } from "../../../tests/__mocks__/services/RedisSerivce";
 
 describe("Expense controller test suite", () => {
   let request: Request;

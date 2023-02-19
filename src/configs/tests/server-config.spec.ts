@@ -1,5 +1,5 @@
 import http from "http";
-import { server } from "../../src/configs/server-config";
+import { server } from "../server-config";
 
 describe("Server Config test", () => {
   it("should export server config", () => {

@@ -1,5 +1,5 @@
-import { UserService } from "../../src/services/user-service";
-import { InMemoryUserRepository } from "../../src/repositories";
+import { UserService } from "../user-service";
+import { InMemoryUserRepository } from "../../repositories";
 
 describe("User service test suite", () => {
   let userService: UserService;

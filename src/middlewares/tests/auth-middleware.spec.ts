@@ -1,5 +1,5 @@
-import { type NextFunction, type Request, type Response } from "express";
-import { ensureAuthentication } from "../../src/middlewares/auth-middleware";
+import { NextFunction, Request, Response } from "express";
+import { ensureAuthentication } from "../auth-middleware";
 
 describe("ensureAuthentication()", () => {
   let request: Request;
