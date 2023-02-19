@@ -24,7 +24,6 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^4.7.1",
-    "@typescript-eslint/parser": "5.48.2",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -46,6 +45,7 @@
     "@types/redis": "^4.0.11",
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "5.48.2",
     "eslint": "^8.0.1",
     "eslint-config-standard-with-typescript": "^34.0.0",
     "eslint-plugin-import": "^2.25.2",
