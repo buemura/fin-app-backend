@@ -17,3 +17,34 @@ export interface UpdateUserProps {
   email?: string;
   password?: string;
 }
+
+export interface GetUserDetailsProps {
+  userId: string;
+}
+
+export interface GetUserDetailsResponse {
+  data: UserProps;
+}
+
+export interface SignUpProps {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface SignUpResponse {
+  data: UserProps;
+}
+
+export interface SignInProps {
+  email: string;
+  password: string;
+}
+
+export interface SignInResponse {
+  data: {
+    message: string;
+    accessToken: string;
+    user: Omit<UserProps, "password">;
+  };
+}

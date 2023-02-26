@@ -1,9 +1,23 @@
 import { type Expense } from "@prisma/client";
+import {
+  PaginationMetadataProps,
+  PaginationMetadataResponse,
+} from "./pagination";
 
 export interface ExpenseProps extends Expense {}
 
 export interface FindAllExpensesProps {
   userId: string;
+}
+
+export interface FindUserExpensesProps {
+  pagination: PaginationMetadataProps;
+  userId: string;
+}
+
+export interface FindUserExpensesResponse {
+  data: ExpenseProps[];
+  metadata: PaginationMetadataResponse;
 }
 
 export interface CreateExpenseProps {
@@ -18,6 +32,10 @@ export interface UpdateExpenseProps {
   imageUrl?: string;
   isPaid?: boolean;
   isActive?: boolean;
+}
+
+export interface UpdateAllExpensesResponseProps {
+  message: string;
 }
 
 export interface DeleteExpenseProps {

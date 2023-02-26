@@ -77,7 +77,6 @@ describe("Handle http response test", () => {
     const res = handleHttpResponse(response, 403, {});
     expect(res.send).toHaveBeenCalledWith({
       status: "failure",
-      data: {},
     });
   });
 
@@ -85,17 +84,25 @@ describe("Handle http response test", () => {
     const res = handleHttpResponse(response, 200, {});
     expect(res.send).toHaveBeenCalledWith({
       status: "success",
-      data: {},
     });
   });
 
   it("should return with provided data", () => {
-    const expectedData = { message: "test success case" };
+    const expectedResponse = {
+      data: { message: "test success case" },
+      metadata: {
+        page: 1,
+        items: 5,
+        totalPages: 2,
+        totalItems: 10,
+      },
+    };
 
-    const res = handleHttpResponse(response, 200, expectedData);
+    const res = handleHttpResponse(response, 200, expectedResponse);
     expect(res.send).toHaveBeenCalledWith({
       status: "success",
-      data: expectedData,
+      data: expectedResponse.data,
+      metadata: expectedResponse.metadata,
     });
   });
 });

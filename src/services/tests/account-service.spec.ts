@@ -3,6 +3,7 @@ import {
   InMemoryUserRepository,
 } from "../../../tests/__mocks__/repositories";
 import { RedisService } from "../../../tests/__mocks__/services/RedisSerivce";
+import { DEFAULT_PAGINATION } from "../../utils/constants";
 import { AccountService } from "../account-service";
 
 describe("Account service test suite", () => {
@@ -40,13 +41,23 @@ describe("Account service test suite", () => {
 
   describe("Find Accounts by User Id", () => {
     it("should throw an error if required parameters are missing", async () => {
-      const result = accountService.getAccountsByUserId({ userId: "" });
+      const result = accountService.getAccountsByUserId({
+        userId: "",
+        pagination: {
+          page: DEFAULT_PAGINATION.PAGE,
+          items: DEFAULT_PAGINATION.ITEMS,
+        },
+      });
       await expect(result).rejects.toThrow("Missing required parameter");
     });
 
     it("should throw an error if user is not found", async () => {
       const result = accountService.getAccountsByUserId({
         userId: "not-exists",
+        pagination: {
+          page: DEFAULT_PAGINATION.PAGE,
+          items: DEFAULT_PAGINATION.ITEMS,
+        },
       });
       await expect(result).rejects.toThrow("User does not exists");
     });
@@ -54,9 +65,12 @@ describe("Account service test suite", () => {
     it("should return users expenses", async () => {
       const result = await accountService.getAccountsByUserId({
         userId: "user-1",
+        pagination: {
+          page: DEFAULT_PAGINATION.PAGE,
+          items: DEFAULT_PAGINATION.ITEMS,
+        },
       });
       expect(result).not.toBe(null);
-      // expect(result.accounts[0].id).toBe("account-1");
     });
   });
 

@@ -1,34 +1,17 @@
 import { logger } from "../utils/logger";
 import { AppError } from "../utils/app-error";
-import { type IRedisService } from "./redis-service";
-import { type IExpenseRepository, type IUserRepository } from "../repositories";
-import { type ExpenseProps } from "../interfaces/expense";
-
-interface FindUserExpensesProps {
-  userId: string;
-}
-
-interface CreateExpenseProps {
-  userId: string;
-  title: string;
-  imageUrl?: string;
-}
-
-interface UpdateExpenseProps {
-  expenseId: string;
-  title?: string;
-  imageUrl?: string;
-  isPaid?: boolean;
-  isActive?: boolean;
-}
-
-interface DeleteExpenseProps {
-  expenseId: string;
-}
-
-interface UpdateAllExpensesResponseProps {
-  message: string;
-}
+import { IRedisService } from "./redis-service";
+import { IExpenseRepository, IUserRepository } from "../repositories";
+import { paginationMetada, sliceParams } from "../utils/functions";
+import {
+  FindUserExpensesProps,
+  FindUserExpensesResponse,
+  CreateExpenseProps,
+  DeleteExpenseProps,
+  ExpenseProps,
+  UpdateAllExpensesResponseProps,
+  UpdateExpenseProps,
+} from "../interfaces/expense";
 
 export class ExpenseService {
   private readonly expenseKey: string = process.env.REDIS_EXPENSES_KEY ?? "";
@@ -39,7 +22,10 @@ export class ExpenseService {
     private readonly redisService: IRedisService
   ) {}
 
-  async findByUser({ userId }: FindUserExpensesProps): Promise<ExpenseProps[]> {
+  async findByUser({
+    pagination,
+    userId,
+  }: FindUserExpensesProps): Promise<FindUserExpensesResponse> {
     logger.info(`Find user ${userId} expenses`);
 
     if (!userId) {
@@ -51,6 +37,12 @@ export class ExpenseService {
       throw new AppError("User does not exists");
     }
 
+    const { start, end } = sliceParams({
+      page: pagination.page,
+      items: pagination.items,
+    });
+
+    let result;
     let expenses = await this.redisService.get<ExpenseProps[]>(this.expenseKey);
     if (!expenses) {
       logger.info(`No cache found`);
@@ -58,11 +50,24 @@ export class ExpenseService {
 
       logger.info(`Creating cache for expenses`);
       await this.redisService.save(this.expenseKey, expenses);
-      return expenses;
+
+      result = expenses.slice(start, end);
+    } else {
+      result = expenses
+        .filter((expense) => expense.userId === userId)
+        .slice(start, end);
     }
 
-    expenses = expenses.filter((expense) => expense.userId === userId);
-    return expenses;
+    const metadata = paginationMetada({
+      data: expenses,
+      page: pagination.page,
+      items: pagination.items,
+    });
+
+    return {
+      metadata,
+      data: result,
+    };
   }
 
   async createExpense(data: CreateExpenseProps): Promise<ExpenseProps> {

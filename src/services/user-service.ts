@@ -3,33 +3,21 @@ import jwt from "jsonwebtoken";
 import { logger } from "../utils/logger";
 import { AppError } from "../utils/app-error";
 import { type IUserRepository } from "../repositories";
-import { type UserProps } from "../interfaces/user";
-
-interface GetUserDetailsProps {
-  userId: string;
-}
-
-interface SignUpProps {
-  name: string;
-  email: string;
-  password: string;
-}
-
-interface SignInProps {
-  email: string;
-  password: string;
-}
-
-interface SignInResponseProps {
-  message: string;
-  accessToken: string;
-  user: Omit<UserProps, "password">;
-}
+import {
+  GetUserDetailsProps,
+  GetUserDetailsResponse,
+  SignInProps,
+  SignInResponse,
+  SignUpProps,
+  SignUpResponse,
+} from "../interfaces/user";
 
 export class UserService {
   constructor(private readonly userRepository: IUserRepository) {}
 
-  async getUserDetails({ userId }: GetUserDetailsProps): Promise<UserProps> {
+  async getUserDetails({
+    userId,
+  }: GetUserDetailsProps): Promise<GetUserDetailsResponse> {
     logger.info(`Getting user ${userId} details`);
 
     if (!userId) {
@@ -41,10 +29,16 @@ export class UserService {
       throw new AppError("User not found", 404);
     }
 
-    return user;
+    return {
+      data: user,
+    };
   }
 
-  async signUpUser({ name, email, password }: SignUpProps): Promise<UserProps> {
+  async signUpUser({
+    name,
+    email,
+    password,
+  }: SignUpProps): Promise<SignUpResponse> {
     logger.info(`Sign up user`);
 
     if (!name || !email || !password) {
@@ -65,14 +59,14 @@ export class UserService {
     };
 
     logger.info(`User created`);
+    const user = await this.userRepository.create(newUser);
 
-    return this.userRepository.create(newUser);
+    return {
+      data: user,
+    };
   }
 
-  async signInUser({
-    email,
-    password,
-  }: SignInProps): Promise<SignInResponseProps> {
+  async signInUser({ email, password }: SignInProps): Promise<SignInResponse> {
     logger.info(`Sign in user`);
 
     if (!email || !password) {
@@ -101,9 +95,11 @@ export class UserService {
     logger.info(`Successfully authenticated`);
 
     return {
-      message: "Successfully authenticated",
-      accessToken,
-      user: userToReturn,
+      data: {
+        message: "Successfully authenticated",
+        accessToken,
+        user: userToReturn,
+      },
     };
   }
 }

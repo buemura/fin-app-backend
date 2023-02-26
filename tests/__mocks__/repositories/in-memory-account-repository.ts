@@ -51,11 +51,8 @@ export class InMemoryAccountRepository implements AccountRepository {
     return account;
   }
 
-  async update(
-    id: string,
-    data: UpdateAccountProps
-  ): Promise<AccountProps | null> {
-    const account = this.accounts.find((account) => account.id === id);
+  async update(data: UpdateAccountProps): Promise<AccountProps | null> {
+    const account = this.accounts.find((account) => account.id === data.id);
     if (!account) {
       return null;
     }

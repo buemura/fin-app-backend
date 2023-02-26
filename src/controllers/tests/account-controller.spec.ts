@@ -5,8 +5,10 @@ import { AccountService } from "../../services/account-service";
 import {
   InMemoryUserRepository,
   InMemoryAccountRepository,
-} from "../../../tests/__mocks__/repositories";
-import { RedisService } from "../../../tests/__mocks__/services/RedisSerivce";
+  RedisService,
+  requestMock,
+  responseMock,
+} from "../../../tests/__mocks__/";
 
 describe("Account controller test suite", () => {
   let request: Request;
@@ -16,15 +18,8 @@ describe("Account controller test suite", () => {
   let accountController: AccountController;
 
   beforeEach(() => {
-    request = {
-      params: {},
-      body: {},
-    } as Request;
-
-    response = {
-      status: jest.fn().mockReturnThis(),
-      send: jest.fn(),
-    } as unknown as Response;
+    request = requestMock;
+    response = responseMock;
 
     const userRepository = new InMemoryUserRepository();
     const accountRepository = new InMemoryAccountRepository();

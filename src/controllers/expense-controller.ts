@@ -4,15 +4,23 @@ import {
   handleHttpResponse,
   handleHttpErrorResponse,
 } from "../utils/response-handler";
+import { DEFAULT_PAGINATION } from "../utils/constants";
 
 export class ExpenseController {
   constructor(private readonly expenseService: ExpenseService) {}
 
   async findByUserId(request: Request, response: Response): Promise<Response> {
     const { userId } = request.params;
+    const pagination = {
+      page: Number(request.query.page) || DEFAULT_PAGINATION.PAGE,
+      items: Number(request.query.items) || DEFAULT_PAGINATION.ITEMS,
+    };
 
     try {
-      const result = await this.expenseService.findByUser({ userId });
+      const result = await this.expenseService.findByUser({
+        pagination,
+        userId,
+      });
       return handleHttpResponse(response, 200, result);
     } catch (error: any) {
       return handleHttpErrorResponse(response, error);

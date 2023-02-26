@@ -10,7 +10,7 @@ export function handleHttpResponse(
 
   const responseObject = {
     status: statusMessage,
-    data,
+    ...data,
   };
 
   return response.status(statusCode).send(responseObject);

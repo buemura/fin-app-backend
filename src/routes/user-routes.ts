@@ -22,7 +22,7 @@ async function signIn(request: Request, response: Response): Promise<Response> {
 }
 
 async function signUp(request: Request, response: Response): Promise<Response> {
-  return userController.signIn(request, response);
+  return userController.signUp(request, response);
 }
 
 router.get("/user/:userId", ensureAuthentication, getUserDetails);

@@ -1,39 +1,17 @@
 import { AppError } from "../utils/app-error";
-import { type AccountProps } from "../interfaces/account";
-import { type IUserRepository, type IAccountRepository } from "../repositories";
-import { type IRedisService } from "./redis-service";
+import {
+  GetAccountsByIdProps,
+  AccountProps,
+  GetAccountsByUserIdProps,
+  GetAccountsByUserIdResponse,
+  CreateAccountProps,
+  UpdateAccountProps,
+  DeleteAccountProps,
+} from "../interfaces/account";
+import { IUserRepository, IAccountRepository } from "../repositories";
+import { IRedisService } from "./redis-service";
 import { logger } from "../utils/logger";
-
-interface getAccountsByIdProps {
-  id: string;
-}
-
-interface getAccountsByUserIdProps {
-  userId: string;
-}
-
-interface GetAccountsByUserIdResponse {
-  accounts: AccountProps[];
-  totalBalance: number;
-}
-
-interface createAccountProps {
-  userId: string;
-  name: string;
-  balance: number;
-  icon?: string;
-}
-
-interface updateAccountProps {
-  id: string;
-  name?: string;
-  balance?: number;
-  icon?: string;
-}
-
-interface deleteAccountProps {
-  id: string;
-}
+import { paginationMetada, sliceParams } from "../utils/functions";
 
 export class AccountService {
   private readonly accountsKey: string = process.env.REDIS_ACCOUNTS_KEY ?? "";
@@ -46,7 +24,7 @@ export class AccountService {
 
   async getAccountById({
     id,
-  }: getAccountsByIdProps): Promise<AccountProps | null> {
+  }: GetAccountsByIdProps): Promise<AccountProps | null> {
     if (!id) {
       throw new AppError("Missing required parameter");
     }
@@ -55,8 +33,9 @@ export class AccountService {
   }
 
   async getAccountsByUserId({
+    pagination,
     userId,
-  }: getAccountsByUserIdProps): Promise<GetAccountsByUserIdResponse> {
+  }: GetAccountsByUserIdProps): Promise<GetAccountsByUserIdResponse> {
     if (!userId) {
       throw new AppError("Missing required parameter");
     }
@@ -66,6 +45,12 @@ export class AccountService {
       throw new AppError("User does not exists");
     }
 
+    const { start, end } = sliceParams({
+      page: pagination.page,
+      items: pagination.items,
+    });
+
+    let result;
     let accounts = await this.redisService.get<AccountProps[]>(
       this.accountsKey
     );
@@ -75,15 +60,30 @@ export class AccountService {
 
       logger.info(`Creating cache for user ${userId}`);
       await this.redisService.save(this.accountsKey, accounts);
+      result = accounts.slice(start, end);
     } else {
-      accounts = accounts.filter((account) => account.userId === userId);
+      result = accounts
+        .filter((account) => account.userId === userId)
+        .slice(start, end);
     }
 
-    const totalBalance = accounts
+    const totalBalance = result
       .reduce((acc, account) => acc + account.balance, 0)
       .toFixed(2);
 
-    return { accounts, totalBalance: Number(totalBalance) };
+    const metadata = paginationMetada({
+      data: accounts,
+      page: pagination.page,
+      items: pagination.items,
+    });
+
+    return {
+      metadata,
+      data: {
+        accounts,
+        totalBalance: Number(totalBalance),
+      },
+    };
   }
 
   async createAccount({
@@ -91,7 +91,7 @@ export class AccountService {
     name,
     balance,
     icon,
-  }: createAccountProps): Promise<AccountProps> {
+  }: CreateAccountProps): Promise<AccountProps> {
     if (!userId || !name || !balance) {
       throw new AppError("Missing required parameter");
     }
@@ -118,7 +118,7 @@ export class AccountService {
     name,
     balance,
     icon,
-  }: updateAccountProps): Promise<AccountProps | null> {
+  }: UpdateAccountProps): Promise<AccountProps | null> {
     if (!id) {
       throw new AppError("Missing required parameter");
     }
@@ -128,20 +128,20 @@ export class AccountService {
       throw new AppError("Account not found");
     }
 
-    const result = await this.accountRepository.update(id, {
+    const result = await this.accountRepository.update({
+      id,
       name,
       balance: Number(balance),
       icon,
     });
 
     await this.redisService.remove(this.accountsKey);
-
     return result;
   }
 
   async deleteAccount({
     id,
-  }: deleteAccountProps): Promise<AccountProps | null> {
+  }: DeleteAccountProps): Promise<AccountProps | null> {
     if (!id) {
       throw new AppError("Missing required parameter");
     }

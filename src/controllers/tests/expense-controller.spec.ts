@@ -5,8 +5,10 @@ import { ExpenseService } from "../../services/expense-service";
 import {
   InMemoryUserRepository,
   InMemoryExpenseRepository,
-} from "../../../tests/__mocks__/repositories";
-import { RedisService } from "../../../tests/__mocks__/services/RedisSerivce";
+  RedisService,
+  requestMock,
+  responseMock,
+} from "../../../tests/__mocks__/";
 
 describe("Expense controller test suite", () => {
   let request: Request;
@@ -16,15 +18,8 @@ describe("Expense controller test suite", () => {
   let expenseController: ExpenseController;
 
   beforeEach(() => {
-    request = {
-      params: {},
-      body: {},
-    } as Request;
-
-    response = {
-      status: jest.fn().mockReturnThis(),
-      send: jest.fn(),
-    } as unknown as Response;
+    request = requestMock;
+    response = responseMock;
 
     const userRepository = new InMemoryUserRepository();
     const expenseRepository = new InMemoryExpenseRepository();
@@ -50,6 +45,8 @@ describe("Expense controller test suite", () => {
 
     it("should return 200 status code", async () => {
       request.params.userId = "user-1";
+      request.query.page = "1";
+      request.query.items = "5";
       await expenseController.findByUserId(request, response);
       expect(response.status).toHaveBeenCalledWith(200);
     });

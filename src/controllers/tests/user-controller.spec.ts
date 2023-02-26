@@ -2,7 +2,11 @@ import { Request, Response } from "express";
 
 import { UserController } from "../../controllers/user-controller";
 import { UserService } from "../../services/user-service";
-import { InMemoryUserRepository } from "../../../tests/__mocks__/repositories";
+import {
+  InMemoryUserRepository,
+  requestMock,
+  responseMock,
+} from "../../../tests/__mocks__/";
 
 describe("User controller test suite", () => {
   let request: Request;
@@ -12,15 +16,8 @@ describe("User controller test suite", () => {
   let userController: UserController;
 
   beforeEach(() => {
-    request = {
-      params: {},
-      body: {},
-    } as Request;
-
-    response = {
-      status: jest.fn().mockReturnThis(),
-      send: jest.fn(),
-    } as unknown as Response;
+    request = requestMock;
+    response = responseMock;
 
     const userRepository = new InMemoryUserRepository();
     userService = new UserService(userRepository);

@@ -37,12 +37,9 @@ export class PrismaAccountRepository implements AccountRepository {
     });
   }
 
-  async update(
-    id: string,
-    data: UpdateAccountProps
-  ): Promise<AccountProps | null> {
+  async update(data: UpdateAccountProps): Promise<AccountProps | null> {
     return this.accountRespository.update({
-      where: { id },
+      where: { id: data.id },
       data: {
         name: data.name,
         balance: data.balance,

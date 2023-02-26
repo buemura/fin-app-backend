@@ -28,7 +28,7 @@ describe("User service test suite", () => {
         userId: "user-1",
       });
       expect(result).not.toBeNull();
-      expect(result.name).toBe("john");
+      expect(result.data.name).toBe("john");
     });
   });
 
@@ -75,8 +75,8 @@ describe("User service test suite", () => {
         email: "jane@example.com",
         password: "pass",
       });
-      expect(result).toHaveProperty("id");
-      expect(result).toHaveProperty("createdAt");
+      expect(result.data).toHaveProperty("id");
+      expect(result.data).toHaveProperty("createdAt");
     });
   });
 
@@ -118,8 +118,8 @@ describe("User service test suite", () => {
         email: "john@example.com",
         password: "password",
       });
-      expect(result).toHaveProperty("accessToken");
-      expect(result.message).toBe("Successfully authenticated");
+      expect(result.data).toHaveProperty("accessToken");
+      expect(result.data.message).toBe("Successfully authenticated");
     });
   });
 });

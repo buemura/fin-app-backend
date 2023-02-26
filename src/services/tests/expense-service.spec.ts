@@ -4,6 +4,7 @@ import {
   InMemoryUserRepository,
   InMemoryExpenseRepository,
 } from "../../../tests/__mocks__/repositories";
+import { DEFAULT_PAGINATION } from "../../utils/constants";
 
 describe("Expense service test suite", () => {
   let expenseService: ExpenseService;
@@ -21,17 +22,35 @@ describe("Expense service test suite", () => {
 
   describe("Find Expenses by User Id", () => {
     it("should throw an error if required parameters are missing", async () => {
-      const result = expenseService.findByUser({ userId: "" });
+      const result = expenseService.findByUser({
+        userId: "",
+        pagination: {
+          page: DEFAULT_PAGINATION.PAGE,
+          items: DEFAULT_PAGINATION.ITEMS,
+        },
+      });
       await expect(result).rejects.toThrow("User id not provided");
     });
 
     it("should throw an error if user is not found", async () => {
-      const result = expenseService.findByUser({ userId: "not-exists" });
+      const result = expenseService.findByUser({
+        userId: "not-exists",
+        pagination: {
+          page: DEFAULT_PAGINATION.PAGE,
+          items: DEFAULT_PAGINATION.ITEMS,
+        },
+      });
       await expect(result).rejects.toThrow("User does not exists");
     });
 
     it("should return users expenses", async () => {
-      const result = await expenseService.findByUser({ userId: "user-1" });
+      const result = await expenseService.findByUser({
+        userId: "user-1",
+        pagination: {
+          page: DEFAULT_PAGINATION.PAGE,
+          items: DEFAULT_PAGINATION.ITEMS,
+        },
+      });
       expect(result).not.toBe(null);
       // expect(result[0].id).toBe("expense-1");
     });
