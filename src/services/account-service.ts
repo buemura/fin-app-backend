@@ -67,9 +67,14 @@ export class AccountService {
         .slice(start, end);
     }
 
-    const totalBalance = result
+    const totalBalance = accounts
       .reduce((acc, account) => acc + account.balance, 0)
       .toFixed(2);
+
+    const accountsForMetrics = accounts.map((account) => ({
+      name: account.name,
+      balance: account.balance,
+    }));
 
     const metadata = paginationMetada({
       data: accounts,
@@ -80,8 +85,9 @@ export class AccountService {
     return {
       metadata,
       data: {
-        accounts,
+        accounts: result,
         totalBalance: Number(totalBalance),
+        metricsData: accountsForMetrics,
       },
     };
   }

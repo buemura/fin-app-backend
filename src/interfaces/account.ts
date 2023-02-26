@@ -20,6 +20,10 @@ export interface GetAccountsByUserIdResponse {
   data: {
     accounts: AccountProps[];
     totalBalance: number;
+    metricsData: Array<{
+      name: string;
+      balance: number;
+    }>;
   };
 }
 
