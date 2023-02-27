@@ -14,6 +14,10 @@ export class PrismaAccountRepository implements AccountRepository {
     this.accountRespository = prisma.account;
   }
 
+  async findMany(): Promise<AccountProps[]> {
+    return this.accountRespository.findMany();
+  }
+
   async findById(id: string): Promise<AccountProps | null> {
     return this.accountRespository.findFirst({
       where: { id },

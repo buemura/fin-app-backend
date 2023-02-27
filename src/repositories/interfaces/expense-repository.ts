@@ -5,6 +5,7 @@ import {
 } from "../../interfaces/expense";
 
 export abstract class ExpenseRepository {
+  abstract findMany(): Promise<ExpenseProps[]>;
   abstract findById(id: string): Promise<ExpenseProps | null>;
   abstract findByUserId(userId: string): Promise<ExpenseProps[]>;
   abstract create(data: CreateExpenseProps): Promise<ExpenseProps>;

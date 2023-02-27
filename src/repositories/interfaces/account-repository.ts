@@ -5,6 +5,7 @@ import {
 } from "../../interfaces/account";
 
 export abstract class AccountRepository {
+  abstract findMany(): Promise<AccountProps[]>;
   abstract findById(id: string): Promise<AccountProps | null>;
   abstract findByUserId(userId: string): Promise<AccountProps[]>;
   abstract create(data: CreateAccountProps): Promise<AccountProps>;

@@ -14,6 +14,10 @@ export class PrismaExpenseRepository implements ExpenseRepository {
     this.expenseRespository = prisma.expense;
   }
 
+  async findMany(): Promise<ExpenseProps[]> {
+    return this.expenseRespository.findMany();
+  }
+
   async findById(id: string): Promise<ExpenseProps | null> {
     return this.expenseRespository.findFirst({
       where: { id },
