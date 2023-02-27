@@ -2,7 +2,7 @@ import { logger } from "../utils/logger";
 import { AppError } from "../utils/app-error";
 import { IRedisService } from "./redis-service";
 import { IExpenseRepository, IUserRepository } from "../repositories";
-import { paginationMetada, sliceParams } from "../utils/functions";
+import { paginationMetadata, sliceParams } from "../utils/functions";
 import {
   FindUserExpensesProps,
   FindUserExpensesResponse,
@@ -42,23 +42,21 @@ export class ExpenseService {
       items: pagination.items,
     });
 
-    let result;
     let expenses = await this.redisService.get<ExpenseProps[]>(this.expenseKey);
     if (!expenses) {
       logger.info(`No cache found`);
       expenses = await this.expenseRepository.findByUserId(userId);
-
       logger.info(`Creating cache for expenses`);
       await this.redisService.save(this.expenseKey, expenses);
-
-      result = expenses.slice(start, end);
     } else {
-      result = expenses
+      expenses = expenses
         .filter((expense) => expense.userId === userId)
         .slice(start, end);
     }
 
-    const metadata = paginationMetada({
+    const result = expenses.slice(start, end);
+
+    const metadata = paginationMetadata({
       data: expenses,
       page: pagination.page,
       items: pagination.items,

@@ -11,7 +11,7 @@ import {
 import { IUserRepository, IAccountRepository } from "../repositories";
 import { IRedisService } from "./redis-service";
 import { logger } from "../utils/logger";
-import { paginationMetada, sliceParams } from "../utils/functions";
+import { paginationMetadata, sliceParams } from "../utils/functions";
 
 export class AccountService {
   private readonly accountsKey: string = process.env.REDIS_ACCOUNTS_KEY ?? "";
@@ -50,33 +50,30 @@ export class AccountService {
       items: pagination.items,
     });
 
-    let result;
     let accounts = await this.redisService.get<AccountProps[]>(
       this.accountsKey
     );
     if (!accounts) {
       logger.info(`No cache found for user ${userId}`);
-      accounts = await this.accountRepository.findByUserId(userId);
-
+      accounts = await this.accountRepository.findMany();
       logger.info(`Creating cache for user ${userId}`);
       await this.redisService.save(this.accountsKey, accounts);
-      result = accounts.slice(start, end);
     } else {
-      result = accounts
-        .filter((account) => account.userId === userId)
-        .slice(start, end);
+      accounts = accounts.filter((account) => account.userId === userId);
     }
+
+    const result = accounts.slice(start, end);
 
     const totalBalance = accounts
       .reduce((acc, account) => acc + account.balance, 0)
       .toFixed(2);
 
-    const accountsForMetrics = accounts.map((account) => ({
+    const accountsMetrics = accounts.map((account) => ({
       name: account.name,
       balance: account.balance,
     }));
 
-    const metadata = paginationMetada({
+    const metadata = paginationMetadata({
       data: accounts,
       page: pagination.page,
       items: pagination.items,
@@ -87,7 +84,7 @@ export class AccountService {
       data: {
         accounts: result,
         totalBalance: Number(totalBalance),
-        metricsData: accountsForMetrics,
+        metricsData: accountsMetrics,
       },
     };
   }

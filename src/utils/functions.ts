@@ -16,7 +16,7 @@ interface SliceParamsResponse {
   end: number;
 }
 
-export function paginationMetada({
+export function paginationMetadata({
   data,
   page,
   items,
