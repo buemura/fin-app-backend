@@ -84,4 +84,81 @@ export class InvestmentController {
       return handleHttpErrorResponse(response, error);
     }
   }
+
+  async findTrxByUserId(
+    request: Request,
+    response: Response
+  ): Promise<Response> {
+    const { userId } = request.params;
+    const pagination = {
+      page: Number(request.query.page) || DEFAULT_PAGINATION.PAGE,
+      items: Number(request.query.items) || DEFAULT_PAGINATION.ITEMS,
+    };
+
+    try {
+      const result = await this.investmentService.findTrxByUserId({
+        userId,
+        pagination,
+      });
+      return handleHttpResponse(response, 200, result);
+    } catch (error: any) {
+      return handleHttpErrorResponse(response, error);
+    }
+  }
+
+  async createInvestmentTrx(
+    request: Request,
+    response: Response
+  ): Promise<Response> {
+    const { userId } = request.params;
+    const { investmentId, pricePerQuantity, quantity } = request.body;
+
+    try {
+      const result = await this.investmentService.createInvestmentTrx({
+        userId,
+        investmentId,
+        pricePerQuantity,
+        quantity,
+      });
+      return handleHttpResponse(response, 200, result);
+    } catch (error: any) {
+      return handleHttpErrorResponse(response, error);
+    }
+  }
+
+  async updateInvestmentTrx(
+    request: Request,
+    response: Response
+  ): Promise<Response> {
+    const { investmentTrxId } = request.params;
+    const { investmentId, pricePerQuantity, quantity } = request.body;
+
+    try {
+      const result = await this.investmentService.updateInvestmentTrx({
+        id: investmentTrxId,
+        investmentId,
+        pricePerQuantity,
+        quantity,
+      });
+      return handleHttpResponse(response, 200, result);
+    } catch (error: any) {
+      return handleHttpErrorResponse(response, error);
+    }
+  }
+
+  async deleteInvestmentTrx(
+    request: Request,
+    response: Response
+  ): Promise<Response> {
+    const { investmentTrxId } = request.params;
+
+    try {
+      const result = await this.investmentService.deleteInvestmentTrx({
+        id: investmentTrxId,
+      });
+      return handleHttpResponse(response, 200, result);
+    } catch (error: any) {
+      return handleHttpErrorResponse(response, error);
+    }
+  }
 }

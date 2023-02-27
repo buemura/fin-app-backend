@@ -14,7 +14,7 @@ router.get("/", (_request: Request, response: Response) => {
 });
 
 router.use("/api", userRouter, expenseRouter, accountRouter);
-router.use("/api/user/:userId", investmentRouter);
+router.use("/api/user", investmentRouter);
 router.get("/api/health", (_request: Request, response: Response) => {
   return response.send({
     message: "API is up and running",

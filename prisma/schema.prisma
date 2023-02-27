@@ -10,20 +10,21 @@ datasource db {
 }
 
 model User {
-  id                String     @id @default(uuid())
-  name              String
-  email             String     @unique
-  password          String?
-  isExternal        Boolean
-  externalId        String?    @map("external_id")
-  imageUrl          String?    @map("image_url")
-
-  createdAt         DateTime   @map("created_at") @default(now())
-  updatedAt         DateTime   @map("updated_at") @updatedAt
-  expense           Expense[]
-  account           Account[]
-  // transaction       Transaction[]
-  investment        Investment[]
+  id                      String     @id @default(uuid())
+  name                    String
+  email                   String     @unique
+  password                String?
+  isExternal              Boolean
+  externalId              String?    @map("external_id")
+  imageUrl                String?    @map("image_url")
+      
+  createdAt               DateTime   @map("created_at") @default(now())
+  updatedAt               DateTime   @map("updated_at") @updatedAt
+  expense                 Expense[]
+  account                 Account[]
+  // transaction             Transaction[]
+  investment              Investment[]
+  InvestmentTransaction   InvestmentTransaction[]
 
   @@map("user")
 }
@@ -89,9 +90,11 @@ model Investment {
   totalQuantity           Float               @map("total_quantity")         @default(0)
   totalPaidPrice          Float               @map("total_paid_price")       @default(0)
   totalPrice              Float               @map("total_price")            @default(0)
-  allocation              Float               @default(100)
+  allocation              Float               @default(0)
+  createdAt               DateTime            @default(now()) @map("created_at")
+  updatedAt               DateTime            @updatedAt @map("updated_at")
 
-  InvestmentTransaction   InvestmentTransaction[]
+  investmentTransaction   InvestmentTransaction[]
 
   @@map("investment")
   @@index([userId])
@@ -100,12 +103,18 @@ model Investment {
 
 model InvestmentTransaction {
   id                String              @id @default(uuid())
-  investment        Investment          @relation(fields: [InvestmentId], references: [id])
-  InvestmentId      String              @map("investment_id")
+  user              User                @relation(fields: [userId], references: [id])
+  userId            String              @map("user_id")
+  investment        Investment          @relation(fields: [investmentId], references: [id])
+  investmentId      String              @map("investment_id")
 
-  pricePaid         Float
+  pricePerQuantity  Float               @map("price_per_quantity")
+  pricePaid         Float               @map("price_paid")
   quantity          Float
+  createdAt         DateTime            @default(now()) @map("created_at")
+  updatedAt         DateTime            @updatedAt @map("updated_at")
 
   @@map("investment_transaction")
-  @@index([InvestmentId])
+  @@index([userId])
+  @@index([investmentId])
 }
