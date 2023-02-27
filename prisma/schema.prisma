@@ -23,6 +23,7 @@ model User {
   expense           Expense[]
   account           Account[]
   // transaction       Transaction[]
+  investment        Investment[]
 
   @@map("user")
 }
@@ -52,6 +53,8 @@ model Account {
   createdAt         DateTime            @default(now()) @map("created_at")
   updatedAt         DateTime            @updatedAt @map("updated_at")
 
+  investment        Investment[]
+
   @@map("account")
   @@index(userId)
 }
@@ -71,3 +74,38 @@ model Account {
 
 //   @@map("transaction")
 // }
+
+model Investment {
+  id                      String              @id @default(uuid())
+  user                    User                @relation(fields: [userId], references: [id])
+  userId                  String              @map("user_id")
+  account                 Account?            @relation(fields: [accountId], references: [id])
+  accountId               String?             @map("account_id")
+      
+  category                String
+  ticker                  String              @unique
+  type                    String?
+  pricePerQuantity        Float               @map("price_per_quantity")     @default(0)
+  totalQuantity           Float               @map("total_quantity")         @default(0)
+  totalPaidPrice          Float               @map("total_paid_price")       @default(0)
+  totalPrice              Float               @map("total_price")            @default(0)
+  allocation              Float               @default(100)
+
+  InvestmentTransaction   InvestmentTransaction[]
+
+  @@map("investment")
+  @@index([userId])
+  @@index([accountId])
+}
+
+model InvestmentTransaction {
+  id                String              @id @default(uuid())
+  investment        Investment          @relation(fields: [InvestmentId], references: [id])
+  InvestmentId      String              @map("investment_id")
+
+  pricePaid         Float
+  quantity          Float
+
+  @@map("investment_transaction")
+  @@index([InvestmentId])
+}

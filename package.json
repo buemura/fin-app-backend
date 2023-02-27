@@ -8,6 +8,7 @@
     "clean": "rimraf node_modules",
     "clean:deep": "rimraf dist && rimraf node_modules",
     "postinstall": "prisma generate",
+    "migrate": "prisma db push",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
