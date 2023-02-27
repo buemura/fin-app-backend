@@ -19,6 +19,10 @@ export class InMemoryAccountRepository implements AccountRepository {
     },
   ];
 
+  async findMany(): Promise<AccountProps[]> {
+    return this.accounts;
+  }
+
   async findById(id: string): Promise<AccountProps | null> {
     const account = this.accounts.find((account) => account.id === id);
     if (!account) {

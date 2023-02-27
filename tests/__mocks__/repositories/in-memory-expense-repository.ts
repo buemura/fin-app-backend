@@ -20,6 +20,10 @@ export class InMemoryExpenseRepository implements ExpenseRepository {
     },
   ];
 
+  async findMany(): Promise<ExpenseProps[]> {
+    return this.expenses;
+  }
+
   async findById(id: string): Promise<ExpenseProps | null> {
     const expense = this.expenses.find((expense) => expense.id === id);
     if (!expense) {
