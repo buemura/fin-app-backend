@@ -103,6 +103,8 @@ export class ExpenseService {
 
     await this.expenseRepository.updateAll();
 
+    await this.redisService.remove(this.expenseKey);
+
     return {
       message: "updated all expense payment status",
     };
