@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CreateExpenseDto, UpdateExpenseDto } from '../dtos/expense';
+import { CreateExpenseDto, UpdateExpenseDto } from '../dtos/expense.dto';
 import { ExpenseRepository } from '../repositories/expense.repository';
 
 @Injectable()

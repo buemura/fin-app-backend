@@ -7,10 +7,13 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { CreateAccountDto, UpdateAccountDto } from '@application/dtos/account';
+import {
+  CreateAccountDto,
+  UpdateAccountDto,
+} from '@application/dtos/account.dto';
 import { AccountsService } from '@application/services/accounts.service';
 
-@Controller('accounts')
+@Controller('users/:userId/accounts')
 export class AccountsController {
   constructor(private readonly accountsService: AccountsService) {}
 
@@ -20,22 +23,22 @@ export class AccountsController {
   }
 
   @Get()
-  findAll() {
-    return this.accountsService.findAll();
+  findAllByUserId(@Param('userId') userId: string) {
+    return this.accountsService.findAllByUserId(userId);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.accountsService.findOne(+id);
+    return this.accountsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAccountDto: UpdateAccountDto) {
-    return this.accountsService.update(+id, updateAccountDto);
+    return this.accountsService.update(id, updateAccountDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.accountsService.remove(+id);
+    return this.accountsService.remove(id);
   }
 }

@@ -1,5 +1,5 @@
 import { Expense } from '../entities/expense.entity';
-import { CreateExpenseDto, UpdateExpenseDto } from '../dtos/expense';
+import { CreateExpenseDto, UpdateExpenseDto } from '../dtos/expense.dto';
 
 export abstract class ExpenseRepository {
   abstract findById(id: string): Promise<Expense | null>;

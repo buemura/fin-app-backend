@@ -3,7 +3,10 @@ import { PrismaClient } from '@prisma/client';
 
 import { Expense } from '@application/entities/expense.entity';
 import { ExpenseRepository } from '@application/repositories/expense.repository';
-import { CreateExpenseDto, UpdateExpenseDto } from '@application/dtos/expense';
+import {
+  CreateExpenseDto,
+  UpdateExpenseDto,
+} from '@application/dtos/expense.dto';
 
 @Injectable()
 export class PrismaExpenseRepository implements ExpenseRepository {

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAccountDto, UpdateAccountDto } from '../dtos/account';
+import { CreateAccountDto, UpdateAccountDto } from '../dtos/account.dto';
 
 @Injectable()
 export class AccountsService {
@@ -7,19 +7,19 @@ export class AccountsService {
     return 'This action adds a new account';
   }
 
-  findAll() {
+  async findAllByUserId(userId: string) {
     return `This action returns all accounts`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} account`;
   }
 
-  update(id: number, updateAccountDto: UpdateAccountDto) {
+  update(id: string, updateAccountDto: UpdateAccountDto) {
     return `This action updates a #${id} account`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} account`;
   }
 }

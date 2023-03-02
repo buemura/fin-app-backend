@@ -1,6 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { RegisterAuthDto, LoginAuthDto } from '../dtos/auth';
+import { RegisterAuthDto, LoginAuthDto } from '../dtos/auth.dto';
 import { UserRepository } from '../repositories/user.repository';
+import { PasswordHelper } from '@helpers/password-helper';
+import { AccessTokenHelper } from '@helpers/access-token-helper';
 
 @Injectable()
 export class AuthService {
@@ -12,8 +14,13 @@ export class AuthService {
       throw new BadRequestException('User already registered');
     }
 
+    const hashedPassword = await PasswordHelper.hashPassword(
+      registerAuthDto.password,
+    );
+
     const data = {
       ...registerAuthDto,
+      password: hashedPassword,
       isExternal: false,
     };
     return this.userRepository.create(data);
@@ -25,11 +32,19 @@ export class AuthService {
       throw new BadRequestException('User not registered');
     }
 
-    const match = user.password === loginAuthDto.password;
+    const match = await PasswordHelper.comparePassword(
+      loginAuthDto.password,
+      user.password,
+    );
     if (!match) {
       throw new BadRequestException('Invalid credentials');
     }
 
-    return user;
+    const accessToken = await AccessTokenHelper.generate(user.id);
+
+    return {
+      accessToken,
+      user,
+    };
   }
 }

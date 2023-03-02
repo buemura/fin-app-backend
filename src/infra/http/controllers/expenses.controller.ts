@@ -8,7 +8,10 @@ import {
   Param,
 } from '@nestjs/common';
 import { ExpensesService } from '@application/services/expenses.service';
-import { CreateExpenseDto, UpdateExpenseDto } from '@application/dtos/expense';
+import {
+  CreateExpenseDto,
+  UpdateExpenseDto,
+} from '@application/dtos/expense.dto';
 
 @Controller('users/:userId/expenses')
 export class ExpensesController {
