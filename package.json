@@ -9,10 +9,14 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
-    "start:dev": "nest start --watch",
+    "studio:dev": "prisma studio --schema=prisma/schema.dev.prisma",
+    "studio:prod": "prisma studio --schema=prisma/schema.prod.prisma",
+    "postinstall:dev": "prisma generate --schema=prisma/schema.dev.prisma",
+    "postinstall:prod": "prisma generate --schema=prisma/schema.prod.prisma",
+    "start": "npm run postinstall:prod && nest start",
+    "start:dev": "npm run postinstall:dev && nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "npm run postinstall:prod && node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -71,8 +75,5 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  },
-  "prisma": {
-    "schema": "src/infra/database/prisma/schema.prisma"
   }
 }
