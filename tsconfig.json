@@ -20,8 +20,10 @@
     "paths": {
       "@adapters/*": ["./src/adapters/*"],
       "@application/*": ["./src/application/*"],
-      "@helpers/*": ["./src/helpers/*"],
+      "@core/*": ["./src/core/*"],
+      "@helpers/*": ["src/adapters/*"],
       "@infra/*": ["./src/infra/*"],
+      "@providers/*": ["./src/providers/*"],
       "@test/*": ["./test/*"]
     }
   }

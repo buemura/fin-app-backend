@@ -1,26 +1,33 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { UpdateUserDto } from '../dtos/user.dto';
+
+import { UpdateUserDto, UpdateUserPasswordDto } from '../dtos/user.dto';
 import { UserRepository } from '../repositories/user.repository';
 
 @Injectable()
 export class UsersService {
   constructor(private userRepository: UserRepository) {}
 
-  async findAll() {
-    return this.userRepository.findAll();
-  }
-
   async findOne(id: string) {
     return this.userRepository.findById(id);
   }
 
-  async update(updateUserDto: UpdateUserDto) {
-    const user = await this.findOne(updateUserDto.id);
+  async update(data: UpdateUserDto) {
+    const user = await this.findOne(data.id);
     if (!user) {
       throw new BadRequestException('User not found');
     }
 
-    return this.userRepository.update(updateUserDto);
+    return this.userRepository.update(data);
+  }
+
+  // TODO: Finish this
+  async updatePassword(data: UpdateUserPasswordDto) {
+    const user = await this.findOne(data.id);
+    if (!user) {
+      throw new BadRequestException('User not found');
+    }
+
+    return this.userRepository.update(data);
   }
 
   async remove(id: string) {

@@ -1,34 +1,35 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Put,
+  Controller,
   Delete,
+  Get,
   Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
-import { ExpensesService } from '@application/services/expenses.service';
+
 import {
   CreateExpenseDto,
   UpdateExpenseDto,
 } from '@application/dtos/expense.dto';
+import { ExpensesService } from '@application/services/expenses.service';
 
 @Controller('users/:userId/expenses')
 export class ExpensesController {
   constructor(private readonly expensesService: ExpensesService) {}
 
   @Post()
-  create(@Body() createExpenseDto: CreateExpenseDto) {
+  async create(@Body() createExpenseDto: CreateExpenseDto) {
     return this.expensesService.create(createExpenseDto);
   }
 
   @Get()
-  findByUserId(@Param('userId') userId: string) {
+  async findByUserId(@Param('userId') userId: string) {
     return this.expensesService.findByUserId(userId);
   }
 
-  @Put(':expenseId')
-  update(
+  @Patch(':expenseId')
+  async update(
     @Param('expenseId') expenseId: string,
     @Body() updateExpenseDto: UpdateExpenseDto,
   ) {
@@ -39,8 +40,18 @@ export class ExpensesController {
     return this.expensesService.update(data);
   }
 
+  @Patch()
+  async resetAllStatus() {
+    return this.expensesService.resetAllStatus();
+  }
+
+  @Patch(':expenseId')
+  async deactivate(@Param('expenseId') expenseId: string) {
+    return this.expensesService.deactivate(expenseId);
+  }
+
   @Delete(':expenseId')
-  remove(@Param('expenseId') expenseId: string) {
+  async remove(@Param('expenseId') expenseId: string) {
     return this.expensesService.remove(expenseId);
   }
 }

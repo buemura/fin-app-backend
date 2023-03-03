@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+
 import { CreateExpenseDto, UpdateExpenseDto } from '../dtos/expense.dto';
 import { ExpenseRepository } from '../repositories/expense.repository';
 
@@ -10,13 +11,25 @@ export class ExpensesService {
     return this.expenseRepository.findByUserId(userId);
   }
 
-  async create(createExpenseDto: CreateExpenseDto) {
-    return this.expenseRepository.create(createExpenseDto);
+  async create(data: CreateExpenseDto) {
+    return this.expenseRepository.create(data);
   }
 
-  async update(updateExpenseDto: UpdateExpenseDto) {
-    await this.checkExpenseExists(updateExpenseDto.expenseId);
-    return this.expenseRepository.update(updateExpenseDto);
+  async update(data: UpdateExpenseDto) {
+    await this.checkExpenseExists(data.expenseId);
+    return this.expenseRepository.update(data);
+  }
+
+  async resetAllStatus() {
+    return this.expenseRepository.updateAll();
+  }
+
+  async deactivate(expenseId: string) {
+    const data = {
+      expenseId,
+      isActive: false,
+    };
+    return this.expenseRepository.update(data);
   }
 
   async remove(expenseId: string) {

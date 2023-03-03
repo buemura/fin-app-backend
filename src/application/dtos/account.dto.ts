@@ -6,6 +6,7 @@ export interface CreateAccountDto {
 }
 
 export interface UpdateAccountDto {
+  accountId: string;
   name?: string;
   balance?: number;
   icon?: string;

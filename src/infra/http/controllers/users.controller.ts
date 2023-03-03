@@ -1,6 +1,10 @@
-import { Controller, Get, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch } from '@nestjs/common';
+
+import {
+  UpdateUserDto,
+  UpdateUserPasswordDto,
+} from '@application/dtos/user.dto';
 import { UsersService } from '@application/services/users.service';
-import { UpdateUserDto } from '@application/dtos/user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -19,6 +23,19 @@ export class UsersController {
     };
 
     return this.usersService.update(data);
+  }
+
+  @Patch(':id')
+  async updatePasswird(
+    @Param('id') id: string,
+    @Body() updateUserPasswordDto: UpdateUserPasswordDto,
+  ) {
+    const data = {
+      id,
+      ...updateUserPasswordDto,
+    };
+
+    return this.usersService.updatePassword(data);
   }
 
   @Delete(':id')

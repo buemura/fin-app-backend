@@ -61,11 +61,8 @@ export class PrismaExpenseRepository implements ExpenseRepository {
   }
 
   async remove(id: string): Promise<void> {
-    await this.prisma.expense.update({
+    await this.prisma.expense.delete({
       where: { id },
-      data: {
-        isActive: false,
-      },
     });
   }
 }
