@@ -16,7 +16,13 @@ export class AccountsService {
   constructor(private readonly accountRepository: AccountRepository) {}
 
   async create(data: CreateAccountDto) {
-    return this.accountRepository.create(data);
+    const account = await this.accountRepository.create(data);
+
+    return {
+      data: {
+        id: account.id,
+      },
+    };
   }
 
   async findByUserId(props: FindByUserIdDto) {
@@ -49,10 +55,21 @@ export class AccountsService {
       accountId: id,
       ...updateAccountDto,
     };
-    return this.accountRepository.update(data);
+
+    const account = await this.accountRepository.update(data);
+
+    return {
+      data: {
+        id: account.id,
+      },
+    };
   }
 
   async remove(id: string) {
-    return this.accountRepository.remove(id);
+    await this.accountRepository.remove(id);
+
+    return {
+      data: { id },
+    };
   }
 }

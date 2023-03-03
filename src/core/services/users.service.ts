@@ -8,7 +8,11 @@ export class UsersService {
   constructor(private userRepository: UserRepository) {}
 
   async findOne(id: string) {
-    return this.userRepository.findById(id);
+    const { password, ...userToReturn } = await this.userRepository.findById(
+      id,
+    );
+
+    return { data: userToReturn };
   }
 
   async update(data: UpdateUserDto) {

@@ -32,7 +32,7 @@ export class InvestmentsTrxService {
       props.pricePaid,
     );
 
-    return { data: investmentTrx };
+    return { data: { id: investmentTrx.id } };
   }
 
   async findByUserId(userId: string) {
@@ -58,7 +58,7 @@ export class InvestmentsTrxService {
       throw new BadRequestException('Investment not found');
     }
 
-    const resp = await this.investmentTrxRepository.update({
+    const newInvestmentTrx = await this.investmentTrxRepository.update({
       investmentTrxId: id,
       ...props,
     });
@@ -73,7 +73,7 @@ export class InvestmentsTrxService {
       investmentTrx.pricePaid,
     );
 
-    return { resp };
+    return { data: { id: newInvestmentTrx.id } };
   }
 
   async remove(id: string) {
@@ -97,7 +97,8 @@ export class InvestmentsTrxService {
       investmentTrx.pricePaid,
     );
 
-    return this.investmentTrxRepository.remove(id);
+    await this.investmentTrxRepository.remove(id);
+    return { data: { id } };
   }
 
   private async incrementInvestmentTotals(

@@ -36,12 +36,30 @@ export class ExpensesService {
   }
 
   async create(data: CreateExpenseDto) {
-    return this.expenseRepository.create(data);
+    const expense = await this.expenseRepository.create(data);
+
+    return {
+      data: {
+        id: expense.id,
+      },
+    };
   }
 
-  async update(data: UpdateExpenseDto) {
-    await this.checkExpenseExists(data.expenseId);
-    return this.expenseRepository.update(data);
+  async update(props: UpdateExpenseDto) {
+    const expenseExists = await this.expenseRepository.findById(
+      props.expenseId,
+    );
+    if (!expenseExists) {
+      throw new BadRequestException('Expense not found');
+    }
+
+    const expense = await this.expenseRepository.update(props);
+
+    return {
+      data: {
+        id: expense.id,
+      },
+    };
   }
 
   async resetAllStatus() {
@@ -49,24 +67,37 @@ export class ExpensesService {
   }
 
   async deactivate(expenseId: string) {
-    await this.checkExpenseExists(expenseId);
+    const expense = await this.expenseRepository.findById(expenseId);
+    if (!expense) {
+      throw new BadRequestException('Expense not found');
+    }
 
     const data = {
       expenseId,
       isActive: false,
     };
-    return this.expenseRepository.update(data);
+
+    await this.expenseRepository.update(data);
+
+    return {
+      data: {
+        id: expenseId,
+      },
+    };
   }
 
   async remove(expenseId: string) {
-    await this.checkExpenseExists(expenseId);
-    return this.expenseRepository.remove(expenseId);
-  }
-
-  private async checkExpenseExists(expenseId: string): Promise<void> {
     const expense = await this.expenseRepository.findById(expenseId);
     if (!expense) {
       throw new BadRequestException('Expense not found');
     }
+
+    await this.expenseRepository.remove(expenseId);
+
+    return {
+      data: {
+        id: expenseId,
+      },
+    };
   }
 }
