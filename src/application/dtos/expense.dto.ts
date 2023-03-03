@@ -1,3 +1,5 @@
+import { PaginationQueryParams } from './pagination.dto';
+
 export interface CreateExpenseDto {
   userId: string;
   title: string;
@@ -10,4 +12,9 @@ export interface UpdateExpenseDto {
   imageUrl?: string;
   isPaid?: boolean;
   isActive?: boolean;
+}
+
+export interface FindByUserIdDto {
+  userId: string;
+  pagination: PaginationQueryParams;
 }

@@ -6,26 +6,46 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 
 import {
   CreateAccountDto,
   UpdateAccountDto,
 } from '@application/dtos/account.dto';
+import { PaginationQueryParams } from '@application/dtos/pagination.dto';
 import { AccountsService } from '@application/services/accounts.service';
+import { DEFAULT_PAGINATION } from 'src/helpers/pagination/constants';
 
 @Controller('users/:userId/accounts')
 export class AccountsController {
   constructor(private readonly accountsService: AccountsService) {}
 
   @Post()
-  async create(@Body() createAccountDto: CreateAccountDto) {
-    return this.accountsService.create(createAccountDto);
+  async create(
+    @Param('userId') userId: string,
+    @Body() createAccountDto: CreateAccountDto,
+  ) {
+    const props = {
+      userId,
+      ...createAccountDto,
+    };
+    return this.accountsService.create(props);
   }
 
   @Get()
-  async findByUserId(@Param('userId') userId: string) {
-    return this.accountsService.findByUserId(userId);
+  async findByUserId(
+    @Param('userId') userId: string,
+    @Query() query: PaginationQueryParams,
+  ) {
+    const props = {
+      userId,
+      pagination: {
+        page: Number(query.page) || DEFAULT_PAGINATION.PAGE,
+        items: Number(query.items) || DEFAULT_PAGINATION.ITEMS,
+      },
+    };
+    return this.accountsService.findByUserId(props);
   }
 
   @Get(':id')

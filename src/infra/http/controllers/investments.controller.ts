@@ -19,8 +19,15 @@ export class InvestmentsController {
   constructor(private readonly investmentsService: InvestmentsService) {}
 
   @Post()
-  async create(@Body() createInvestmentDto: CreateInvestmentDto) {
-    return this.investmentsService.create(createInvestmentDto);
+  async create(
+    @Param('userId') userId: string,
+    @Body() createInvestmentDto: CreateInvestmentDto,
+  ) {
+    const props = {
+      userId,
+      ...createInvestmentDto,
+    };
+    return this.investmentsService.create(props);
   }
 
   @Get()

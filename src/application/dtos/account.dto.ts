@@ -1,3 +1,5 @@
+import { PaginationQueryParams } from './pagination.dto';
+
 export interface CreateAccountDto {
   userId: string;
   name: string;
@@ -10,4 +12,9 @@ export interface UpdateAccountDto {
   name?: string;
   balance?: number;
   icon?: string;
+}
+
+export interface FindByUserIdDto {
+  userId: string;
+  pagination: PaginationQueryParams;
 }
