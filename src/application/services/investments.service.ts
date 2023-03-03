@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 
 import { InvestmentRepository } from '@application/repositories/investment.repository';
 import {
@@ -11,23 +11,33 @@ export class InvestmentsService {
   constructor(private readonly investmentRepository: InvestmentRepository) {}
 
   async create(data: CreateInvestmentDto) {
+    const investment = await this.investmentRepository.findByTicker(
+      data.ticker,
+    );
+    if (investment) {
+      throw new BadRequestException('Investment already registered');
+    }
     return this.investmentRepository.create(data);
   }
 
   async findByUserId(userId: string) {
-    return this.investmentRepository.findByUserId(userId);
+    const data = await this.investmentRepository.findByUserId(userId);
+    return { data };
   }
 
   async findOne(id: string) {
-    return this.investmentRepository.findById(id);
+    const data = await this.investmentRepository.findById(id);
+    return { data };
   }
 
   async update(id: string, updateInvestmentDto: UpdateInvestmentDto) {
     const data = {
-      id,
+      investmentId: id,
       ...updateInvestmentDto,
     };
-    return this.investmentRepository.update(data);
+
+    const resp = await this.investmentRepository.update(data);
+    return { data: resp };
   }
 
   async remove(id: string) {

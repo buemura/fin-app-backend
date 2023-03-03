@@ -14,13 +14,20 @@ import {
 } from '@application/dtos/investment-trx.dto';
 import { InvestmentsTrxService } from '@application/services/investments-trx.service';
 
-@Controller('users/:userId/investments')
+@Controller('users/:userId/investments-trx')
 export class InvestmentsTrxController {
   constructor(private readonly investmentsTrxService: InvestmentsTrxService) {}
 
   @Post()
-  async create(@Body() createInvestmentTrxDto: CreateInvestmentTrxDto) {
-    return this.investmentsTrxService.create(createInvestmentTrxDto);
+  async create(
+    @Param('userId') userId: string,
+    @Body() createInvestmentTrxDto: CreateInvestmentTrxDto,
+  ) {
+    const props = {
+      userId,
+      ...createInvestmentTrxDto,
+    };
+    return this.investmentsTrxService.create(props);
   }
 
   @Get()

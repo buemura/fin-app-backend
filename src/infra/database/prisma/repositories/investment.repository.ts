@@ -22,6 +22,12 @@ export class PrismaInvestmentRepository implements InvestmentRepository {
     });
   }
 
+  async findByTicker(ticker: string): Promise<Investment> {
+    return this.prisma.investment.findFirst({
+      where: { ticker },
+    });
+  }
+
   async findByUserId(userId: string): Promise<Investment[]> {
     return this.prisma.investment.findMany({
       where: { userId },
@@ -29,6 +35,8 @@ export class PrismaInvestmentRepository implements InvestmentRepository {
   }
 
   async create(data: CreateInvestmentDto): Promise<Investment> {
+    console.log(data);
+
     return this.prisma.investment.create({
       data: {
         userId: data.userId,
