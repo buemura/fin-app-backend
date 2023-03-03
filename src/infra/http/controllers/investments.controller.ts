@@ -11,8 +11,8 @@ import {
 import {
   CreateInvestmentDto,
   UpdateInvestmentDto,
-} from '@application/dtos/investment.dto';
-import { InvestmentsService } from '@application/services/investments.service';
+} from '@core/dtos/investment.dto';
+import { InvestmentsService } from '@core/services/investments.service';
 
 @Controller('users/:userId/investments')
 export class InvestmentsController {

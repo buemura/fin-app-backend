@@ -9,12 +9,9 @@ import {
   Query,
 } from '@nestjs/common';
 
-import {
-  CreateExpenseDto,
-  UpdateExpenseDto,
-} from '@application/dtos/expense.dto';
-import { PaginationQueryParams } from '@application/dtos/pagination.dto';
-import { ExpensesService } from '@application/services/expenses.service';
+import { CreateExpenseDto, UpdateExpenseDto } from '@core/dtos/expense.dto';
+import { PaginationQueryParams } from '@core/dtos/pagination.dto';
+import { ExpensesService } from '@core/services/expenses.service';
 import { DEFAULT_PAGINATION } from 'src/helpers/pagination/constants';
 
 @Controller('users/:userId/expenses')

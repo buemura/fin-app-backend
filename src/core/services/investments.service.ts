@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 
-import { InvestmentRepository } from '@application/repositories/investment.repository';
 import {
   CreateInvestmentDto,
   UpdateInvestmentDto,
 } from '../dtos/investment.dto';
+import { InvestmentRepository } from '../repositories/investment.repository';
 
 @Injectable()
 export class InvestmentsService {

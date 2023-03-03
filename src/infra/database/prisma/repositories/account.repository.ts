@@ -1,12 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 
-import {
-  CreateAccountDto,
-  UpdateAccountDto,
-} from '@application/dtos/account.dto';
-import { Account } from '@application/entities/account.entity';
-import { AccountRepository } from '@application/repositories/account.repository';
+import { CreateAccountDto, UpdateAccountDto } from '@core/dtos/account.dto';
+import { Account } from '@core/entities/account.entity';
+import { AccountRepository } from '@core/repositories/account.repository';
 
 @Injectable()
 export class PrismaAccountRepository implements AccountRepository {

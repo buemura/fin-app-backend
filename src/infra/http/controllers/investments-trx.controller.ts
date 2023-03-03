@@ -11,8 +11,8 @@ import {
 import {
   CreateInvestmentTrxDto,
   UpdateInvestmentTrxDto,
-} from '@application/dtos/investment-trx.dto';
-import { InvestmentsTrxService } from '@application/services/investments-trx.service';
+} from '@core/dtos/investment-trx.dto';
+import { InvestmentsTrxService } from '@core/services/investments-trx.service';
 
 @Controller('users/:userId/investments-trx')
 export class InvestmentsTrxController {

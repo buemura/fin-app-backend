@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 
-import { AccountRepository } from '@application/repositories/account.repository';
 import {
   paginationMetadata,
   paginationSliceParams,
-} from 'src/helpers/pagination/functions';
+} from '@helpers/pagination/functions';
 import {
   CreateAccountDto,
   FindByUserIdDto,
   UpdateAccountDto,
 } from '../dtos/account.dto';
+import { AccountRepository } from '../repositories/account.repository';
 
 @Injectable()
 export class AccountsService {

@@ -3,7 +3,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import {
   paginationMetadata,
   paginationSliceParams,
-} from 'src/helpers/pagination/functions';
+} from '@helpers/pagination/functions';
 import {
   CreateExpenseDto,
   FindByUserIdDto,

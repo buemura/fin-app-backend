@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 
-import { AccountRepository } from '@application/repositories/account.repository';
-import { ExpenseRepository } from '@application/repositories/expense.repository';
-import { InvestmentTrxRepository } from '@application/repositories/investment-trx.repository';
-import { InvestmentRepository } from '@application/repositories/investment.repository';
-import { UserRepository } from '@application/repositories/user.repository';
+import { AccountRepository } from '@core/repositories/account.repository';
+import { ExpenseRepository } from '@core/repositories/expense.repository';
+import { InvestmentTrxRepository } from '@core/repositories/investment-trx.repository';
+import { InvestmentRepository } from '@core/repositories/investment.repository';
+import { UserRepository } from '@core/repositories/user.repository';
 import { PrismaService } from './prisma/prisma.service';
 import { PrismaAccountRepository } from './prisma/repositories/account.repository';
 import { PrismaExpenseRepository } from './prisma/repositories/expense.repository';

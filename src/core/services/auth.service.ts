@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 
-import { AccessTokenAdapter } from '@adapters/access-token-adapter';
-import { PasswordHashAdapter } from '@adapters/password-hash-adapter';
+import { AccessTokenProvider } from '@application/providers/access-token-provider';
+import { HashProvider } from '@application/providers/hash-provider';
 import { LoginAuthDto, RegisterAuthDto } from '../dtos/auth.dto';
 import { UserRepository } from '../repositories/user.repository';
 
@@ -15,16 +15,17 @@ export class AuthService {
       throw new BadRequestException('User already registered');
     }
 
-    const hashedPassword = await PasswordHashAdapter.hashPassword(
+    const hashedPassword = await HashProvider.hashPassword(
       registerAuthDto.password,
     );
 
-    const data = {
+    const props = {
       ...registerAuthDto,
       password: hashedPassword,
       isExternal: false,
     };
-    return this.userRepository.create(data);
+    const data = await this.userRepository.create(props);
+    return { data: { id: data.id } };
   }
 
   async login(loginAuthDto: LoginAuthDto) {
@@ -33,7 +34,7 @@ export class AuthService {
       throw new BadRequestException('User not registered');
     }
 
-    const match = await PasswordHashAdapter.comparePassword(
+    const match = await HashProvider.comparePassword(
       loginAuthDto.password,
       user.password,
     );
@@ -41,11 +42,14 @@ export class AuthService {
       throw new BadRequestException('Invalid credentials');
     }
 
-    const accessToken = await AccessTokenAdapter.generate(user.id);
+    const accessToken = await AccessTokenProvider.generate(user.id);
+    const { password, ...userToReturn } = user;
 
     return {
-      accessToken,
-      user,
+      data: {
+        accessToken,
+        user: userToReturn,
+      },
     };
   }
 }

@@ -9,12 +9,9 @@ import {
   Query,
 } from '@nestjs/common';
 
-import {
-  CreateAccountDto,
-  UpdateAccountDto,
-} from '@application/dtos/account.dto';
-import { PaginationQueryParams } from '@application/dtos/pagination.dto';
-import { AccountsService } from '@application/services/accounts.service';
+import { CreateAccountDto, UpdateAccountDto } from '@core/dtos/account.dto';
+import { PaginationQueryParams } from '@core/dtos/pagination.dto';
+import { AccountsService } from '@core/services/accounts.service';
 import { DEFAULT_PAGINATION } from 'src/helpers/pagination/constants';
 
 @Controller('users/:userId/accounts')
