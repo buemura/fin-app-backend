@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Patch,
   Post,
   Query,
@@ -20,7 +21,7 @@ export class ExpensesController {
 
   @Post()
   async create(
-    @Param('userId') userId: string,
+    @Param('userId', new ParseUUIDPipe()) userId: string,
     @Body() createExpenseDto: CreateExpenseDto,
   ) {
     const props = {
@@ -32,7 +33,7 @@ export class ExpensesController {
 
   @Get()
   async findByUserId(
-    @Param('userId') userId: string,
+    @Param('userId', new ParseUUIDPipe()) userId: string,
     @Query() query: PaginationQueryParams,
   ) {
     const props = {
@@ -47,7 +48,7 @@ export class ExpensesController {
 
   @Patch(':expenseId')
   async update(
-    @Param('expenseId') expenseId: string,
+    @Param('expenseId', new ParseUUIDPipe()) expenseId: string,
     @Body() updateExpenseDto: UpdateExpenseDto,
   ) {
     const data = {
@@ -63,12 +64,12 @@ export class ExpensesController {
   }
 
   @Patch(':expenseId/deactivate')
-  async deactivate(@Param('expenseId') expenseId: string) {
+  async deactivate(@Param('expenseId', new ParseUUIDPipe()) expenseId: string) {
     return this.expensesService.deactivate(expenseId);
   }
 
   @Delete(':expenseId')
-  async remove(@Param('expenseId') expenseId: string) {
+  async remove(@Param('expenseId', new ParseUUIDPipe()) expenseId: string) {
     return this.expensesService.remove(expenseId);
   }
 }

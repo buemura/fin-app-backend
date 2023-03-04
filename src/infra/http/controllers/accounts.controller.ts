@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Patch,
   Post,
   Query,
@@ -20,7 +21,7 @@ export class AccountsController {
 
   @Post()
   async create(
-    @Param('userId') userId: string,
+    @Param('userId', new ParseUUIDPipe()) userId: string,
     @Body() createAccountDto: CreateAccountDto,
   ) {
     const props = {
@@ -32,7 +33,7 @@ export class AccountsController {
 
   @Get()
   async findByUserId(
-    @Param('userId') userId: string,
+    @Param('userId', new ParseUUIDPipe()) userId: string,
     @Query() query: PaginationQueryParams,
   ) {
     const props = {
@@ -46,20 +47,20 @@ export class AccountsController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.accountsService.findOne(id);
   }
 
   @Patch(':id')
   async update(
-    @Param('id') id: string,
+    @Param('id', new ParseUUIDPipe()) id: string,
     @Body() updateAccountDto: UpdateAccountDto,
   ) {
     return this.accountsService.update(id, updateAccountDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.accountsService.remove(id);
   }
 }

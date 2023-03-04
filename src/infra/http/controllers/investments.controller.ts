@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Patch,
   Post,
 } from '@nestjs/common';
@@ -20,7 +21,7 @@ export class InvestmentsController {
 
   @Post()
   async create(
-    @Param('userId') userId: string,
+    @Param('userId', new ParseUUIDPipe()) userId: string,
     @Body() createInvestmentDto: CreateInvestmentDto,
   ) {
     const props = {
@@ -31,25 +32,25 @@ export class InvestmentsController {
   }
 
   @Get()
-  async findByUserId(@Param('userId') userId: string) {
+  async findByUserId(@Param('userId', new ParseUUIDPipe()) userId: string) {
     return this.investmentsService.findByUserId(userId);
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.investmentsService.findOne(id);
   }
 
   @Patch(':id')
   async update(
-    @Param('id') id: string,
+    @Param('id', new ParseUUIDPipe()) id: string,
     @Body() updateInvestmentDto: UpdateInvestmentDto,
   ) {
     return this.investmentsService.update(id, updateInvestmentDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.investmentsService.remove(id);
   }
 }
