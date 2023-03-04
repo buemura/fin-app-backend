@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 
+import { ExpenseService } from "@services/expense-service";
 import {
   InMemoryExpenseRepository,
   InMemoryUserRepository,
   requestMock,
   responseMock,
-} from "../../../tests/__mocks__/";
-import { ExpenseService } from "../../services/expense-service";
+} from "@tests/__mocks__/";
 import { ExpenseController } from "../expense-controller";
 
 describe("Expense controller test suite", () => {

@@ -1,11 +1,12 @@
 import { PrismaClient } from "@prisma/client";
+
 import {
   CreateInvestmentProps,
   InvestmentProps,
   UpdateInvestmentProps,
-} from "../../../interfaces/investment";
-import { CacheRepository } from "../../interfaces/cache-repository";
-import { InvestmentRepository } from "../../interfaces/investment-repository";
+} from "@interfaces/investment";
+import { CacheRepository } from "@repositories/interfaces/cache-repository";
+import { InvestmentRepository } from "@repositories/interfaces/investment-repository";
 
 export class PrismaInvestmentRepository implements InvestmentRepository {
   private readonly investments;

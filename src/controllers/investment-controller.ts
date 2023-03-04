@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
-import { InvestmentService } from "../services/investment-service";
-import { DEFAULT_PAGINATION } from "../utils/constants";
+
+import { InvestmentService } from "@services/investment-service";
+import { DEFAULT_PAGINATION } from "@utils/constants";
 import {
   handleHttpErrorResponse,
   handleHttpResponse,
-} from "../utils/response-handler";
+} from "@utils/response-handler";
 
 export class InvestmentController {
   constructor(private readonly investmentService: InvestmentService) {}

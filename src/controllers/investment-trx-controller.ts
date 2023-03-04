@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
-import { InvestmentTrxService } from "../services/investment-trx-service";
-import { DEFAULT_PAGINATION } from "../utils/constants";
+
+import { InvestmentTrxService } from "@services/investment-trx-service";
+import { DEFAULT_PAGINATION } from "@utils/constants";
 import {
   handleHttpErrorResponse,
   handleHttpResponse,
-} from "../utils/response-handler";
+} from "@utils/response-handler";
 
 export class InvestmentTrxController {
   constructor(private readonly investmentTrxService: InvestmentTrxService) {}

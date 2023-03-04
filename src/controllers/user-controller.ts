@@ -1,10 +1,10 @@
-import { type Request, type Response } from "express";
+import { Request, Response } from "express";
 
-import { type UserService } from "../services/user-service";
+import { UserService } from "@services/user-service";
 import {
-  handleHttpResponse,
   handleHttpErrorResponse,
-} from "../utils/response-handler";
+  handleHttpResponse,
+} from "@utils/response-handler";
 
 export class UserController {
   constructor(private readonly userService: UserService) {}

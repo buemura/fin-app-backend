@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
-import { ensureAuthentication } from "../middlewares/auth-middleware";
-import { investmentTrxController } from "../utils/container";
+
+import { ensureAuthentication } from "@middlewares/auth-middleware";
+import { investmentTrxController } from "@utils/container";
 
 const router = Router();
 

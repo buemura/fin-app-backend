@@ -1,4 +1,4 @@
-import { type Response } from "express";
+import { Response } from "express";
 import { AppError } from "./app-error";
 
 export function handleHttpResponse(

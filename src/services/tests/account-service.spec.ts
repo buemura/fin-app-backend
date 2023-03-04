@@ -1,8 +1,8 @@
 import {
   InMemoryAccountRepository,
   InMemoryUserRepository,
-} from "../../../tests/__mocks__/repositories";
-import { DEFAULT_PAGINATION } from "../../utils/constants";
+} from "@tests/__mocks__/";
+import { DEFAULT_PAGINATION } from "@utils/constants";
 import { AccountService } from "../account-service";
 
 describe("Account service test suite", () => {

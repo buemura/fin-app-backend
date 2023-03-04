@@ -1,12 +1,13 @@
 import { PrismaClient } from "@prisma/client";
+
 import {
   CreateInvestmentTrxProps,
   GetTotalDetailsReponse,
   InvestmentTrxProps,
   UpdateInvestmentTrxProps,
-} from "../../../interfaces/investment-trx";
-import { CacheRepository } from "../../interfaces/cache-repository";
-import { InvestmentTrxRepository } from "../../interfaces/investment-trx-repository";
+} from "@interfaces/investment-trx";
+import { CacheRepository } from "@repositories/interfaces/cache-repository";
+import { InvestmentTrxRepository } from "@repositories/interfaces/investment-trx-repository";
 
 export class PrismaInvestmentTrxRepository implements InvestmentTrxRepository {
   private readonly investmentsTrx;

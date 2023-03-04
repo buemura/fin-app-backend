@@ -1,4 +1,4 @@
-import { PaginationMetadataResponse } from "../interfaces/pagination";
+import { PaginationMetadataResponse } from "@interfaces/pagination";
 
 interface PaginationMetadataProps {
   data: any[];

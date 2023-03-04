@@ -1,8 +1,8 @@
 import {
   InMemoryExpenseRepository,
   InMemoryUserRepository,
-} from "../../../tests/__mocks__/repositories";
-import { DEFAULT_PAGINATION } from "../../utils/constants";
+} from "@tests/__mocks__/";
+import { DEFAULT_PAGINATION } from "@utils/constants";
 import { ExpenseService } from "../expense-service";
 
 describe("Expense service test suite", () => {

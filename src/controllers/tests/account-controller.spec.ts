@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 
+import { AccountService } from "@services/account-service";
 import {
   InMemoryAccountRepository,
   InMemoryUserRepository,
   requestMock,
   responseMock,
-} from "../../../tests/__mocks__/";
-import { AccountService } from "../../services/account-service";
+} from "@tests/__mocks__/";
 import { AccountController } from "../account-controller";
 
 describe("Account controller test suite", () => {

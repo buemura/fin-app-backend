@@ -1,6 +1,3 @@
-export { InMemoryAccountRepository } from "../../tests/__mocks__/repositories/in-memory-account-repository";
-export { InMemoryExpenseRepository } from "../../tests/__mocks__/repositories/in-memory-expense-repository";
-export { InMemoryUserRepository } from "../../tests/__mocks__/repositories/in-memory-user-repository";
 export { PrismaAccountRepository as AccountRepository } from "./implementation/prisma/prisma-account-repository";
 export { PrismaExpenseRepository as ExpenseRepository } from "./implementation/prisma/prisma-expense-repository";
 export { PrismaInvestmentRepository as InvestmentRepository } from "./implementation/prisma/prisma-investment-repository";

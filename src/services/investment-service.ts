@@ -5,10 +5,10 @@ import {
   FindInvestmentsByUserIdResponse,
   InvestmentProps,
   UpdateInvestmentProps,
-} from "../interfaces/investment";
-import { IInvestmentRepository, IUserRepository } from "../repositories";
-import { AppError } from "../utils/app-error";
-import { paginationMetadata, sliceParams } from "../utils/functions";
+} from "@interfaces/investment";
+import { IInvestmentRepository, IUserRepository } from "@repositories/index";
+import { AppError } from "@utils/app-error";
+import { paginationMetadata, sliceParams } from "@utils/functions";
 
 export class InvestmentService {
   constructor(

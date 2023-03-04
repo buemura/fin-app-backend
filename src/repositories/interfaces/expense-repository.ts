@@ -2,7 +2,7 @@ import {
   type CreateExpenseProps,
   type ExpenseProps,
   type UpdateExpenseProps,
-} from "../../interfaces/expense";
+} from "@interfaces/expense";
 
 export abstract class ExpenseRepository {
   abstract findMany(): Promise<ExpenseProps[]>;

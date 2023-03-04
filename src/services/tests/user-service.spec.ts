@@ -1,4 +1,4 @@
-import { InMemoryUserRepository } from "../../repositories";
+import { InMemoryUserRepository } from "@tests/__mocks__";
 import { UserService } from "../user-service";
 
 describe("User service test suite", () => {

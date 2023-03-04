@@ -2,7 +2,7 @@ import {
   type AccountProps,
   type CreateAccountProps,
   type UpdateAccountProps,
-} from "../../interfaces/account";
+} from "@interfaces/account";
 
 export abstract class AccountRepository {
   abstract findMany(): Promise<AccountProps[]>;

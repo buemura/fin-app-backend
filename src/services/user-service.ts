@@ -8,10 +8,10 @@ import {
   SignInResponse,
   SignUpProps,
   SignUpResponse,
-} from "../interfaces/user";
-import { type IUserRepository } from "../repositories";
-import { AppError } from "../utils/app-error";
-import { logger } from "../utils/logger";
+} from "@interfaces/user";
+import { IUserRepository } from "@repositories/index";
+import { AppError } from "@utils/app-error";
+import { logger } from "@utils/logger";
 
 export class UserService {
   constructor(private readonly userRepository: IUserRepository) {}

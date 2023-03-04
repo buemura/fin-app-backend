@@ -6,10 +6,10 @@ import {
   GetAccountsByUserIdProps,
   GetAccountsByUserIdResponse,
   UpdateAccountProps,
-} from "../interfaces/account";
-import { IAccountRepository, IUserRepository } from "../repositories";
-import { AppError } from "../utils/app-error";
-import { paginationMetadata, sliceParams } from "../utils/functions";
+} from "@interfaces/account";
+import { IAccountRepository, IUserRepository } from "@repositories/index";
+import { AppError } from "@utils/app-error";
+import { paginationMetadata, sliceParams } from "@utils/functions";
 
 export class AccountService {
   constructor(

@@ -1,7 +1,8 @@
 import Redis, { type Redis as RedisClient } from "ioredis";
-import { RedisConfig } from "../../../configs/redis";
-import { logger } from "../../../utils/logger";
-import { CacheRepository } from "../../interfaces/cache-repository";
+
+import { RedisConfig } from "@configs/redis";
+import { CacheRepository } from "@repositories/interfaces/cache-repository";
+import { logger } from "@utils/logger";
 
 export class RedisRepository implements CacheRepository {
   private readonly client: RedisClient;

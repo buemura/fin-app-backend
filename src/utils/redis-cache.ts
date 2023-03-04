@@ -1,5 +1,6 @@
-import Redis, { type Redis as RedisClient } from "ioredis";
-import { RedisConfig } from "../configs/redis";
+import Redis, { Redis as RedisClient } from "ioredis";
+
+import { RedisConfig } from "@configs/redis";
 
 export class RedisCache {
   private readonly client: RedisClient;

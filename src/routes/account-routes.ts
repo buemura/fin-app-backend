@@ -1,6 +1,7 @@
-import { Router, type Request, type Response } from "express";
-import { ensureAuthentication } from "../middlewares/auth-middleware";
-import { accountController } from "../utils/container";
+import { Request, Response, Router } from "express";
+
+import { ensureAuthentication } from "@middlewares/auth-middleware";
+import { accountController } from "@utils/container";
 
 const router = Router();
 

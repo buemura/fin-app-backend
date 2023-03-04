@@ -1,5 +1,6 @@
-import { Router, type Request, type Response } from "express";
-import { userController } from "../utils/container";
+import { Request, Response, Router } from "express";
+
+import { userController } from "@utils/container";
 
 const router = Router();
 

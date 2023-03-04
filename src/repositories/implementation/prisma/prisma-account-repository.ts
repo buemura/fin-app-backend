@@ -1,11 +1,12 @@
 import { PrismaClient } from "@prisma/client";
+
 import {
   AccountProps,
   CreateAccountProps,
   UpdateAccountProps,
-} from "../../../interfaces/account";
-import { AccountRepository } from "../../interfaces/account-repository";
-import { CacheRepository } from "../../interfaces/cache-repository";
+} from "@interfaces/account";
+import { AccountRepository } from "@repositories/interfaces/account-repository";
+import { CacheRepository } from "@repositories/interfaces/cache-repository";
 
 export class PrismaAccountRepository implements AccountRepository {
   private readonly accountRespository;

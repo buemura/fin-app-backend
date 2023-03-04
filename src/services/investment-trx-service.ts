@@ -5,15 +5,15 @@ import {
   FindInvestmentsTrxByUserIdResponse,
   InvestmentTrxProps,
   UpdateInvestmentTrxProps,
-} from "../interfaces/investment-trx";
+} from "@interfaces/investment-trx";
 import {
   IInvestmentRepository,
   IInvestmentTrxRepository,
   IUserRepository,
-} from "../repositories";
-import { AppError } from "../utils/app-error";
-import { paginationMetadata, sliceParams } from "../utils/functions";
-import { logger } from "../utils/logger";
+} from "@repositories/index";
+import { AppError } from "@utils/app-error";
+import { paginationMetadata, sliceParams } from "@utils/functions";
+import { logger } from "@utils/logger";
 
 export class InvestmentTrxService {
   constructor(

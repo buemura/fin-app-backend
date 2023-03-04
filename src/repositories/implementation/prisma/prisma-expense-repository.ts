@@ -1,11 +1,12 @@
 import { PrismaClient } from "@prisma/client";
+
 import {
   CreateExpenseProps,
   ExpenseProps,
   UpdateExpenseProps,
-} from "../../../interfaces/expense";
-import { CacheRepository } from "../../interfaces/cache-repository";
-import { ExpenseRepository } from "../../interfaces/expense-repository";
+} from "@interfaces/expense";
+import { CacheRepository } from "@repositories/interfaces/cache-repository";
+import { ExpenseRepository } from "@repositories/interfaces/expense-repository";
 
 export class PrismaExpenseRepository implements ExpenseRepository {
   private readonly expenseRespository;

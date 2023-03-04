@@ -2,7 +2,7 @@ import {
   CreateInvestmentProps,
   InvestmentProps,
   UpdateInvestmentProps,
-} from "../../interfaces/investment";
+} from "@interfaces/investment";
 
 export abstract class InvestmentRepository {
   abstract findMany(): Promise<InvestmentProps[]>;

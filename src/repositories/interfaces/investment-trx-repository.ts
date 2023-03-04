@@ -3,7 +3,7 @@ import {
   GetTotalDetailsReponse,
   InvestmentTrxProps,
   UpdateInvestmentTrxProps,
-} from "../../interfaces/investment-trx";
+} from "@interfaces/investment-trx";
 
 export abstract class InvestmentTrxRepository {
   abstract findMany(): Promise<InvestmentTrxProps[]>;

@@ -4,10 +4,27 @@
     "module": "commonjs",
     "rootDir": "./",
     "outDir": "dist",
+    "baseUrl": "./",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@configs/*": ["./src/configs/*"],
+      "@controllers/*": ["./src/controllers/*"],
+      "@interfaces/*": ["./src/interfaces/*"],
+      "@middlewares/*": ["./src/middlewares/*"],
+      "@repositories/*": ["./src/repositories/*"],
+      "@routes/*": ["./src/routes/*"],
+      "@services/*": ["./src/services/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@tests/*": ["./tests/*"],
+      "@application/*": ["./src/application/*"],
+      "@core/*": ["./src/core/*"],
+      "@helpers/*": ["src/helpers/*"],
+      "@infra/*": ["./src/infra/*"],
+      "@test/*": ["./test/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "tests/**/*.ts"]

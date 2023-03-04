@@ -1,10 +1,11 @@
-import { type Request, type Response } from "express";
-import { type AccountService } from "../services/account-service";
-import { DEFAULT_PAGINATION } from "../utils/constants";
+import { Request, Response } from "express";
+
+import { AccountService } from "@services/account-service";
+import { DEFAULT_PAGINATION } from "@utils/constants";
 import {
   handleHttpErrorResponse,
   handleHttpResponse,
-} from "../utils/response-handler";
+} from "@utils/response-handler";
 
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}

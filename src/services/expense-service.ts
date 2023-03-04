@@ -6,11 +6,11 @@ import {
   FindUserExpensesResponse,
   UpdateAllExpensesResponseProps,
   UpdateExpenseProps,
-} from "../interfaces/expense";
-import { IExpenseRepository, IUserRepository } from "../repositories";
-import { AppError } from "../utils/app-error";
-import { paginationMetadata, sliceParams } from "../utils/functions";
-import { logger } from "../utils/logger";
+} from "@interfaces/expense";
+import { IExpenseRepository, IUserRepository } from "@repositories/index";
+import { AppError } from "@utils/app-error";
+import { paginationMetadata, sliceParams } from "@utils/functions";
+import { logger } from "@utils/logger";
 
 export class ExpenseService {
   constructor(
