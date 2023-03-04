@@ -15,7 +15,7 @@ import { InvestmentsService } from '@core/services/investments.service';
 import {
   CreateInvestmentDto,
   UpdateInvestmentDto,
-} from '../dtos/investment.dto';
+} from '../dtos/investment-dto';
 
 @Controller('users/:userId/investments')
 @UseGuards(AuthGuard('jwt'))

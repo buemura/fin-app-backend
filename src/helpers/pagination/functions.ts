@@ -1,4 +1,4 @@
-import { PaginationMetadataResponse } from '@core/dtos/pagination.dto';
+import { PaginationMetadataResponse } from '@core/dtos/pagination-dto';
 import {
   PaginationMetadataProps,
   SliceParamsProps,

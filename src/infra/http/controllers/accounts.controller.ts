@@ -13,9 +13,9 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 
 import { AccountsService } from '@core/services/accounts.service';
-import { DEFAULT_PAGINATION } from 'src/helpers/pagination/constants';
-import { CreateAccountDto, UpdateAccountDto } from '../dtos/account.dto';
-import { PaginationQueryParams } from '../dtos/pagination.dto';
+import { DEFAULT_PAGINATION } from '@helpers/pagination/constants';
+import { CreateAccountDto, UpdateAccountDto } from '../dtos/account-dto';
+import { PaginationQueryParams } from '../dtos/pagination-dto';
 
 @Controller('users/:userId/accounts')
 @UseGuards(AuthGuard('jwt'))

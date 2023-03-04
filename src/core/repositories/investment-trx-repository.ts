@@ -1,8 +1,8 @@
 import {
   CreateInvestmentTrxDto,
   UpdateInvestmentTrxDto,
-} from '../dtos/investment-trx.dto';
-import { InvestmentTrx } from '../entities/investment-trx.entity';
+} from '../dtos/investment-trx-dto';
+import { InvestmentTrx } from '../entities/investment-trx-entity';
 
 export abstract class InvestmentTrxRepository {
   abstract findById(id: string): Promise<InvestmentTrx | null>;

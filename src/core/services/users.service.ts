@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 
 import { ERROR_MESSAGE } from '@helpers/errors/messages';
-import { UpdateUserDto, UpdateUserPasswordDto } from '../dtos/user.dto';
-import { UserRepository } from '../repositories/user.repository';
+import { UpdateUserDto, UpdateUserPasswordDto } from '../dtos/user-dto';
+import { UserRepository } from '../repositories/user-repository';
 
 @Injectable()
 export class UsersService {

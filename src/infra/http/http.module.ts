@@ -8,8 +8,6 @@ import { ExpensesService } from '@core/services/expenses.service';
 import { InvestmentsTrxService } from '@core/services/investments-trx.service';
 import { InvestmentsService } from '@core/services/investments.service';
 import { UsersService } from '@core/services/users.service';
-import { JwtStrategy } from '@infra/http/strategies/jwt.strategy';
-import { LocalStrategy } from '@infra/http/strategies/local.strategy';
 import { DatabaseModule } from '../database/database.module';
 import { AccountsController } from './controllers/accounts.controller';
 import { AuthController } from './controllers/auth.controller';
@@ -17,6 +15,8 @@ import { ExpensesController } from './controllers/expenses.controller';
 import { InvestmentsTrxController } from './controllers/investments-trx.controller';
 import { InvestmentsController } from './controllers/investments.controller';
 import { UsersController } from './controllers/users.controller';
+import { JwtStrategy } from './strategies/jwt.strategy';
+import { LocalStrategy } from './strategies/local.strategy';
 
 @Module({
   imports: [DatabaseModule, PassportModule, JwtModule],

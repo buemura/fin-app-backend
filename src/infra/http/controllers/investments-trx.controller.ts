@@ -15,7 +15,7 @@ import { InvestmentsTrxService } from '@core/services/investments-trx.service';
 import {
   CreateInvestmentTrxDto,
   UpdateInvestmentTrxDto,
-} from '../dtos/investment-trx.dto';
+} from '../dtos/investment-trx-dto';
 
 @Controller('users/:userId/investments-trx')
 @UseGuards(AuthGuard('jwt'))

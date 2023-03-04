@@ -1,5 +1,5 @@
-import { CreateUserDto, UpdateUserDto } from '../dtos/user.dto';
-import { User } from '../entities/user.entity';
+import { CreateUserDto, UpdateUserDto } from '../dtos/user-dto';
+import { User } from '../entities/user-entity';
 
 export abstract class UserRepository {
   abstract findAll(): Promise<User[]>;

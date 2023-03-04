@@ -4,9 +4,9 @@ import { ERROR_MESSAGE } from '@helpers/errors/messages';
 import {
   CreateInvestmentDto,
   UpdateInvestmentDto,
-} from '../dtos/investment.dto';
-import { AccountRepository } from '../repositories/account.repository';
-import { InvestmentRepository } from '../repositories/investment.repository';
+} from '../dtos/investment-dto';
+import { AccountRepository } from '../repositories/account-repository';
+import { InvestmentRepository } from '../repositories/investment-repository';
 
 @Injectable()
 export class InvestmentsService {

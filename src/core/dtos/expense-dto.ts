@@ -1,4 +1,4 @@
-import { PaginationQueryParams } from './pagination.dto';
+import { PaginationQueryParams } from './pagination-dto';
 
 export interface CreateExpenseDto {
   userId: string;

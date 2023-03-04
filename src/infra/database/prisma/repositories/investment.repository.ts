@@ -4,9 +4,9 @@ import { PrismaClient } from '@prisma/client';
 import {
   CreateInvestmentDto,
   UpdateInvestmentDto,
-} from '@core/dtos/investment.dto';
-import { Investment } from '@core/entities/investment.entity';
-import { InvestmentRepository } from '@core/repositories/investment.repository';
+} from '@core/dtos/investment-dto';
+import { Investment } from '@core/entities/investment-entity';
+import { InvestmentRepository } from '@core/repositories/investment-repository';
 
 @Injectable()
 export class PrismaInvestmentRepository implements InvestmentRepository {

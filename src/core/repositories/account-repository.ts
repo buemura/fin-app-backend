@@ -1,5 +1,5 @@
-import { CreateAccountDto, UpdateAccountDto } from '../dtos/account.dto';
-import { Account } from '../entities/account.entity';
+import { CreateAccountDto, UpdateAccountDto } from '../dtos/account-dto';
+import { Account } from '../entities/account-entity';
 
 export abstract class AccountRepository {
   abstract findById(id: string): Promise<Account | null>;

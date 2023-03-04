@@ -9,8 +9,8 @@ import {
   CreateExpenseDto,
   FindByUserIdDto,
   UpdateExpenseDto,
-} from '../dtos/expense.dto';
-import { ExpenseRepository } from '../repositories/expense.repository';
+} from '../dtos/expense-dto';
+import { ExpenseRepository } from '../repositories/expense-repository';
 
 @Injectable()
 export class ExpensesService {

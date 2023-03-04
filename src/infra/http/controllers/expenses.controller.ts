@@ -12,10 +12,10 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { PaginationQueryParams } from '@core/dtos/pagination.dto';
+import { PaginationQueryParams } from '@core/dtos/pagination-dto';
 import { ExpensesService } from '@core/services/expenses.service';
-import { DEFAULT_PAGINATION } from 'src/helpers/pagination/constants';
-import { CreateExpenseDto, UpdateExpenseDto } from '../dtos/expense.dto';
+import { DEFAULT_PAGINATION } from '@helpers/pagination/constants';
+import { CreateExpenseDto, UpdateExpenseDto } from '../dtos/expense-dto';
 
 @Controller('users/:userId/expenses')
 @UseGuards(AuthGuard('jwt'))

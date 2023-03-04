@@ -4,9 +4,9 @@ import { ERROR_MESSAGE } from '@helpers/errors/messages';
 import {
   CreateInvestmentTrxDto,
   UpdateInvestmentTrxDto,
-} from '../dtos/investment-trx.dto';
-import { InvestmentTrxRepository } from '../repositories/investment-trx.repository';
-import { InvestmentRepository } from '../repositories/investment.repository';
+} from '../dtos/investment-trx-dto';
+import { InvestmentRepository } from '../repositories/investment-repository';
+import { InvestmentTrxRepository } from '../repositories/investment-trx-repository';
 
 @Injectable()
 export class InvestmentsTrxService {

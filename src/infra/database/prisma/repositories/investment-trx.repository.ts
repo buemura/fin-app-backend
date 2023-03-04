@@ -4,9 +4,9 @@ import { PrismaClient } from '@prisma/client';
 import {
   CreateInvestmentTrxDto,
   UpdateInvestmentTrxDto,
-} from '@core/dtos/investment-trx.dto';
-import { InvestmentTrx } from '@core/entities/investment-trx.entity';
-import { InvestmentTrxRepository } from '@core/repositories/investment-trx.repository';
+} from '@core/dtos/investment-trx-dto';
+import { InvestmentTrx } from '@core/entities/investment-trx-entity';
+import { InvestmentTrxRepository } from '@core/repositories/investment-trx-repository';
 
 @Injectable()
 export class PrismaInvestmentTrxRepository implements InvestmentTrxRepository {

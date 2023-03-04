@@ -10,7 +10,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 
 import { AuthService } from '@core/services/auth.service';
-import { RegisterAuthDto } from '../dtos/auth.dto';
+import { RegisterAuthDto } from '../dtos/auth-dto';
 
 @Controller('auth')
 export class AuthController {

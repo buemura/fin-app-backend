@@ -3,9 +3,9 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { AccessTokenProvider } from '@application/providers/access-token-provider';
 import { HashProvider } from '@application/providers/hash-provider';
 import { ERROR_MESSAGE } from '@helpers/errors/messages';
-import { LoginAuthDto, RegisterAuthDto } from '../dtos/auth.dto';
-import { User } from '../entities/user.entity';
-import { UserRepository } from '../repositories/user.repository';
+import { LoginAuthDto, RegisterAuthDto } from '../dtos/auth-dto';
+import { User } from '../entities/user-entity';
+import { UserRepository } from '../repositories/user-repository';
 
 @Injectable()
 export class AuthService {

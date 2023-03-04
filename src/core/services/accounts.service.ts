@@ -8,8 +8,8 @@ import {
   CreateAccountDto,
   FindByUserIdDto,
   UpdateAccountDto,
-} from '../dtos/account.dto';
-import { AccountRepository } from '../repositories/account.repository';
+} from '../dtos/account-dto';
+import { AccountRepository } from '../repositories/account-repository';
 
 @Injectable()
 export class AccountsService {

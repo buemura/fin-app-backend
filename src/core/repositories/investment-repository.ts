@@ -1,8 +1,8 @@
 import {
   CreateInvestmentDto,
   UpdateInvestmentDto,
-} from '../dtos/investment.dto';
-import { Investment } from '../entities/investment.entity';
+} from '../dtos/investment-dto';
+import { Investment } from '../entities/investment-entity';
 
 export abstract class InvestmentRepository {
   abstract findById(id: string): Promise<Investment | null>;
