@@ -7,7 +7,9 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
 import {
   CreateInvestmentDto,
@@ -16,6 +18,7 @@ import {
 import { InvestmentsService } from '@core/services/investments.service';
 
 @Controller('users/:userId/investments')
+@UseGuards(AuthGuard('jwt'))
 export class InvestmentsController {
   constructor(private readonly investmentsService: InvestmentsService) {}
 

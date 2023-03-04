@@ -3,6 +3,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { AccessTokenProvider } from '@application/providers/access-token-provider';
 import { HashProvider } from '@application/providers/hash-provider';
 import { LoginAuthDto, RegisterAuthDto } from '../dtos/auth.dto';
+import { User } from '../entities/user.entity';
 import { UserRepository } from '../repositories/user.repository';
 
 @Injectable()
@@ -28,10 +29,10 @@ export class AuthService {
     return { data: { id: data.id } };
   }
 
-  async login(loginAuthDto: LoginAuthDto) {
+  async validateUser(loginAuthDto: LoginAuthDto) {
     const user = await this.userRepository.findByEmail(loginAuthDto.email);
     if (!user) {
-      throw new BadRequestException('User not registered');
+      return null;
     }
 
     const match = await HashProvider.comparePassword(
@@ -39,9 +40,13 @@ export class AuthService {
       user.password,
     );
     if (!match) {
-      throw new BadRequestException('Invalid credentials');
+      return null;
     }
 
+    return user;
+  }
+
+  async login(user: User) {
     const accessToken = await AccessTokenProvider.generate(user.id);
     const { password, ...userToReturn } = user;
 

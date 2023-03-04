@@ -10,7 +10,7 @@ export class RegisterAuthDto {
   email: string;
 
   @IsNotEmpty()
-  @Matches(RegexHelper.password)
+  @Matches(RegexHelper.password, { message: RegexHelper.validationError })
   password: string;
 }
 

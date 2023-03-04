@@ -16,7 +16,7 @@ export class CreateUserDto {
   email: string;
 
   @IsOptional()
-  @Matches(RegexHelper.password)
+  @Matches(RegexHelper.password, { message: RegexHelper.validationError })
   password?: string;
 
   @IsOptional()

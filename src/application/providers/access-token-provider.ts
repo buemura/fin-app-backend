@@ -6,7 +6,7 @@ export class AccessTokenProvider {
 
     const payload = { sub: userId };
     const options = {
-      secret: process.env.ACCESS_TOKEN_SECRET ?? 'secret',
+      privateKey: process.env.ACCESS_TOKEN_SECRET ?? 'secret',
       expiresIn: process.env.ACCESS_TOKEN_EXPIRATION ?? '7d',
     };
 

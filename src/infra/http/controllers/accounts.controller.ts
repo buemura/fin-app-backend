@@ -8,7 +8,9 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
 import { CreateAccountDto, UpdateAccountDto } from '@core/dtos/account.dto';
 import { PaginationQueryParams } from '@core/dtos/pagination.dto';
@@ -16,6 +18,7 @@ import { AccountsService } from '@core/services/accounts.service';
 import { DEFAULT_PAGINATION } from 'src/helpers/pagination/constants';
 
 @Controller('users/:userId/accounts')
+@UseGuards(AuthGuard('jwt'))
 export class AccountsController {
   constructor(private readonly accountsService: AccountsService) {}
 

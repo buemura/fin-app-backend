@@ -8,7 +8,9 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
 import { CreateExpenseDto, UpdateExpenseDto } from '@core/dtos/expense.dto';
 import { PaginationQueryParams } from '@core/dtos/pagination.dto';
@@ -16,6 +18,7 @@ import { ExpensesService } from '@core/services/expenses.service';
 import { DEFAULT_PAGINATION } from 'src/helpers/pagination/constants';
 
 @Controller('users/:userId/expenses')
+@UseGuards(AuthGuard('jwt'))
 export class ExpensesController {
   constructor(private readonly expensesService: ExpensesService) {}
 
