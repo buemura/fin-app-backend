@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 
+import { ERROR_MESSAGE } from '@helpers/errors/messages';
 import {
   CreateInvestmentTrxDto,
   UpdateInvestmentTrxDto,
@@ -19,7 +20,7 @@ export class InvestmentsTrxService {
       props.investmentId,
     );
     if (!investment) {
-      throw new BadRequestException('Investment not found');
+      throw new BadRequestException(ERROR_MESSAGE.INVESTMENT_NOT_FOUND);
     }
 
     const investmentTrx = await this.investmentTrxRepository.create(props);
@@ -45,23 +46,22 @@ export class InvestmentsTrxService {
     return { data };
   }
 
-  async update(id: string, props: UpdateInvestmentTrxDto) {
-    const investmentTrx = await this.investmentTrxRepository.findById(id);
+  async update(props: UpdateInvestmentTrxDto) {
+    const investmentTrx = await this.investmentTrxRepository.findById(
+      props.investmentTrxId,
+    );
     if (!investmentTrx) {
-      throw new BadRequestException('Investment transaction not found');
+      throw new BadRequestException(ERROR_MESSAGE.INVESTMENT_TRX_NOT_FOUND);
     }
 
     const investment = await this.investmentRepository.findById(
-      investmentTrx.investmentId,
+      props.investmentId,
     );
     if (!investment) {
-      throw new BadRequestException('Investment not found');
+      throw new BadRequestException(ERROR_MESSAGE.INVESTMENT_NOT_FOUND);
     }
 
-    const newInvestmentTrx = await this.investmentTrxRepository.update({
-      investmentTrxId: id,
-      ...props,
-    });
+    const newInvestmentTrx = await this.investmentTrxRepository.update(props);
 
     await this.updateInvestmentTotals(
       props.investmentId,
@@ -79,14 +79,14 @@ export class InvestmentsTrxService {
   async remove(id: string) {
     const investmentTrx = await this.investmentTrxRepository.findById(id);
     if (!investmentTrx) {
-      throw new BadRequestException('Investment transaction not found');
+      throw new BadRequestException(ERROR_MESSAGE.INVESTMENT_TRX_NOT_FOUND);
     }
 
     const investment = await this.investmentRepository.findById(
       investmentTrx.investmentId,
     );
     if (!investment) {
-      throw new BadRequestException('Investment not found');
+      throw new BadRequestException(ERROR_MESSAGE.INVESTMENT_NOT_FOUND);
     }
 
     await this.decrementInvestmentTotals(

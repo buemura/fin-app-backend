@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 
+import { ERROR_MESSAGE } from '@helpers/errors/messages';
 import { UpdateUserDto, UpdateUserPasswordDto } from '../dtos/user.dto';
 import { UserRepository } from '../repositories/user.repository';
 
@@ -18,7 +19,7 @@ export class UsersService {
   async update(data: UpdateUserDto) {
     const user = await this.findOne(data.id);
     if (!user) {
-      throw new BadRequestException('User not found');
+      throw new BadRequestException(ERROR_MESSAGE.USER_NOT_FOUND);
     }
 
     return this.userRepository.update(data);
@@ -28,7 +29,7 @@ export class UsersService {
   async updatePassword(data: UpdateUserPasswordDto) {
     const user = await this.findOne(data.id);
     if (!user) {
-      throw new BadRequestException('User not found');
+      throw new BadRequestException(ERROR_MESSAGE.USER_NOT_FOUND);
     }
 
     return this.userRepository.update(data);
@@ -37,7 +38,7 @@ export class UsersService {
   async remove(id: string) {
     const user = await this.findOne(id);
     if (!user) {
-      throw new BadRequestException('User not found');
+      throw new BadRequestException(ERROR_MESSAGE.USER_NOT_FOUND);
     }
 
     return this.userRepository.remove(id);

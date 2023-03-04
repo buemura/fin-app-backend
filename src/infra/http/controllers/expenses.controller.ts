@@ -12,10 +12,10 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { CreateExpenseDto, UpdateExpenseDto } from '@core/dtos/expense.dto';
 import { PaginationQueryParams } from '@core/dtos/pagination.dto';
 import { ExpensesService } from '@core/services/expenses.service';
 import { DEFAULT_PAGINATION } from 'src/helpers/pagination/constants';
+import { CreateExpenseDto, UpdateExpenseDto } from '../dtos/expense.dto';
 
 @Controller('users/:userId/expenses')
 @UseGuards(AuthGuard('jwt'))
@@ -54,21 +54,16 @@ export class ExpensesController {
     @Param('expenseId', new ParseUUIDPipe()) expenseId: string,
     @Body() updateExpenseDto: UpdateExpenseDto,
   ) {
-    const data = {
+    const props = {
       expenseId,
       ...updateExpenseDto,
     };
-    return this.expensesService.update(data);
+    return this.expensesService.update(props);
   }
 
   @Patch()
   async resetAllStatus() {
     return this.expensesService.resetAllStatus();
-  }
-
-  @Patch(':expenseId/deactivate')
-  async deactivate(@Param('expenseId', new ParseUUIDPipe()) expenseId: string) {
-    return this.expensesService.deactivate(expenseId);
   }
 
   @Delete(':expenseId')

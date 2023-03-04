@@ -11,11 +11,11 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
+import { InvestmentsTrxService } from '@core/services/investments-trx.service';
 import {
   CreateInvestmentTrxDto,
   UpdateInvestmentTrxDto,
-} from '@core/dtos/investment-trx.dto';
-import { InvestmentsTrxService } from '@core/services/investments-trx.service';
+} from '../dtos/investment-trx.dto';
 
 @Controller('users/:userId/investments-trx')
 @UseGuards(AuthGuard('jwt'))
@@ -46,10 +46,14 @@ export class InvestmentsTrxController {
 
   @Patch(':id')
   async update(
-    @Param('id', new ParseUUIDPipe()) id: string,
+    @Param('id', new ParseUUIDPipe()) investmentTrxId: string,
     @Body() updateInvestmentTrxDto: UpdateInvestmentTrxDto,
   ) {
-    return this.investmentsTrxService.update(id, updateInvestmentTrxDto);
+    const props = {
+      investmentTrxId,
+      ...updateInvestmentTrxDto,
+    };
+    return this.investmentsTrxService.update(props);
   }
 
   @Delete(':id')

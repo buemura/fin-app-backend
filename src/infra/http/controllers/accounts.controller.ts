@@ -12,10 +12,10 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
-import { CreateAccountDto, UpdateAccountDto } from '@core/dtos/account.dto';
-import { PaginationQueryParams } from '@core/dtos/pagination.dto';
 import { AccountsService } from '@core/services/accounts.service';
 import { DEFAULT_PAGINATION } from 'src/helpers/pagination/constants';
+import { CreateAccountDto, UpdateAccountDto } from '../dtos/account.dto';
+import { PaginationQueryParams } from '../dtos/pagination.dto';
 
 @Controller('users/:userId/accounts')
 @UseGuards(AuthGuard('jwt'))
@@ -56,10 +56,14 @@ export class AccountsController {
 
   @Patch(':id')
   async update(
-    @Param('id', new ParseUUIDPipe()) id: string,
+    @Param('id', new ParseUUIDPipe()) accountId: string,
     @Body() updateAccountDto: UpdateAccountDto,
   ) {
-    return this.accountsService.update(id, updateAccountDto);
+    const props = {
+      accountId,
+      ...updateAccountDto,
+    };
+    return this.accountsService.update(props);
   }
 
   @Delete(':id')

@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 
+import { ERROR_MESSAGE } from '@helpers/errors/messages';
 import {
   paginationMetadata,
   paginationSliceParams,
@@ -50,7 +51,7 @@ export class ExpensesService {
       props.expenseId,
     );
     if (!expenseExists) {
-      throw new BadRequestException('Expense not found');
+      throw new BadRequestException(ERROR_MESSAGE.EXPENSE_NOT_FOUND);
     }
 
     const expense = await this.expenseRepository.update(props);
@@ -66,30 +67,10 @@ export class ExpensesService {
     return this.expenseRepository.updateAll();
   }
 
-  async deactivate(expenseId: string) {
-    const expense = await this.expenseRepository.findById(expenseId);
-    if (!expense) {
-      throw new BadRequestException('Expense not found');
-    }
-
-    const data = {
-      expenseId,
-      isActive: false,
-    };
-
-    await this.expenseRepository.update(data);
-
-    return {
-      data: {
-        id: expenseId,
-      },
-    };
-  }
-
   async remove(expenseId: string) {
     const expense = await this.expenseRepository.findById(expenseId);
     if (!expense) {
-      throw new BadRequestException('Expense not found');
+      throw new BadRequestException(ERROR_MESSAGE.EXPENSE_NOT_FOUND);
     }
 
     await this.expenseRepository.remove(expenseId);

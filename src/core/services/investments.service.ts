@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 
+import { ERROR_MESSAGE } from '@helpers/errors/messages';
 import {
   CreateInvestmentDto,
   UpdateInvestmentDto,
@@ -19,14 +20,12 @@ export class InvestmentsService {
       props.ticker,
     );
     if (investment) {
-      throw new BadRequestException(
-        'Investment with provided ticker already registered',
-      );
+      throw new BadRequestException(ERROR_MESSAGE.INVESTMENT_ALREADY_EXISTS);
     }
 
     const account = await this.accountRepository.findById(props.accountId);
     if (!account) {
-      throw new BadRequestException('Account not found');
+      throw new BadRequestException(ERROR_MESSAGE.ACCOUNT_NOT_FOUND);
     }
 
     const newInvestment = await this.investmentRepository.create(props);
@@ -48,33 +47,26 @@ export class InvestmentsService {
     return { data };
   }
 
-  async update(id: string, updateInvestmentDto: UpdateInvestmentDto) {
-    const investment = await this.investmentRepository.findById(id);
+  async update(props: UpdateInvestmentDto) {
+    const investment = await this.investmentRepository.findById(
+      props.investmentId,
+    );
     if (!investment) {
-      throw new BadRequestException('Investment not found');
+      throw new BadRequestException(ERROR_MESSAGE.INVESTMENT_NOT_FOUND);
     }
 
     // TODO: revalidate if ticker should be unique
     const investmentExists = await this.investmentRepository.findByTicker(
-      updateInvestmentDto.ticker,
+      props.ticker,
     );
-    if (investmentExists && investmentExists.id !== id) {
-      throw new BadRequestException(
-        'Investment with provided ticker already exists',
-      );
+    if (investmentExists && investmentExists.id !== props.investmentId) {
+      throw new BadRequestException(ERROR_MESSAGE.INVESTMENT_ALREADY_EXISTS);
     }
 
-    const account = await this.accountRepository.findById(
-      updateInvestmentDto.accountId,
-    );
+    const account = await this.accountRepository.findById(props.accountId);
     if (!account) {
-      throw new BadRequestException('Account not found');
+      throw new BadRequestException(ERROR_MESSAGE.ACCOUNT_NOT_FOUND);
     }
-
-    const props = {
-      investmentId: id,
-      ...updateInvestmentDto,
-    };
 
     const newInvestment = await this.investmentRepository.update(props);
     return {

@@ -50,13 +50,8 @@ export class AccountsService {
     return { data };
   }
 
-  async update(id: string, updateAccountDto: UpdateAccountDto) {
-    const data = {
-      accountId: id,
-      ...updateAccountDto,
-    };
-
-    const account = await this.accountRepository.update(data);
+  async update(updateAccountDto: UpdateAccountDto) {
+    const account = await this.accountRepository.update(updateAccountDto);
 
     return {
       data: {
