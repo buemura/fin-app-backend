@@ -1,14 +1,8 @@
 import { Router, type Request, type Response } from "express";
-import { UserRepository } from "../repositories";
-import { UserService } from "../services/user-service";
-import { UserController } from "../controllers/user-controller";
 import { ensureAuthentication } from "../middlewares/auth-middleware";
+import { userController } from "../utils/container";
 
 const router = Router();
-
-const userRepository = new UserRepository();
-const userService = new UserService(userRepository);
-const userController = new UserController(userService);
 
 async function getUserDetails(
   request: Request,

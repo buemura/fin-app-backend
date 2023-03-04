@@ -1,27 +1,8 @@
-import { Router, Request, Response } from "express";
+import { Request, Response, Router } from "express";
 import { ensureAuthentication } from "../middlewares/auth-middleware";
-import { InvestmentService } from "../services/investment-service";
-import { InvestmentController } from "../controllers/investment-controller";
-import {
-  InvestmentRepository,
-  InvestmentTrxRepository,
-  UserRepository,
-} from "../repositories";
-import { RedisService } from "../services/redis-service";
+import { investmentController } from "../utils/container";
 
 const router = Router();
-
-const redisService = new RedisService();
-const userRepository = new UserRepository();
-const investmentRepository = new InvestmentRepository();
-const investmentTrxRepository = new InvestmentTrxRepository();
-const investmentService = new InvestmentService(
-  userRepository,
-  investmentRepository,
-  investmentTrxRepository,
-  redisService
-);
-const investmentController = new InvestmentController(investmentService);
 
 async function findByUserId(
   request: Request,

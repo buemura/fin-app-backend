@@ -1,21 +1,8 @@
 import { Router, type Request, type Response } from "express";
-import { AccountController } from "../controllers/account-controller";
 import { ensureAuthentication } from "../middlewares/auth-middleware";
-import { UserRepository, AccountRepository } from "../repositories";
-import { AccountService } from "../services/account-service";
-import { RedisService } from "../services/redis-service";
+import { accountController } from "../utils/container";
 
 const router = Router();
-
-const userRepository = new UserRepository();
-const accountRepository = new AccountRepository();
-const redisService = new RedisService();
-const accountService = new AccountService(
-  userRepository,
-  accountRepository,
-  redisService
-);
-const accountController = new AccountController(accountService);
 
 async function getAccountById(
   request: Request,

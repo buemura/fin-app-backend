@@ -1,21 +1,8 @@
 import { Router, type Request, type Response } from "express";
-import { ExpenseController } from "../controllers/expense-controller";
 import { ensureAuthentication } from "../middlewares/auth-middleware";
-import { ExpenseRepository, UserRepository } from "../repositories";
-import { ExpenseService } from "../services/expense-service";
-import { RedisService } from "../services/redis-service";
+import { expenseController } from "../utils/container";
 
 const router = Router();
-
-const userRepository = new UserRepository();
-const expenseRepository = new ExpenseRepository();
-const redisService = new RedisService();
-const expenseService = new ExpenseService(
-  userRepository,
-  expenseRepository,
-  redisService
-);
-const expenseController = new ExpenseController(expenseService);
 
 async function findByUserId(
   request: Request,
