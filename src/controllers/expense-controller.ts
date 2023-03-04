@@ -1,10 +1,10 @@
 import { type Request, type Response } from "express";
 import { type ExpenseService } from "../services/expense-service";
-import {
-  handleHttpResponse,
-  handleHttpErrorResponse,
-} from "../utils/response-handler";
 import { DEFAULT_PAGINATION } from "../utils/constants";
+import {
+  handleHttpErrorResponse,
+  handleHttpResponse,
+} from "../utils/response-handler";
 
 export class ExpenseController {
   constructor(private readonly expenseService: ExpenseService) {}

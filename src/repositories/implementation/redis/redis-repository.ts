@@ -1,13 +1,9 @@
 import Redis, { type Redis as RedisClient } from "ioredis";
-import { RedisConfig } from "../configs/redis";
+import { RedisConfig } from "../../../configs/redis";
+import { logger } from "../../../utils/logger";
+import { CacheRepository } from "../../interfaces/cache-repository";
 
-export interface IRedisService {
-  save: (key: string, value: any) => Promise<void>;
-  get: <T>(key: string) => Promise<T | null>;
-  remove: (key: string) => Promise<void>;
-}
-
-export class RedisService implements IRedisService {
+export class RedisRepository implements CacheRepository {
   private readonly client: RedisClient;
 
   constructor() {
@@ -15,6 +11,7 @@ export class RedisService implements IRedisService {
   }
 
   public async save(key: string, value: any): Promise<void> {
+    logger.info(`Saving cache for key: ${key}`);
     await this.client.set(key, JSON.stringify(value));
   }
 
@@ -22,14 +19,17 @@ export class RedisService implements IRedisService {
     const data = await this.client.get(key);
 
     if (!data) {
+      logger.info(`No cache found for key: ${key}`);
       return null;
     }
 
+    logger.info(`Got cache for key: ${key}`);
     const parsedData = JSON.parse(data) as T;
     return parsedData;
   }
 
   public async remove(key: string): Promise<void> {
+    logger.info(`Removing cache for key: ${key}`);
     await this.client.del(key);
   }
 }

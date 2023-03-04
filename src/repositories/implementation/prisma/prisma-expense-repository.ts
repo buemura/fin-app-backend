@@ -1,15 +1,16 @@
 import { PrismaClient } from "@prisma/client";
-import { type ExpenseRepository } from "../../interfaces/expense-repository";
 import {
-  type ExpenseProps,
-  type CreateExpenseProps,
-  type UpdateExpenseProps,
+  CreateExpenseProps,
+  ExpenseProps,
+  UpdateExpenseProps,
 } from "../../../interfaces/expense";
+import { CacheRepository } from "../../interfaces/cache-repository";
+import { ExpenseRepository } from "../../interfaces/expense-repository";
 
 export class PrismaExpenseRepository implements ExpenseRepository {
   private readonly expenseRespository;
 
-  constructor() {
+  constructor(private readonly cacheRepository: CacheRepository) {
     const prisma = new PrismaClient();
     this.expenseRespository = prisma.expense;
   }
@@ -25,12 +26,27 @@ export class PrismaExpenseRepository implements ExpenseRepository {
   }
 
   async findByUserId(userId: string): Promise<ExpenseProps[]> {
-    return this.expenseRespository.findMany({
+    const cached = await this.cacheRepository.get<ExpenseProps[]>(
+      String(process.env.REDIS_EXPENSES_KEY)
+    );
+    if (cached) {
+      return cached;
+    }
+
+    const result = await this.expenseRespository.findMany({
       where: { userId },
     });
+
+    await this.cacheRepository.save(
+      String(process.env.REDIS_EXPENSES_KEY),
+      result
+    );
+
+    return result;
   }
 
   async create(data: CreateExpenseProps): Promise<ExpenseProps> {
+    await this.cacheRepository.remove(String(process.env.REDIS_EXPENSES_KEY));
     return this.expenseRespository.create({
       data: {
         userId: data.userId,
@@ -43,6 +59,7 @@ export class PrismaExpenseRepository implements ExpenseRepository {
   }
 
   async update(data: UpdateExpenseProps): Promise<ExpenseProps | null> {
+    await this.cacheRepository.remove(String(process.env.REDIS_EXPENSES_KEY));
     return this.expenseRespository.update({
       where: { id: data.expenseId },
       data: {
@@ -54,6 +71,7 @@ export class PrismaExpenseRepository implements ExpenseRepository {
   }
 
   async updateAll(): Promise<void> {
+    await this.cacheRepository.remove(String(process.env.REDIS_EXPENSES_KEY));
     await this.expenseRespository.updateMany({
       where: { isPaid: true },
       data: {
@@ -63,6 +81,7 @@ export class PrismaExpenseRepository implements ExpenseRepository {
   }
 
   async delete(id: string): Promise<ExpenseProps | null> {
+    await this.cacheRepository.remove(String(process.env.REDIS_EXPENSES_KEY));
     return this.expenseRespository.update({
       where: { id },
       data: {

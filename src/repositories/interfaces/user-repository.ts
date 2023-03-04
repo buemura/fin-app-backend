@@ -1,7 +1,7 @@
 import {
-  type UserProps,
   type CreateUserProps,
   type UpdateUserProps,
+  type UserProps,
 } from "../../interfaces/user";
 
 export abstract class UserRepository {

@@ -39,10 +39,10 @@ async function deleteAccount(
   return accountController.deleteAccount(request, response);
 }
 
-router.get("/account/:id", ensureAuthentication, getAccountById);
-router.get("/accounts/:userId", ensureAuthentication, getAccountsByUserId);
-router.post("/account", ensureAuthentication, createAccount);
-router.put("/account/:id", ensureAuthentication, updateAccount);
-router.delete("/account/:id", ensureAuthentication, deleteAccount);
+router.get("/:userId/accounts", ensureAuthentication, getAccountsByUserId);
+router.get("/:userId/accounts/:id", ensureAuthentication, getAccountById);
+router.post("/:userId/accounts", ensureAuthentication, createAccount);
+router.put("/:userId/accounts/:id", ensureAuthentication, updateAccount);
+router.delete("/:userId/accounts/:id", ensureAuthentication, deleteAccount);
 
 export { router as accountRouter };

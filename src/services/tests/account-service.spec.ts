@@ -2,7 +2,6 @@ import {
   InMemoryAccountRepository,
   InMemoryUserRepository,
 } from "../../../tests/__mocks__/repositories";
-import { RedisService } from "../../../tests/__mocks__/services/RedisSerivce";
 import { DEFAULT_PAGINATION } from "../../utils/constants";
 import { AccountService } from "../account-service";
 
@@ -12,12 +11,7 @@ describe("Account service test suite", () => {
   beforeEach(() => {
     const userRepository = new InMemoryUserRepository();
     const accountRepository = new InMemoryAccountRepository();
-    const redisSerivce = new RedisService();
-    accountService = new AccountService(
-      userRepository,
-      accountRepository,
-      redisSerivce
-    );
+    accountService = new AccountService(userRepository, accountRepository);
   });
 
   afterEach(() => {

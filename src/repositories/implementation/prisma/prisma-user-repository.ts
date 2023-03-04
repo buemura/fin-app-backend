@@ -1,10 +1,10 @@
 import { PrismaClient } from "@prisma/client";
-import { type UserRepository } from "../../interfaces/user-repository";
 import {
   type CreateUserProps,
   type UpdateUserProps,
   type UserProps,
 } from "../../../interfaces/user";
+import { type UserRepository } from "../../interfaces/user-repository";
 
 export class PrismaUserRepository implements UserRepository {
   private readonly userRespository;

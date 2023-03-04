@@ -1,6 +1,6 @@
 import {
-  InvestmentProps,
   CreateInvestmentProps,
+  InvestmentProps,
   UpdateInvestmentProps,
 } from "../../interfaces/investment";
 

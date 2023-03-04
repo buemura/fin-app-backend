@@ -1,15 +1,18 @@
 import { Request, Response } from "express";
-import { InvestmentService } from "../services/investment-service";
+import { InvestmentTrxService } from "../services/investment-trx-service";
 import { DEFAULT_PAGINATION } from "../utils/constants";
 import {
   handleHttpErrorResponse,
   handleHttpResponse,
 } from "../utils/response-handler";
 
-export class InvestmentController {
-  constructor(private readonly investmentService: InvestmentService) {}
+export class InvestmentTrxController {
+  constructor(private readonly investmentTrxService: InvestmentTrxService) {}
 
-  async findByUserId(request: Request, response: Response): Promise<Response> {
+  async findTrxByUserId(
+    request: Request,
+    response: Response
+  ): Promise<Response> {
     const { userId } = request.params;
     const pagination = {
       page: Number(request.query.page) || DEFAULT_PAGINATION.PAGE,
@@ -17,7 +20,7 @@ export class InvestmentController {
     };
 
     try {
-      const result = await this.investmentService.findByUserId({
+      const result = await this.investmentTrxService.findTrxByUserId({
         userId,
         pagination,
       });
@@ -27,20 +30,19 @@ export class InvestmentController {
     }
   }
 
-  async createInvestment(
+  async createInvestmentTrx(
     request: Request,
     response: Response
   ): Promise<Response> {
     const { userId } = request.params;
-    const { accountId, category, ticker, type } = request.body;
+    const { investmentId, pricePerQuantity, quantity } = request.body;
 
     try {
-      const result = await this.investmentService.createInvestment({
+      const result = await this.investmentTrxService.createInvestmentTrx({
         userId,
-        accountId,
-        category,
-        ticker,
-        type,
+        investmentId,
+        pricePerQuantity,
+        quantity,
       });
       return handleHttpResponse(response, 200, result);
     } catch (error: any) {
@@ -48,20 +50,19 @@ export class InvestmentController {
     }
   }
 
-  async updateInvestment(
+  async updateInvestmentTrx(
     request: Request,
     response: Response
   ): Promise<Response> {
-    const { id } = request.params;
-    const { accountId, category, ticker, type } = request.body;
+    const { investmentTrxId } = request.params;
+    const { investmentId, pricePerQuantity, quantity } = request.body;
 
     try {
-      const result = await this.investmentService.updateInvestment({
-        id,
-        accountId,
-        category,
-        ticker,
-        type,
+      const result = await this.investmentTrxService.updateInvestmentTrx({
+        id: investmentTrxId,
+        investmentId,
+        pricePerQuantity,
+        quantity,
       });
       return handleHttpResponse(response, 200, result);
     } catch (error: any) {
@@ -69,15 +70,15 @@ export class InvestmentController {
     }
   }
 
-  async deleteInvestment(
+  async deleteInvestmentTrx(
     request: Request,
     response: Response
   ): Promise<Response> {
-    const { id } = request.params;
+    const { investmentTrxId } = request.params;
 
     try {
-      const result = await this.investmentService.deleteInvestment({
-        id,
+      const result = await this.investmentTrxService.deleteInvestmentTrx({
+        id: investmentTrxId,
       });
       return handleHttpResponse(response, 200, result);
     } catch (error: any) {

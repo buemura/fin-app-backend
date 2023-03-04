@@ -1,9 +1,7 @@
 export {
   InMemoryAccountRepository,
+  InMemoryCacheRepository,
   InMemoryExpenseRepository,
   InMemoryUserRepository,
 } from "./repositories/";
-
-export { RedisService } from "./services/RedisSerivce";
-
 export { requestMock, responseMock } from "./utils/mocks";

@@ -1,10 +1,10 @@
 import { type Request, type Response } from "express";
 import { type AccountService } from "../services/account-service";
-import {
-  handleHttpResponse,
-  handleHttpErrorResponse,
-} from "../utils/response-handler";
 import { DEFAULT_PAGINATION } from "../utils/constants";
+import {
+  handleHttpErrorResponse,
+  handleHttpResponse,
+} from "../utils/response-handler";
 
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
@@ -45,7 +45,8 @@ export class AccountController {
   }
 
   async createAccount(request: Request, response: Response): Promise<Response> {
-    const { userId, name, balance, icon } = request.body;
+    const { userId } = request.params;
+    const { name, balance, icon } = request.body;
 
     try {
       const result = await this.accountService.createAccount({

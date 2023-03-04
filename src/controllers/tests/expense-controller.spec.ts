@@ -1,14 +1,13 @@
 import { Request, Response } from "express";
 
-import { ExpenseController } from "../expense-controller";
-import { ExpenseService } from "../../services/expense-service";
 import {
-  InMemoryUserRepository,
   InMemoryExpenseRepository,
-  RedisService,
+  InMemoryUserRepository,
   requestMock,
   responseMock,
 } from "../../../tests/__mocks__/";
+import { ExpenseService } from "../../services/expense-service";
+import { ExpenseController } from "../expense-controller";
 
 describe("Expense controller test suite", () => {
   let request: Request;
@@ -23,12 +22,7 @@ describe("Expense controller test suite", () => {
 
     const userRepository = new InMemoryUserRepository();
     const expenseRepository = new InMemoryExpenseRepository();
-    const redisService = new RedisService();
-    expenseService = new ExpenseService(
-      userRepository,
-      expenseRepository,
-      redisService
-    );
+    expenseService = new ExpenseService(userRepository, expenseRepository);
     expenseController = new ExpenseController(expenseService);
   });
 

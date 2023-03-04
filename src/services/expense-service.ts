@@ -1,25 +1,21 @@
-import { logger } from "../utils/logger";
-import { AppError } from "../utils/app-error";
-import { IRedisService } from "./redis-service";
-import { IExpenseRepository, IUserRepository } from "../repositories";
-import { paginationMetadata, sliceParams } from "../utils/functions";
 import {
-  FindUserExpensesProps,
-  FindUserExpensesResponse,
   CreateExpenseProps,
   DeleteExpenseProps,
   ExpenseProps,
+  FindUserExpensesProps,
+  FindUserExpensesResponse,
   UpdateAllExpensesResponseProps,
   UpdateExpenseProps,
 } from "../interfaces/expense";
+import { IExpenseRepository, IUserRepository } from "../repositories";
+import { AppError } from "../utils/app-error";
+import { paginationMetadata, sliceParams } from "../utils/functions";
+import { logger } from "../utils/logger";
 
 export class ExpenseService {
-  private readonly expenseKey: string = process.env.REDIS_EXPENSES_KEY ?? "";
-
   constructor(
     private readonly userRepository: IUserRepository,
-    private readonly expenseRepository: IExpenseRepository,
-    private readonly redisService: IRedisService
+    private readonly expenseRepository: IExpenseRepository
   ) {}
 
   async findByUser({
@@ -42,18 +38,7 @@ export class ExpenseService {
       items: pagination.items,
     });
 
-    let expenses = await this.redisService.get<ExpenseProps[]>(this.expenseKey);
-    if (!expenses) {
-      logger.info(`No cache found`);
-      expenses = await this.expenseRepository.findByUserId(userId);
-      logger.info(`Creating cache for expenses`);
-      await this.redisService.save(this.expenseKey, expenses);
-    } else {
-      expenses = expenses
-        .filter((expense) => expense.userId === userId)
-        .slice(start, end);
-    }
-
+    const expenses = await this.expenseRepository.findByUserId(userId);
     const result = expenses.slice(start, end);
 
     const metadata = paginationMetadata({
@@ -77,9 +62,6 @@ export class ExpenseService {
     }
 
     const result = await this.expenseRepository.create(data);
-
-    await this.redisService.remove(this.expenseKey);
-
     return result;
   }
 
@@ -92,9 +74,6 @@ export class ExpenseService {
     }
 
     const result = await this.expenseRepository.update(data);
-
-    await this.redisService.remove(this.expenseKey);
-
     return result;
   }
 
@@ -117,9 +96,6 @@ export class ExpenseService {
     }
 
     const result = await this.expenseRepository.delete(data.expenseId);
-
-    await this.redisService.remove(this.expenseKey);
-
     return result;
   }
 }

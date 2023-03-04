@@ -1,4 +1,4 @@
-import { IRedisService } from "../../../src/services/redis-service";
+import { ICacheRepository } from "../../../src/repositories";
 
 interface Cache {
   [key: string]: any;
@@ -6,7 +6,7 @@ interface Cache {
   "fin-app-ACCOUNTS_LIST": string;
 }
 
-export class RedisService implements IRedisService {
+export class InMemoryCacheRepository implements ICacheRepository {
   private cache: Cache = {
     "fin-app-EXPENSES_LIST": "",
     "fin-app-ACCOUNTS_LIST": "",

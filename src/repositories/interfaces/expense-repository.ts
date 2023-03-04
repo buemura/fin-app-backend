@@ -1,6 +1,6 @@
 import {
-  type ExpenseProps,
   type CreateExpenseProps,
+  type ExpenseProps,
   type UpdateExpenseProps,
 } from "../../interfaces/expense";
 

@@ -1,15 +1,16 @@
 import { PrismaClient } from "@prisma/client";
-import { InvestmentRepository } from "../../interfaces/investment-repository";
 import {
-  InvestmentProps,
   CreateInvestmentProps,
+  InvestmentProps,
   UpdateInvestmentProps,
 } from "../../../interfaces/investment";
+import { CacheRepository } from "../../interfaces/cache-repository";
+import { InvestmentRepository } from "../../interfaces/investment-repository";
 
 export class PrismaInvestmentRepository implements InvestmentRepository {
   private readonly investments;
 
-  constructor() {
+  constructor(private readonly cacheRepository: CacheRepository) {
     const prisma = new PrismaClient();
     this.investments = prisma.investment;
   }
@@ -25,12 +26,29 @@ export class PrismaInvestmentRepository implements InvestmentRepository {
   }
 
   async findByUserId(userId: string): Promise<InvestmentProps[]> {
-    return this.investments.findMany({
+    const cached = await this.cacheRepository.get<InvestmentProps[]>(
+      String(process.env.REDIS_INVESTMENTS_KEY)
+    );
+    if (cached) {
+      return cached;
+    }
+
+    const result = await this.investments.findMany({
       where: { userId },
     });
+
+    await this.cacheRepository.save(
+      String(process.env.REDIS_INVESTMENTS_KEY),
+      result
+    );
+
+    return result;
   }
 
   async create(data: CreateInvestmentProps): Promise<InvestmentProps> {
+    await this.cacheRepository.remove(
+      String(process.env.REDIS_INVESTMENTS_KEY)
+    );
     return this.investments.create({
       data: {
         userId: data.userId,
@@ -43,6 +61,9 @@ export class PrismaInvestmentRepository implements InvestmentRepository {
   }
 
   async update(data: UpdateInvestmentProps): Promise<InvestmentProps | null> {
+    await this.cacheRepository.remove(
+      String(process.env.REDIS_INVESTMENTS_KEY)
+    );
     return this.investments.update({
       where: { id: data.id },
       data: {
@@ -59,6 +80,9 @@ export class PrismaInvestmentRepository implements InvestmentRepository {
   }
 
   async delete(id: string): Promise<InvestmentProps | null> {
+    await this.cacheRepository.remove(
+      String(process.env.REDIS_INVESTMENTS_KEY)
+    );
     return this.investments.delete({
       where: { id },
     });

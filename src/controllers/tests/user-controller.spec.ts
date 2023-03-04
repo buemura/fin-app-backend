@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 
-import { UserController } from "../../controllers/user-controller";
-import { UserService } from "../../services/user-service";
 import {
   InMemoryUserRepository,
   requestMock,
   responseMock,
 } from "../../../tests/__mocks__/";
+import { UserController } from "../../controllers/user-controller";
+import { UserService } from "../../services/user-service";
 
 describe("User controller test suite", () => {
   let request: Request;

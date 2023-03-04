@@ -39,10 +39,14 @@ async function deleteExpense(
   return expenseController.deleteExpense(request, response);
 }
 
-router.get("/expense/:userId", ensureAuthentication, findByUserId);
-router.post("/expense", ensureAuthentication, createExpense);
-router.put("/expense", updateAllExpense);
-router.put("/expense/:expenseId", ensureAuthentication, updateExpense);
-router.delete("/expense/:expenseId", ensureAuthentication, deleteExpense);
+router.get("/:userId/expenses", ensureAuthentication, findByUserId);
+router.post("/:userId/expenses", ensureAuthentication, createExpense);
+router.put("/:userId/expenses", updateAllExpense);
+router.put("/:userId/expenses/:expenseId", ensureAuthentication, updateExpense);
+router.delete(
+  "/:userId/expenses/:expenseId",
+  ensureAuthentication,
+  deleteExpense
+);
 
 export { router as expenseRouter };

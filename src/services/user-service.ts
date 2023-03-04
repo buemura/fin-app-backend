@@ -1,8 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { logger } from "../utils/logger";
-import { AppError } from "../utils/app-error";
-import { type IUserRepository } from "../repositories";
+
 import {
   GetUserDetailsProps,
   GetUserDetailsResponse,
@@ -11,6 +9,9 @@ import {
   SignUpProps,
   SignUpResponse,
 } from "../interfaces/user";
+import { type IUserRepository } from "../repositories";
+import { AppError } from "../utils/app-error";
+import { logger } from "../utils/logger";
 
 export class UserService {
   constructor(private readonly userRepository: IUserRepository) {}

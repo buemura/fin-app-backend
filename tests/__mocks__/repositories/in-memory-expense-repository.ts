@@ -1,10 +1,10 @@
 import { randomUUID } from "crypto";
-import { type ExpenseRepository } from "../../../src/repositories/interfaces/expense-repository";
 import {
-  type ExpenseProps,
   type CreateExpenseProps,
+  type ExpenseProps,
   type UpdateExpenseProps,
 } from "../../../src/interfaces/expense";
+import { type ExpenseRepository } from "../../../src/repositories/interfaces/expense-repository";
 
 export class InMemoryExpenseRepository implements ExpenseRepository {
   private readonly expenses: ExpenseProps[] = [

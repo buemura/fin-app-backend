@@ -1,25 +1,20 @@
-import { AppError } from "../utils/app-error";
 import {
-  GetAccountsByIdProps,
   AccountProps,
+  CreateAccountProps,
+  DeleteAccountProps,
+  GetAccountsByIdProps,
   GetAccountsByUserIdProps,
   GetAccountsByUserIdResponse,
-  CreateAccountProps,
   UpdateAccountProps,
-  DeleteAccountProps,
 } from "../interfaces/account";
-import { IUserRepository, IAccountRepository } from "../repositories";
-import { IRedisService } from "./redis-service";
-import { logger } from "../utils/logger";
+import { IAccountRepository, IUserRepository } from "../repositories";
+import { AppError } from "../utils/app-error";
 import { paginationMetadata, sliceParams } from "../utils/functions";
 
 export class AccountService {
-  private readonly accountsKey: string = process.env.REDIS_ACCOUNTS_KEY ?? "";
-
   constructor(
     private readonly userRepository: IUserRepository,
-    private readonly accountRepository: IAccountRepository,
-    private readonly redisService: IRedisService
+    private readonly accountRepository: IAccountRepository
   ) {}
 
   async getAccountById({
@@ -50,18 +45,7 @@ export class AccountService {
       items: pagination.items,
     });
 
-    let accounts = await this.redisService.get<AccountProps[]>(
-      this.accountsKey
-    );
-    if (!accounts) {
-      logger.info(`No cache found for user ${userId}`);
-      accounts = await this.accountRepository.findMany();
-      logger.info(`Creating cache for user ${userId}`);
-      await this.redisService.save(this.accountsKey, accounts);
-    } else {
-      accounts = accounts.filter((account) => account.userId === userId);
-    }
-
+    const accounts = await this.accountRepository.findByUserId(userId);
     const result = accounts.slice(start, end);
 
     const totalBalance = accounts
@@ -111,8 +95,6 @@ export class AccountService {
       icon,
     });
 
-    await this.redisService.remove(this.accountsKey);
-
     return result;
   }
 
@@ -138,7 +120,6 @@ export class AccountService {
       icon,
     });
 
-    await this.redisService.remove(this.accountsKey);
     return result;
   }
 
@@ -153,8 +134,6 @@ export class AccountService {
     if (!account) {
       throw new AppError("Account not found");
     }
-
-    await this.redisService.remove(this.accountsKey);
 
     return this.accountRepository.delete(id);
   }

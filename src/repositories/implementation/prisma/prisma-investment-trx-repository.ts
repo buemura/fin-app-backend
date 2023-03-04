@@ -1,16 +1,17 @@
 import { PrismaClient } from "@prisma/client";
-import { InvestmentTrxRepository } from "../../interfaces/investment-trx-repository";
 import {
   CreateInvestmentTrxProps,
   GetTotalDetailsReponse,
   InvestmentTrxProps,
   UpdateInvestmentTrxProps,
 } from "../../../interfaces/investment-trx";
+import { CacheRepository } from "../../interfaces/cache-repository";
+import { InvestmentTrxRepository } from "../../interfaces/investment-trx-repository";
 
 export class PrismaInvestmentTrxRepository implements InvestmentTrxRepository {
   private readonly investmentsTrx;
 
-  constructor() {
+  constructor(private readonly cacheRepository: CacheRepository) {
     const prisma = new PrismaClient();
     this.investmentsTrx = prisma.investmentTransaction;
   }
@@ -26,12 +27,32 @@ export class PrismaInvestmentTrxRepository implements InvestmentTrxRepository {
   }
 
   async findByUserId(userId: string): Promise<InvestmentTrxProps[]> {
-    return this.investmentsTrx.findMany({
+    const cached = await this.cacheRepository.get<InvestmentTrxProps[]>(
+      String(process.env.REDIS_INVESTMENTS_TRX_KEY)
+    );
+    if (cached) {
+      return cached;
+    }
+
+    const result = await this.investmentsTrx.findMany({
       where: { userId },
     });
+
+    await this.cacheRepository.save(
+      String(process.env.REDIS_INVESTMENTS_TRX_KEY),
+      result
+    );
+
+    return result;
   }
 
   async create(data: CreateInvestmentTrxProps): Promise<InvestmentTrxProps> {
+    await this.cacheRepository.remove(
+      String(process.env.REDIS_INVESTMENTS_KEY)
+    );
+    await this.cacheRepository.remove(
+      String(process.env.REDIS_INVESTMENTS_TRX_KEY)
+    );
     return this.investmentsTrx.create({
       data: {
         userId: data.userId,
@@ -46,6 +67,12 @@ export class PrismaInvestmentTrxRepository implements InvestmentTrxRepository {
   async update(
     data: UpdateInvestmentTrxProps
   ): Promise<InvestmentTrxProps | null> {
+    await this.cacheRepository.remove(
+      String(process.env.REDIS_INVESTMENTS_KEY)
+    );
+    await this.cacheRepository.remove(
+      String(process.env.REDIS_INVESTMENTS_TRX_KEY)
+    );
     return this.investmentsTrx.update({
       where: { id: data.id },
       data: {
@@ -58,6 +85,12 @@ export class PrismaInvestmentTrxRepository implements InvestmentTrxRepository {
   }
 
   async delete(id: string): Promise<InvestmentTrxProps | null> {
+    await this.cacheRepository.remove(
+      String(process.env.REDIS_INVESTMENTS_KEY)
+    );
+    await this.cacheRepository.remove(
+      String(process.env.REDIS_INVESTMENTS_TRX_KEY)
+    );
     return this.investmentsTrx.delete({
       where: { id },
     });

@@ -1,8 +1,8 @@
 import {
-  InvestmentTrxProps,
   CreateInvestmentTrxProps,
-  UpdateInvestmentTrxProps,
   GetTotalDetailsReponse,
+  InvestmentTrxProps,
+  UpdateInvestmentTrxProps,
 } from "../../interfaces/investment-trx";
 
 export abstract class InvestmentTrxRepository {
