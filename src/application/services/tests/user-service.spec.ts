@@ -1,5 +1,5 @@
-import { ERROR_MESSAGE } from "@helpers/errors/messages";
-import { InMemoryUserRepository } from "@tests/__mocks__";
+import { InMemoryUserRepository } from "../../../../tests/__mocks__";
+import { ERROR_MESSAGE } from "../../../helpers/errors/messages";
 import { UserService } from "../user-service";
 
 describe("User service test suite", () => {

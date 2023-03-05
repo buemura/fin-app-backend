@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { UserService } from "@application/services/user-service";
+import { UserService } from "../../../application/services/user-service";
 import {
   handleHttpErrorResponse,
   handleHttpResponse,

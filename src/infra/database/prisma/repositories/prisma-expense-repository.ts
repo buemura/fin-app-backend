@@ -3,10 +3,10 @@ import { PrismaClient } from "@prisma/client";
 import {
   CreateExpenseDto,
   UpdateExpenseDto,
-} from "@application/dtos/expense-dto";
-import { Expense } from "@application/entities/expense";
-import { CacheRepository } from "@application/repositories/cache-repository";
-import { ExpenseRepository } from "@application/repositories/expense-repository";
+} from "../../../../application/dtos/expense-dto";
+import { Expense } from "../../../../application/entities/expense";
+import { CacheRepository } from "../../../../application/repositories/cache-repository";
+import { ExpenseRepository } from "../../../../application/repositories/expense-repository";
 
 export class PrismaExpenseRepository implements ExpenseRepository {
   private readonly expenseRespository;

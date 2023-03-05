@@ -3,9 +3,9 @@ import { randomUUID } from "crypto";
 import {
   CreateAccountDto,
   UpdateAccountDto,
-} from "@application/dtos/account-dto";
-import { Account } from "@application/entities/account";
-import { AccountRepository } from "@application/repositories/account-repository";
+} from "../../../src/application/dtos/account-dto";
+import { Account } from "../../../src/application/entities/account";
+import { AccountRepository } from "../../../src/application/repositories/account-repository";
 
 export class InMemoryAccountRepository implements AccountRepository {
   private accounts: Account[] = [

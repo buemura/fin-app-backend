@@ -13,13 +13,6 @@ export default async (): Promise<Config> => {
     coveragePathIgnorePatterns: ["node_modules", "<rootDir>/src/repositories"],
     transform: { "^.+\\.tsx?$": "ts-jest" },
     forceExit: true,
-    moduleNameMapper: {
-      "@application/(.*)": "<rootDir>/src/application/$1",
-      "@helpers/(.*)": "<rootDir>/src/helpers/$1",
-      "@infra/(.*)": "<rootDir>/src/infra/$1",
-      "@shared/(.*)": "<rootDir>/src/shared/$1",
-      "@tests/(.*)": "<rootDir>/tests/$1",
-    },
     moduleDirectories: ["node_modules", "src"],
   };
 };

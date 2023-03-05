@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 
-import { authController } from "@shared/containers";
+import { authController } from "../../../shared/containers";
 
 const router = Router();
 

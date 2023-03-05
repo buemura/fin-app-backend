@@ -1,8 +1,7 @@
-import { AppError } from "@helpers/errors/app-error";
-import { logger } from "@helpers/logger";
-
-import { ResponseDto } from "@application/dtos/response-dto";
-import { ERROR_MESSAGE } from "@helpers/errors/messages";
+import { AppError } from "../../helpers/errors/app-error";
+import { ERROR_MESSAGE } from "../../helpers/errors/messages";
+import { logger } from "../../helpers/logger";
+import { ResponseDto } from "../dtos/response-dto";
 import { UserRepository } from "../repositories/user-repository";
 
 export class UserService {

@@ -4,10 +4,10 @@ import {
   CreateInvestmentTrxDto,
   TotalDetailsReponse,
   UpdateInvestmentTrxDto,
-} from "@application/dtos/investment-trx-dto";
-import { InvestmentTrx } from "@application/entities/investment-trx";
-import { CacheRepository } from "@application/repositories/cache-repository";
-import { InvestmentTrxRepository } from "@application/repositories/investment-trx-repository";
+} from "../../../../application/dtos/investment-trx-dto";
+import { InvestmentTrx } from "../../../../application/entities/investment-trx";
+import { CacheRepository } from "../../../../application/repositories/cache-repository";
+import { InvestmentTrxRepository } from "../../../../application/repositories/investment-trx-repository";
 
 export class PrismaInvestmentTrxRepository implements InvestmentTrxRepository {
   private readonly investmentsTrx;

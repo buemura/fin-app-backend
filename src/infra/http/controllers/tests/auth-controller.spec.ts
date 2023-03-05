@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 
-import { AuthService } from "@application/services/auth-service";
 import {
   InMemoryUserRepository,
   requestMock,
   responseMock,
-} from "@tests/__mocks__/";
+} from "../../../../../tests/__mocks__/";
+import { AuthService } from "../../../../application/services/auth-service";
 import { AuthController } from "../auth-controller";
 
 describe("Auth controller test suite", () => {

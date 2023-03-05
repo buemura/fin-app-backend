@@ -3,10 +3,10 @@ import { PrismaClient } from "@prisma/client";
 import {
   CreateAccountDto,
   UpdateAccountDto,
-} from "@application/dtos/account-dto";
-import { Account } from "@application/entities/account";
-import { AccountRepository } from "@application/repositories/account-repository";
-import { CacheRepository } from "@application/repositories/cache-repository";
+} from "../../../../application/dtos/account-dto";
+import { Account } from "../../../../application/entities/account";
+import { AccountRepository } from "../../../../application/repositories/account-repository";
+import { CacheRepository } from "../../../../application/repositories/cache-repository";
 
 export class PrismaAccountRepository implements AccountRepository {
   private readonly accountRespository;

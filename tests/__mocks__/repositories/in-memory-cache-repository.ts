@@ -1,4 +1,4 @@
-import { CacheRepository } from "@application/repositories/cache-repository";
+import { CacheRepository } from "../../../src/application/repositories/cache-repository";
 
 interface Cache {
   [key: string]: any;

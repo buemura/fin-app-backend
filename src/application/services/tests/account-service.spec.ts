@@ -1,9 +1,9 @@
-import { ERROR_MESSAGE } from "@helpers/errors/messages";
-import { DEFAULT_PAGINATION } from "@helpers/pagination/constants";
 import {
   InMemoryAccountRepository,
   InMemoryUserRepository,
-} from "@tests/__mocks__/";
+} from "../../../../tests/__mocks__/";
+import { ERROR_MESSAGE } from "../../../helpers/errors/messages";
+import { DEFAULT_PAGINATION } from "../../../helpers/pagination/constants";
 import { AccountService } from "../account-service";
 
 describe("Account service test suite", () => {

@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, Matches } from "class-validator";
 
-import { RegexHelper } from "@helpers/regex";
+import { RegexHelper } from "../../../helpers/regex";
 
 export class RegisterAuthDto {
   @IsNotEmpty()

@@ -1,4 +1,4 @@
-import { PaginationMetadataResponse } from "@application/dtos/pagination-dto";
+import { PaginationMetadataResponse } from "../../application/dtos/pagination-dto";
 import { DEFAULT_PAGINATION } from "./constants";
 import {
   PaginationMetadataProps,

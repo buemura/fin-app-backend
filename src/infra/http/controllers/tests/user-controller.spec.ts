@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 
-import { UserService } from "@application/services/user-service";
 import {
   InMemoryUserRepository,
   requestMock,
   responseMock,
-} from "@tests/__mocks__/";
+} from "../../../../../tests/__mocks__/";
+import { UserService } from "../../../../application/services/user-service";
 import { UserController } from "../user-controller";
 
 describe("User controller test suite", () => {

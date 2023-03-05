@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
-import { InvestmentTrxService } from "@application/services/investment-trx-service";
-import { DEFAULT_PAGINATION } from "@helpers/pagination/constants";
+import { InvestmentTrxService } from "../../../application/services/investment-trx-service";
+import { DEFAULT_PAGINATION } from "../../../helpers/pagination/constants";
 import {
   handleHttpErrorResponse,
   handleHttpResponse,

@@ -1,6 +1,6 @@
 import { Response } from "express";
 
-import { AppError } from "@helpers/errors/app-error";
+import { AppError } from "../../../../helpers/errors/app-error";
 import {
   handleHttpErrorResponse,
   handleHttpResponse,

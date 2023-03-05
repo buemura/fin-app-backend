@@ -1,6 +1,6 @@
-import { IsEmail, IsOptional, Matches } from 'class-validator';
+import { IsEmail, IsOptional, Matches } from "class-validator";
 
-import { RegexHelper } from '@helpers/regex';
+import { RegexHelper } from "../../../helpers/regex";
 
 export class UpdateUserDto {
   @IsOptional()

@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 
-import { investmentController } from "@shared/containers";
+import { investmentController } from "../../../shared/containers";
 import { ensureAuthentication } from "../middlewares/auth-middleware";
 
 const router = Router();

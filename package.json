@@ -23,7 +23,7 @@
     "prebuild": "rimraf dist",
     "build": "tsc --project tsconfig.build.json",
     "build:tsup": "tsup src",
-    "start": "npm run postinstall:prod && node -r ./tsconfig-paths.js dist/src/infra/http/index.js",
+    "start": "npm run postinstall:prod && node dist/src/infra/http/index.js",
     "start:dev": "npm run postinstall:dev && tsx watch src/infra/http/index.ts"
   },
   "keywords": [],
@@ -38,8 +38,7 @@
     "express": "^4.18.2",
     "express-validator": "^6.15.0",
     "ioredis": "^5.3.1",
-    "jsonwebtoken": "^9.0.0",
-    "tsconfig-paths": "^4.1.2"
+    "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",

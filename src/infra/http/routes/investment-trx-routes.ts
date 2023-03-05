@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 
-import { investmentTrxController } from "@shared/containers";
+import { investmentTrxController } from "../../../shared/containers";
 import { ensureAuthentication } from "../middlewares/auth-middleware";
 
 const router = Router();

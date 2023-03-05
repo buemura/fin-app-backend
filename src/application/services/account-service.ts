@@ -1,7 +1,6 @@
-import { AppError } from "@helpers/errors/app-error";
-import { ERROR_MESSAGE } from "@helpers/errors/messages";
-import { PaginationHelper } from "@helpers/pagination/functions";
-
+import { AppError } from "../../helpers/errors/app-error";
+import { ERROR_MESSAGE } from "../../helpers/errors/messages";
+import { PaginationHelper } from "../../helpers/pagination/functions";
 import { CreateAccountDto, UpdateAccountDto } from "../dtos/account-dto";
 import { FindByUserIdDto } from "../dtos/pagination-dto";
 import { ResponseDto } from "../dtos/response-dto";

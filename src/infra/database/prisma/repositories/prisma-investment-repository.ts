@@ -3,10 +3,10 @@ import { PrismaClient } from "@prisma/client";
 import {
   CreateInvestmentDto,
   UpdateInvestmentDto,
-} from "@application/dtos/investment-dto";
-import { Investment } from "@application/entities/investment";
-import { CacheRepository } from "@application/repositories/cache-repository";
-import { InvestmentRepository } from "@application/repositories/investment-repository";
+} from "../../../../application/dtos/investment-dto";
+import { Investment } from "../../../../application/entities/investment";
+import { CacheRepository } from "../../../../application/repositories/cache-repository";
+import { InvestmentRepository } from "../../../../application/repositories/investment-repository";
 
 export class PrismaInvestmentRepository implements InvestmentRepository {
   private readonly investments;

@@ -1,9 +1,9 @@
-import { ERROR_MESSAGE } from "@helpers/errors/messages";
-import { DEFAULT_PAGINATION } from "@helpers/pagination/constants";
 import {
   InMemoryExpenseRepository,
   InMemoryUserRepository,
-} from "@tests/__mocks__/";
+} from "../../../../tests/__mocks__/";
+import { ERROR_MESSAGE } from "../../../helpers/errors/messages";
+import { DEFAULT_PAGINATION } from "../../../helpers/pagination/constants";
 import { ExpenseService } from "../expense-service";
 
 describe("Expense service test suite", () => {

@@ -1,14 +1,13 @@
-import { AppError } from "@helpers/errors/app-error";
-import { ERROR_MESSAGE } from "@helpers/errors/messages";
-import { PaginationHelper } from "@helpers/pagination/functions";
-
-import { AccountRepository } from "@application/repositories/account-repository";
+import { AppError } from "../../helpers/errors/app-error";
+import { ERROR_MESSAGE } from "../../helpers/errors/messages";
+import { PaginationHelper } from "../../helpers/pagination/functions";
 import {
   CreateInvestmentDto,
   UpdateInvestmentDto,
 } from "../dtos/investment-dto";
 import { FindByUserIdDto } from "../dtos/pagination-dto";
 import { ResponseDto } from "../dtos/response-dto";
+import { AccountRepository } from "../repositories/account-repository";
 import { InvestmentRepository } from "../repositories/investment-repository";
 import { UserRepository } from "../repositories/user-repository";
 

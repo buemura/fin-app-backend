@@ -1,7 +1,6 @@
-import { AppError } from "@helpers/errors/app-error";
-import { ERROR_MESSAGE } from "@helpers/errors/messages";
-import { PaginationHelper } from "@helpers/pagination/functions";
-
+import { AppError } from "../../helpers/errors/app-error";
+import { ERROR_MESSAGE } from "../../helpers/errors/messages";
+import { PaginationHelper } from "../../helpers/pagination/functions";
 import {
   CreateInvestmentTrxDto,
   UpdateInvestmentTrxDto,

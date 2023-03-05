@@ -3,9 +3,9 @@ import { randomUUID } from "crypto";
 import {
   CreateExpenseDto,
   UpdateExpenseDto,
-} from "@application/dtos/expense-dto";
-import { Expense } from "@application/entities/expense";
-import { ExpenseRepository } from "@application/repositories/expense-repository";
+} from "../../../src/application/dtos/expense-dto";
+import { Expense } from "../../../src/application/entities/expense";
+import { ExpenseRepository } from "../../../src/application/repositories/expense-repository";
 
 export class InMemoryExpenseRepository implements ExpenseRepository {
   private readonly expenses: Expense[] = [

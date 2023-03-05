@@ -11,14 +11,7 @@
     "forceConsistentCasingInFileNames": true,
     "strictPropertyInitialization": false,
     "strict": true,
-    "skipLibCheck": true,
-    "paths": {
-      "@application/*": ["src/application/*"],
-      "@helpers/*": ["src/helpers/*"],
-      "@shared/*": ["src/shared/*"],
-      "@infra/*": ["src/infra/*"],
-      "@tests/*": ["tests/*"]
-    }
+    "skipLibCheck": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "tests/**/*.ts"]

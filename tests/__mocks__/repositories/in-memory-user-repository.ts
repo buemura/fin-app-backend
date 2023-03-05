@@ -1,8 +1,11 @@
 import { randomUUID } from "crypto";
 
-import { CreateUserDto, UpdateUserDto } from "@application/dtos/user-dto";
-import { User } from "@application/entities/user";
-import { UserRepository } from "@application/repositories/user-repository";
+import {
+  CreateUserDto,
+  UpdateUserDto,
+} from "../../../src/application/dtos/user-dto";
+import { User } from "../../../src/application/entities/user";
+import { UserRepository } from "../../../src/application/repositories/user-repository";
 
 export class InMemoryUserRepository implements UserRepository {
   private readonly users: User[] = [
