@@ -1,13 +1,11 @@
 import { randomUUID } from "crypto";
-import {
-  type CreateUserProps,
-  type UpdateUserProps,
-  type UserProps,
-} from "../../../src/core/interfaces/user";
-import { type UserRepository } from "../../../src/repositories/interfaces/user-repository";
+
+import { CreateUserDto, UpdateUserDto } from "@application/dtos/user-dto";
+import { User } from "@application/entities/user";
+import { UserRepository } from "@application/repositories/user-repository";
 
 export class InMemoryUserRepository implements UserRepository {
-  private readonly users: UserProps[] = [
+  private readonly users: User[] = [
     {
       id: "user-1",
       name: "john",
@@ -21,7 +19,7 @@ export class InMemoryUserRepository implements UserRepository {
     },
   ];
 
-  async findById(id: string): Promise<UserProps | null> {
+  async findById(id: string): Promise<User | null> {
     const user = this.users.find((user) => user.id === id);
     if (!user) {
       return null;
@@ -30,7 +28,7 @@ export class InMemoryUserRepository implements UserRepository {
     return user;
   }
 
-  async findByEmail(email: string): Promise<UserProps | null> {
+  async findByEmail(email: string): Promise<User | null> {
     const user = this.users.find((user) => user.email === email);
     if (!user) {
       return null;
@@ -39,7 +37,7 @@ export class InMemoryUserRepository implements UserRepository {
     return user;
   }
 
-  async create(data: CreateUserProps): Promise<UserProps> {
+  async create(data: CreateUserDto): Promise<User> {
     const user = {
       id: randomUUID(),
       name: data.name,
@@ -56,7 +54,7 @@ export class InMemoryUserRepository implements UserRepository {
     return user;
   }
 
-  async update(data: UpdateUserProps): Promise<UserProps | null> {
+  async update(data: UpdateUserDto): Promise<User | null> {
     const user = this.users.find((user) => user.id === data.id);
     if (!user) {
       return null;

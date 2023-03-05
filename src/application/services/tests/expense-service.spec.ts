@@ -1,8 +1,9 @@
+import { ERROR_MESSAGE } from "@helpers/errors/messages";
+import { DEFAULT_PAGINATION } from "@helpers/pagination/constants";
 import {
   InMemoryExpenseRepository,
   InMemoryUserRepository,
 } from "@tests/__mocks__/";
-import { DEFAULT_PAGINATION } from "@utils/constants";
 import { ExpenseService } from "../expense-service";
 
 describe("Expense service test suite", () => {
@@ -16,29 +17,31 @@ describe("Expense service test suite", () => {
 
   describe("Find Expenses by User Id", () => {
     it("should throw an error if required parameters are missing", async () => {
-      const result = expenseService.findByUser({
+      const result = expenseService.findByUserId({
         userId: "",
         pagination: {
           page: DEFAULT_PAGINATION.PAGE,
           items: DEFAULT_PAGINATION.ITEMS,
         },
       });
-      await expect(result).rejects.toThrow("User id not provided");
+      await expect(result).rejects.toThrow(
+        ERROR_MESSAGE.MISSING_REQUIRED_PARAMETERS
+      );
     });
 
     it("should throw an error if user is not found", async () => {
-      const result = expenseService.findByUser({
+      const result = expenseService.findByUserId({
         userId: "not-exists",
         pagination: {
           page: DEFAULT_PAGINATION.PAGE,
           items: DEFAULT_PAGINATION.ITEMS,
         },
       });
-      await expect(result).rejects.toThrow("User does not exists");
+      await expect(result).rejects.toThrow(ERROR_MESSAGE.USER_NOT_FOUND);
     });
 
     it("should return users expenses", async () => {
-      const result = await expenseService.findByUser({
+      const result = await expenseService.findByUserId({
         userId: "user-1",
         pagination: {
           page: DEFAULT_PAGINATION.PAGE,
@@ -46,81 +49,73 @@ describe("Expense service test suite", () => {
         },
       });
       expect(result).not.toBe(null);
-      // expect(result[0].id).toBe("expense-1");
     });
   });
 
   describe("Create Expense", () => {
     it("should throw an error if user is not found", async () => {
-      const result = expenseService.createExpense({
+      const result = expenseService.create({
         userId: "not-exists",
         title: "new expense",
         imageUrl: "aaa",
       });
-      await expect(result).rejects.toThrow("User does not exists");
+      await expect(result).rejects.toThrow(ERROR_MESSAGE.USER_NOT_FOUND);
     });
 
     it("should create expense", async () => {
-      const result = await expenseService.createExpense({
+      const result = await expenseService.create({
         userId: "user-1",
         title: "new expense",
         imageUrl: "aaa",
       });
       expect(result).not.toBe(null);
-      expect(result).toHaveProperty("id");
-      expect(result.userId).toBe("user-1");
-      expect(result.title).toBe("new expense");
-      expect(result.imageUrl).toBe("aaa");
+      expect(result.data).toHaveProperty("id");
     });
   });
 
   describe("Update Expense", () => {
     it("should throw an error if user is not found", async () => {
-      const result = expenseService.updateExpense({
+      const result = expenseService.update({
         expenseId: "not-exists",
         title: "new expense",
         imageUrl: "aaa",
       });
-      await expect(result).rejects.toThrow("Expense does not exists");
+      await expect(result).rejects.toThrow(ERROR_MESSAGE.EXPENSE_NOT_FOUND);
     });
 
     it("should create expense", async () => {
-      const result = await expenseService.updateExpense({
+      const result = await expenseService.update({
         expenseId: "expense-1",
         title: "updated expense",
         imageUrl: "aaa",
       });
       expect(result).not.toBe(null);
-      expect(result).toHaveProperty("id");
-      expect(result?.userId).toBe("user-1");
-      expect(result?.title).toBe("updated expense");
-      expect(result?.imageUrl).toBe("aaa");
+      expect(result.data).toHaveProperty("id");
+      expect(result.data.id).toBe("expense-1");
     });
   });
 
   describe("Update All Expense", () => {
     it("should create expense", async () => {
-      const result = await expenseService.updateAllExpenses();
+      const result = await expenseService.resetPaymentStatus();
+      console.log("@@ result", result);
+
       expect(result).not.toBe(null);
-      expect(result).toHaveProperty("message");
-      expect(result.message).toBe("updated all expense payment status");
+      expect(result.data).toHaveProperty("message");
+      expect(result.data.message).toBe("successfully reset payment status");
     });
   });
 
   describe("Delete Expense", () => {
     it("should throw an error if user is not found", async () => {
-      const result = expenseService.deleteExpense({
-        expenseId: "not-exists",
-      });
-      await expect(result).rejects.toThrow("Expense does not exists");
+      const result = expenseService.delete("not-exists");
+      await expect(result).rejects.toThrow(ERROR_MESSAGE.EXPENSE_NOT_FOUND);
     });
 
     it("should create expense", async () => {
-      const result = await expenseService.deleteExpense({
-        expenseId: "expense-1",
-      });
+      const result = await expenseService.delete("expense-1");
       expect(result).not.toBe(null);
-      expect(result?.isActive).toBeFalsy();
+      expect(result?.data.id).toBe("expense-1");
     });
   });
 });

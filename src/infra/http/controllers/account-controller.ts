@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { AccountService } from "@core/services/account-service";
+import { AccountService } from "@application/services/account-service";
 import { DEFAULT_PAGINATION } from "@helpers/pagination/constants";
 import {
   handleHttpErrorResponse,

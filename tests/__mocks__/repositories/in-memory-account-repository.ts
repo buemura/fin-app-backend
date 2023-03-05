@@ -1,13 +1,14 @@
 import { randomUUID } from "crypto";
+
 import {
-  type AccountProps,
-  type CreateAccountProps,
-  type UpdateAccountProps,
-} from "../../../src/core/interfaces/account";
-import { type AccountRepository } from "../../../src/core/repositories/account-repository";
+  CreateAccountDto,
+  UpdateAccountDto,
+} from "@application/dtos/account-dto";
+import { Account } from "@application/entities/account";
+import { AccountRepository } from "@application/repositories/account-repository";
 
 export class InMemoryAccountRepository implements AccountRepository {
-  private accounts: AccountProps[] = [
+  private accounts: Account[] = [
     {
       id: "account-1",
       userId: "user-1",
@@ -19,11 +20,11 @@ export class InMemoryAccountRepository implements AccountRepository {
     },
   ];
 
-  async findMany(): Promise<AccountProps[]> {
+  async findMany(): Promise<Account[]> {
     return this.accounts;
   }
 
-  async findById(id: string): Promise<AccountProps | null> {
+  async findById(id: string): Promise<Account | null> {
     const account = this.accounts.find((account) => account.id === id);
     if (!account) {
       return null;
@@ -32,7 +33,7 @@ export class InMemoryAccountRepository implements AccountRepository {
     return account;
   }
 
-  async findByUserId(userId: string): Promise<AccountProps[]> {
+  async findByUserId(userId: string): Promise<Account[]> {
     const account = this.accounts.filter(
       (account) => account.userId === userId
     );
@@ -40,8 +41,8 @@ export class InMemoryAccountRepository implements AccountRepository {
     return account;
   }
 
-  async create(data: CreateAccountProps): Promise<AccountProps> {
-    const account: AccountProps = {
+  async create(data: CreateAccountDto): Promise<Account> {
+    const account: Account = {
       id: randomUUID(),
       userId: data.userId,
       name: data.name,
@@ -55,8 +56,10 @@ export class InMemoryAccountRepository implements AccountRepository {
     return account;
   }
 
-  async update(data: UpdateAccountProps): Promise<AccountProps | null> {
-    const account = this.accounts.find((account) => account.id === data.id);
+  async update(data: UpdateAccountDto): Promise<Account | null> {
+    const account = this.accounts.find(
+      (account) => account.id === data.accountId
+    );
     if (!account) {
       return null;
     }
@@ -68,7 +71,7 @@ export class InMemoryAccountRepository implements AccountRepository {
     return account;
   }
 
-  async delete(id: string): Promise<AccountProps | null> {
+  async delete(id: string): Promise<Account | null> {
     const account = this.accounts.find((account) => account.id === id);
     if (!account) {
       return null;

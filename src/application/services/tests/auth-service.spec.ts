@@ -1,76 +1,60 @@
+import { ERROR_MESSAGE } from "@helpers/errors/messages";
 import { InMemoryUserRepository } from "@tests/__mocks__";
-import { UserService } from "../user-service";
+import { AuthService } from "../auth-service";
 
 describe("User service test suite", () => {
-  let userService: UserService;
+  let authService: AuthService;
 
   beforeEach(() => {
     const userRepository = new InMemoryUserRepository();
-    userService = new UserService(userRepository);
+    authService = new AuthService(userRepository);
   });
 
-  describe("Get user details", () => {
-    it("should throw an error if required parameters are missing", async () => {
-      const result = userService.getUserDetails({ userId: "" });
-      await expect(result).rejects.toThrow("User id not provided");
-    });
-
-    it("should throw an error if user is not found", async () => {
-      const result = userService.getUserDetails({
-        userId: "not-exists",
-      });
-
-      await expect(result).rejects.toThrow("User not found");
-    });
-
-    it("should return user", async () => {
-      const result = await userService.getUserDetails({
-        userId: "user-1",
-      });
-      expect(result).not.toBeNull();
-      expect(result.data.name).toBe("john");
-    });
-  });
-
-  describe("Sign up user", () => {
+  describe("Register user", () => {
     it("should throw if name is missing", async () => {
-      const result = userService.register({
+      const result = authService.register({
         name: "",
         email: "jane@example.com",
         password: "pass",
       });
-      await expect(result).rejects.toThrow("Missing required parameters");
+      await expect(result).rejects.toThrow(
+        ERROR_MESSAGE.MISSING_REQUIRED_PARAMETERS
+      );
     });
 
     it("should throw if email is missing", async () => {
-      const result = userService.register({
+      const result = authService.register({
         name: "jane",
         email: "",
         password: "pass",
       });
-      await expect(result).rejects.toThrow("Missing required parameters");
+      await expect(result).rejects.toThrow(
+        ERROR_MESSAGE.MISSING_REQUIRED_PARAMETERS
+      );
     });
 
     it("should throw if password is missing", async () => {
-      const result = userService.register({
+      const result = authService.register({
         name: "jane",
         email: "jane@example.com",
         password: "",
       });
-      await expect(result).rejects.toThrow("Missing required parameters");
+      await expect(result).rejects.toThrow(
+        ERROR_MESSAGE.MISSING_REQUIRED_PARAMETERS
+      );
     });
 
     it("should throw if user already exists", async () => {
-      const result = userService.register({
+      const result = authService.register({
         name: "jane",
         email: "john@example.com",
         password: "pass",
       });
-      await expect(result).rejects.toThrow("User already registered");
+      await expect(result).rejects.toThrow(ERROR_MESSAGE.USER_ALREADY_EXISTS);
     });
 
     it("should properly create user", async () => {
-      const result = await userService.register({
+      const result = await authService.register({
         name: "jane",
         email: "jane@example.com",
         password: "pass",
@@ -82,31 +66,35 @@ describe("User service test suite", () => {
 
   describe("Sign in user", () => {
     it("should throw if email is missing", async () => {
-      const result = userService.login({
+      const result = authService.login({
         email: "",
         password: "pass",
       });
-      await expect(result).rejects.toThrow("Missing required parameters");
+      await expect(result).rejects.toThrow(
+        ERROR_MESSAGE.MISSING_REQUIRED_PARAMETERS
+      );
     });
 
     it("should throw if password is missing", async () => {
-      const result = userService.login({
+      const result = authService.login({
         email: "jane@example.com",
         password: "",
       });
-      await expect(result).rejects.toThrow("Missing required parameters");
+      await expect(result).rejects.toThrow(
+        ERROR_MESSAGE.MISSING_REQUIRED_PARAMETERS
+      );
     });
 
     it("should throw if user is not registered", async () => {
-      const result = userService.login({
+      const result = authService.login({
         email: "jane@example.com",
         password: "pass",
       });
-      await expect(result).rejects.toThrow("User not registered");
+      await expect(result).rejects.toThrow(ERROR_MESSAGE.INVALID_CREDENTIALS);
     });
 
     it("should throw if password does not match", async () => {
-      const result = userService.login({
+      const result = authService.login({
         email: "john@example.com",
         password: "pass",
       });
@@ -114,7 +102,7 @@ describe("User service test suite", () => {
     });
 
     it("should properly sign in user", async () => {
-      const result = await userService.login({
+      const result = await authService.login({
         email: "john@example.com",
         password: "password",
       });

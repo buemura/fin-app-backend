@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { AccountService } from "@core/services/account-service";
+import { AccountService } from "@application/services/account-service";
 import {
   InMemoryAccountRepository,
   InMemoryUserRepository,
@@ -33,13 +33,13 @@ describe("Account controller test suite", () => {
   describe("Get Account by Id", () => {
     it("should not return 2xx status code", async () => {
       request.params.id = "";
-      await accountController.getAccountById(request, response);
+      await accountController.findById(request, response);
       expect(response.status).not.toHaveBeenCalledWith(200);
     });
 
     it("should return 200 status code", async () => {
       request.params.id = "account-1";
-      await accountController.getAccountById(request, response);
+      await accountController.findById(request, response);
       expect(response.status).toHaveBeenCalledWith(200);
     });
   });
@@ -47,13 +47,13 @@ describe("Account controller test suite", () => {
   describe("Get Accounts by user Id", () => {
     it("should not return 2xx status code", async () => {
       request.params.userId = "";
-      await accountController.getAccountsByUserId(request, response);
+      await accountController.findByUserId(request, response);
       expect(response.status).not.toHaveBeenCalledWith(200);
     });
 
     it("should return 200 status code", async () => {
       request.params.userId = "user-1";
-      await accountController.getAccountsByUserId(request, response);
+      await accountController.findByUserId(request, response);
       expect(response.status).toHaveBeenCalledWith(200);
     });
   });
@@ -67,7 +67,7 @@ describe("Account controller test suite", () => {
         icon: "",
       };
 
-      await accountController.createAccount(request, response);
+      await accountController.create(request, response);
       expect(response.status).not.toHaveBeenCalledWith(200);
     });
 
@@ -79,7 +79,7 @@ describe("Account controller test suite", () => {
         icon: "",
       };
 
-      await accountController.createAccount(request, response);
+      await accountController.create(request, response);
       expect(response.status).toHaveBeenCalledWith(201);
     });
   });
@@ -92,7 +92,7 @@ describe("Account controller test suite", () => {
         icon: "http://example.com",
       };
 
-      await accountController.updateAccount(request, response);
+      await accountController.update(request, response);
       expect(response.status).not.toHaveBeenCalledWith(200);
     });
 
@@ -103,7 +103,7 @@ describe("Account controller test suite", () => {
         icon: "http://example.com",
       };
 
-      await accountController.updateAccount(request, response);
+      await accountController.update(request, response);
       expect(response.status).toHaveBeenCalledWith(200);
     });
   });
@@ -111,13 +111,13 @@ describe("Account controller test suite", () => {
   describe("Delete Account", () => {
     it("should not return 2xx status code", async () => {
       request.params.id = "";
-      await accountController.deleteAccount(request, response);
+      await accountController.delete(request, response);
       expect(response.status).not.toHaveBeenCalledWith(200);
     });
 
     it("should return 200 status code", async () => {
       request.params.id = "account-1";
-      await accountController.deleteAccount(request, response);
+      await accountController.delete(request, response);
       expect(response.status).toHaveBeenCalledWith(200);
     });
   });

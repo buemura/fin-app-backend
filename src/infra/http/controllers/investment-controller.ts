@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { InvestmentService } from "@core/services/investment-service";
+import { InvestmentService } from "@application/services/investment-service";
 import { DEFAULT_PAGINATION } from "@helpers/pagination/constants";
 import {
   handleHttpErrorResponse,

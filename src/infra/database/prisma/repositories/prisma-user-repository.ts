@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 
-import { CreateUserDto, UpdateUserDto } from "@core/dtos/user-dto";
-import { User } from "@core/entities/user";
-import { UserRepository } from "@core/repositories/user-repository";
+import { CreateUserDto, UpdateUserDto } from "@application/dtos/user-dto";
+import { User } from "@application/entities/user";
+import { UserRepository } from "@application/repositories/user-repository";
 
 export class PrismaUserRepository implements UserRepository {
   private readonly userRespository;

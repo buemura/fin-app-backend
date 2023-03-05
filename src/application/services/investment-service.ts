@@ -2,7 +2,7 @@ import { AppError } from "@helpers/errors/app-error";
 import { ERROR_MESSAGE } from "@helpers/errors/messages";
 import { PaginationHelper } from "@helpers/pagination/functions";
 
-import { AccountRepository } from "@core/repositories/account-repository";
+import { AccountRepository } from "@application/repositories/account-repository";
 import {
   CreateInvestmentDto,
   UpdateInvestmentDto,

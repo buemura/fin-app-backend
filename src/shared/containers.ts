@@ -1,9 +1,9 @@
-import { AccountService } from "@core/services/account-service";
-import { AuthService } from "@core/services/auth-service";
-import { ExpenseService } from "@core/services/expense-service";
-import { InvestmentService } from "@core/services/investment-service";
-import { InvestmentTrxService } from "@core/services/investment-trx-service";
-import { UserService } from "@core/services/user-service";
+import { AccountService } from "@application/services/account-service";
+import { AuthService } from "@application/services/auth-service";
+import { ExpenseService } from "@application/services/expense-service";
+import { InvestmentService } from "@application/services/investment-service";
+import { InvestmentTrxService } from "@application/services/investment-trx-service";
+import { UserService } from "@application/services/user-service";
 import { RedisRepository } from "@infra/cache";
 import {
   AccountRepository,

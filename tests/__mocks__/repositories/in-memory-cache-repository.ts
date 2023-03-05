@@ -1,4 +1,4 @@
-import { ICacheRepository } from "../../../src/repositories";
+import { CacheRepository } from "@application/repositories/cache-repository";
 
 interface Cache {
   [key: string]: any;
@@ -6,7 +6,7 @@ interface Cache {
   "fin-app-ACCOUNTS_LIST": string;
 }
 
-export class InMemoryCacheRepository implements ICacheRepository {
+export class InMemoryCacheRepository implements CacheRepository {
   private cache: Cache = {
     "fin-app-EXPENSES_LIST": "",
     "fin-app-ACCOUNTS_LIST": "",

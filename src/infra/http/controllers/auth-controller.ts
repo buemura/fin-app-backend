@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { AuthService } from "@core/services/auth-service";
+import { AuthService } from "@application/services/auth-service";
 import {
   handleHttpErrorResponse,
   handleHttpResponse,

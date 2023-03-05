@@ -75,16 +75,24 @@ describe("Handle http response test", () => {
   });
 
   it("should return with status failure", () => {
-    const res = handleHttpResponse(response, 403, {});
+    const res = handleHttpResponse(response, 403, {
+      data: undefined,
+    });
     expect(res.send).toHaveBeenCalledWith({
       status: "failure",
+      metadata: null,
+      data: null,
     });
   });
 
   it("should return with status success", () => {
-    const res = handleHttpResponse(response, 200, {});
+    const res = handleHttpResponse(response, 200, {
+      data: undefined,
+    });
     expect(res.send).toHaveBeenCalledWith({
       status: "success",
+      metadata: null,
+      data: null,
     });
   });
 

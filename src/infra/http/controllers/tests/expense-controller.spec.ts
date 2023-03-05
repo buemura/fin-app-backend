@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { ExpenseService } from "@services/expense-service";
+import { ExpenseService } from "@application/services/expense-service";
 import {
   InMemoryExpenseRepository,
   InMemoryUserRepository,
@@ -54,7 +54,7 @@ describe("Expense controller test suite", () => {
         imageUrl: "http://example.com",
       };
 
-      await expenseController.createExpense(request, response);
+      await expenseController.create(request, response);
       expect(response.status).not.toHaveBeenCalledWith(200);
     });
 
@@ -65,7 +65,7 @@ describe("Expense controller test suite", () => {
         imageUrl: "http://example.com",
       };
 
-      await expenseController.createExpense(request, response);
+      await expenseController.create(request, response);
       expect(response.status).toHaveBeenCalledWith(201);
     });
   });
@@ -78,7 +78,7 @@ describe("Expense controller test suite", () => {
         imageUrl: "http://example.com",
       };
 
-      await expenseController.updateExpense(request, response);
+      await expenseController.update(request, response);
       expect(response.status).not.toHaveBeenCalledWith(200);
     });
 
@@ -89,23 +89,25 @@ describe("Expense controller test suite", () => {
         imageUrl: "http://example.com",
       };
 
-      await expenseController.updateExpense(request, response);
+      await expenseController.update(request, response);
       expect(response.status).toHaveBeenCalledWith(200);
     });
   });
 
   describe("Update All Expenses", () => {
     it("should not return 2xx status code", async () => {
-      jest.spyOn(expenseService, "updateAllExpenses").mockImplementation(() => {
-        throw new Error("error");
-      });
+      jest
+        .spyOn(expenseService, "resetPaymentStatus")
+        .mockImplementation(() => {
+          throw new Error("error");
+        });
 
-      await expenseController.updateAllExpense(request, response);
+      await expenseController.resetPaymentStatus(request, response);
       expect(response.status).not.toHaveBeenCalledWith(200);
     });
 
     it("should return 200 status code", async () => {
-      await expenseController.updateAllExpense(request, response);
+      await expenseController.resetPaymentStatus(request, response);
       expect(response.status).toHaveBeenCalledWith(200);
     });
   });
@@ -113,13 +115,13 @@ describe("Expense controller test suite", () => {
   describe("Delete Expense", () => {
     it("should not return 2xx status code", async () => {
       request.params.expenseId = "";
-      await expenseController.deleteExpense(request, response);
+      await expenseController.delete(request, response);
       expect(response.status).not.toHaveBeenCalledWith(200);
     });
 
     it("should return 200 status code", async () => {
       request.params.expenseId = "expense-1";
-      await expenseController.deleteExpense(request, response);
+      await expenseController.delete(request, response);
       expect(response.status).toHaveBeenCalledWith(200);
     });
   });

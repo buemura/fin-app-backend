@@ -1,13 +1,14 @@
 import { randomUUID } from "crypto";
+
 import {
-  type CreateExpenseProps,
-  type ExpenseProps,
-  type UpdateExpenseProps,
-} from "../../../src/core/interfaces/expense";
-import { type ExpenseRepository } from "../../../src/repositories/interfaces/expense-repository";
+  CreateExpenseDto,
+  UpdateExpenseDto,
+} from "@application/dtos/expense-dto";
+import { Expense } from "@application/entities/expense";
+import { ExpenseRepository } from "@application/repositories/expense-repository";
 
 export class InMemoryExpenseRepository implements ExpenseRepository {
-  private readonly expenses: ExpenseProps[] = [
+  private readonly expenses: Expense[] = [
     {
       id: "expense-1",
       userId: "user-1",
@@ -20,11 +21,11 @@ export class InMemoryExpenseRepository implements ExpenseRepository {
     },
   ];
 
-  async findMany(): Promise<ExpenseProps[]> {
+  async findMany(): Promise<Expense[]> {
     return this.expenses;
   }
 
-  async findById(id: string): Promise<ExpenseProps | null> {
+  async findById(id: string): Promise<Expense | null> {
     const expense = this.expenses.find((expense) => expense.id === id);
     if (!expense) {
       return null;
@@ -33,7 +34,7 @@ export class InMemoryExpenseRepository implements ExpenseRepository {
     return expense;
   }
 
-  async findByUserId(userId: string): Promise<ExpenseProps[]> {
+  async findByUserId(userId: string): Promise<Expense[]> {
     const expense = this.expenses.filter(
       (expense) => expense.userId === userId
     );
@@ -41,8 +42,8 @@ export class InMemoryExpenseRepository implements ExpenseRepository {
     return expense;
   }
 
-  async create(data: CreateExpenseProps): Promise<ExpenseProps> {
-    const expense: ExpenseProps = {
+  async create(data: CreateExpenseDto): Promise<Expense> {
+    const expense: Expense = {
       id: randomUUID(),
       userId: data.userId,
       title: data.title,
@@ -57,7 +58,7 @@ export class InMemoryExpenseRepository implements ExpenseRepository {
     return expense;
   }
 
-  async update(data: UpdateExpenseProps): Promise<ExpenseProps | null> {
+  async update(data: UpdateExpenseDto): Promise<Expense | null> {
     const expense = this.expenses.find(
       (expense) => expense.id === data.expenseId
     );
@@ -80,7 +81,7 @@ export class InMemoryExpenseRepository implements ExpenseRepository {
     }));
   }
 
-  async delete(id: string): Promise<ExpenseProps | null> {
+  async delete(id: string): Promise<Expense | null> {
     const expense = this.expenses.find((expense) => expense.id === id);
     if (!expense) {
       return null;

@@ -1,9 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 
-import { CreateExpenseDto, UpdateExpenseDto } from "@core/dtos/expense-dto";
-import { Expense } from "@core/entities/expense";
-import { CacheRepository } from "@core/repositories/cache-repository";
-import { ExpenseRepository } from "@core/repositories/expense-repository";
+import {
+  CreateExpenseDto,
+  UpdateExpenseDto,
+} from "@application/dtos/expense-dto";
+import { Expense } from "@application/entities/expense";
+import { CacheRepository } from "@application/repositories/cache-repository";
+import { ExpenseRepository } from "@application/repositories/expense-repository";
 
 export class PrismaExpenseRepository implements ExpenseRepository {
   private readonly expenseRespository;

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { ExpenseService } from "@core/services/expense-service";
+import { ExpenseService } from "@application/services/expense-service";
 import { DEFAULT_PAGINATION } from "@helpers/pagination/constants";
 import {
   handleHttpErrorResponse,

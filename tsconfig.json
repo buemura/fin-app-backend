@@ -13,21 +13,12 @@
     "strict": true,
     "skipLibCheck": true,
     "paths": {
-      "@configs/*": ["./src/configs/*"],
-      "@controllers/*": ["./src/controllers/*"],
-      "@interfaces/*": ["src/core/interfaces/*"],
-      "@middlewares/*": ["./src/middlewares/*"],
-      "@repositories/*": ["./src/repositories/*"],
-      "@routes/*": ["./src/routes/*"],
-      "@services/*": ["./src/services/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@tests/*": ["./tests/*"],
       "@application/*": ["./src/application/*"],
       "@core/*": ["./src/core/*"],
       "@helpers/*": ["src/helpers/*"],
       "@shared/*": ["src/shared/*"],
       "@infra/*": ["./src/infra/*"],
-      "@test/*": ["./test/*"]
+      "@tests/*": ["./tests/*"]
     }
   },
   "include": ["src/**/*"],

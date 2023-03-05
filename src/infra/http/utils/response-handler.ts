@@ -1,6 +1,6 @@
 import { Response } from "express";
 
-import { ResponseDto } from "@core/dtos/response-dto";
+import { ResponseDto } from "@application/dtos/response-dto";
 import { AppError } from "@helpers/errors/app-error";
 
 export function handleHttpResponse(

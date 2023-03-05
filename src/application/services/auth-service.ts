@@ -4,8 +4,8 @@ import jwt from "jsonwebtoken";
 import { AppError } from "@helpers/errors/app-error";
 import { logger } from "@helpers/logger";
 
-import { LoginAuthDto, RegisterAuthDto } from "@core/dtos/auth-dto";
-import { ResponseDto } from "@core/dtos/response-dto";
+import { LoginAuthDto, RegisterAuthDto } from "@application/dtos/auth-dto";
+import { ResponseDto } from "@application/dtos/response-dto";
 import { ERROR_MESSAGE } from "@helpers/errors/messages";
 import { UserRepository } from "../repositories/user-repository";
 
