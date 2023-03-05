@@ -1,10 +1,10 @@
 import { randomUUID } from "crypto";
-import { type UserRepository } from "../../../src/repositories/interfaces/user-repository";
 import {
   type CreateUserProps,
   type UpdateUserProps,
   type UserProps,
-} from "../../../src/interfaces/user";
+} from "../../../src/core/interfaces/user";
+import { type UserRepository } from "../../../src/repositories/interfaces/user-repository";
 
 export class InMemoryUserRepository implements UserRepository {
   private readonly users: UserProps[] = [

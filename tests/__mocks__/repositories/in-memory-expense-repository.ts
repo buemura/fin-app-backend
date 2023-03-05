@@ -3,7 +3,7 @@ import {
   type CreateExpenseProps,
   type ExpenseProps,
   type UpdateExpenseProps,
-} from "../../../src/interfaces/expense";
+} from "../../../src/core/interfaces/expense";
 import { type ExpenseRepository } from "../../../src/repositories/interfaces/expense-repository";
 
 export class InMemoryExpenseRepository implements ExpenseRepository {

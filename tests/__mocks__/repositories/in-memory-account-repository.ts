@@ -1,10 +1,10 @@
 import { randomUUID } from "crypto";
-import { type AccountRepository } from "../../../src/repositories/interfaces/account-repository";
 import {
   type AccountProps,
   type CreateAccountProps,
   type UpdateAccountProps,
-} from "../../../src/interfaces/account";
+} from "../../../src/core/interfaces/account";
+import { type AccountRepository } from "../../../src/core/repositories/account-repository";
 
 export class InMemoryAccountRepository implements AccountRepository {
   private accounts: AccountProps[] = [

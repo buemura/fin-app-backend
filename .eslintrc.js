@@ -23,5 +23,6 @@ module.exports = {
     "@typescript-eslint/consistent-type-imports": "off",
     "@typescript-eslint/consistent-type-assertions": "off",
     "@typescript-eslint/no-dynamic-delete": "off",
+    "@typescript-eslint/indent": "off",
   },
 };
