@@ -22,7 +22,7 @@
     "prebuild": "rimraf dist",
     "build": "tsc --project tsconfig.build.json",
     "build:tsup": "tsup src",
-    "start": "npm run postinstall:prod && node dist/src/infra/http/index.js",
+    "start": "npm run postinstall:prod && node -r ./tsconfig-paths.js dist/src/infra/http/index.js",
     "start:dev": "npm run postinstall:dev && tsx watch src/infra/http/index.ts"
   },
   "keywords": [],

@@ -13,12 +13,11 @@
     "strict": true,
     "skipLibCheck": true,
     "paths": {
-      "@application/*": ["./src/application/*"],
-      "@core/*": ["./src/core/*"],
+      "@application/*": ["src/application/*"],
       "@helpers/*": ["src/helpers/*"],
       "@shared/*": ["src/shared/*"],
-      "@infra/*": ["./src/infra/*"],
-      "@tests/*": ["./tests/*"]
+      "@infra/*": ["src/infra/*"],
+      "@tests/*": ["tests/*"]
     }
   },
   "include": ["src/**/*"],

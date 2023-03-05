@@ -1,3 +1,4 @@
 #!/bin/bash
 
-node ./dist/src/infra/http/express/index.js;
+docker run -d -p 5000:5000 --name=fin-app-backend fin-app-backend;
+docker logs fin-app-backend;
