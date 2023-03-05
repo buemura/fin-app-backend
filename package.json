@@ -24,7 +24,8 @@
     "build": "tsc --project tsconfig.build.json",
     "build:tsup": "tsup src",
     "start": "npm run postinstall:prod && node dist/src/infra/http/index.js",
-    "start:dev": "npm run postinstall:dev && tsx watch src/infra/http/index.ts"
+    "start:dev": "npm run postinstall:dev && tsx watch src/infra/http/index.ts",
+    "start:prod": "npm run postinstall:prod && pm2 start --name backend dist/src/infra/http/index.js"
   },
   "keywords": [],
   "author": "",
