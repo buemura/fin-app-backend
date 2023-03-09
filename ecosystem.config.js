@@ -1,8 +1,6 @@
 module.exports = [
   {
-    script: "./dist/src/infra/http/index.js",
+    script: "./dist/src/main/index.js",
     name: "backend",
-    exec_mode: "cluster",
-    instances: 2,
   },
 ];

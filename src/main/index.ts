@@ -1,4 +1,4 @@
-import { server } from "./configs/server-config";
+import { server } from "../infra/http/configs/server-config";
 
 const PORT = process.env.PORT ?? 5000;
 
