@@ -21,6 +21,7 @@
     "lint:fix": "eslint --fix --color",
     "prebuild": "rimraf dist",
     "build": "npm run postinstall:prod && tsc --project tsconfig.build.json",
+    "vercel-build": "prisma generate --schema=prisma/schema.prod.prisma",
     "build:tsup": "tsup src",
     "start": "npm run postinstall:dev && node dist/src/main/index.js",
     "start:dev": "npm run postinstall:dev && tsnd src/main/index.ts",
