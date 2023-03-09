@@ -1,4 +1,3 @@
 #!/bin/bash
 
-npx prisma generate;
-npx tsc;
+docker build -t fin-app-backend . 

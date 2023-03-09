@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { logger } from "../src/utils/logger";
+import { logger } from "../src/helpers/logger";
 
 logger.info = jest.fn();
 logger.error = jest.fn();

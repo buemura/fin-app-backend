@@ -1,2 +1,16 @@
 node_modules
 tests
+.github
+.husky
+
+docker-compose.yml
+commitlint.config.js
+jest.config.ts
+README.md
+LICENSE
+vercel.json
+
+.env.example
+.eslintignore
+.eslintrc.js
+.gitignore

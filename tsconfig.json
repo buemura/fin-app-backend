@@ -4,8 +4,12 @@
     "module": "commonjs",
     "rootDir": "./",
     "outDir": "dist",
+    "baseUrl": "./",
     "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
     "strict": true,
     "skipLibCheck": true
   },
