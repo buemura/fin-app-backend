@@ -1,11 +1,11 @@
 import { InvestmentService } from "../../../../application/services/investment-service";
-import { RedisRepository } from "../../../../infra/cache";
+import { RedisRepository } from "../../../cache";
 import {
   AccountRepository,
   InvestmentRepository,
   UserRepository,
-} from "../../../../infra/database";
-import { StockPricesProviderImpl } from "../../../../providers/implementation/stocks-price-provider";
+} from "../../../database";
+import { StockPricesProviderImpl } from "../../../providers/stocks-price-provider";
 import { InvestmentController } from "../../controllers/investment-controller";
 
 export function makeInvestmentController(): InvestmentController {

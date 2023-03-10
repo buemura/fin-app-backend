@@ -1,5 +1,5 @@
 import axios from "axios";
-import { StockPricesProvider } from "../interfaces/stocks-price-provider";
+import { StockPricesProvider } from "../../providers/stocks-price-provider";
 
 interface GetCurrentPricesDataResponse {
   ticker: string;

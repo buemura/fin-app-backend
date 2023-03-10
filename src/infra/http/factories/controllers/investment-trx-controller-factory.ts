@@ -1,10 +1,10 @@
 import { InvestmentTrxService } from "../../../../application/services/investment-trx-service";
-import { RedisRepository } from "../../../../infra/cache";
+import { RedisRepository } from "../../../cache";
 import {
   InvestmentRepository,
   InvestmentTrxRepository,
   UserRepository,
-} from "../../../../infra/database";
+} from "../../../database";
 import { InvestmentTrxController } from "../../controllers/investment-trx-controller";
 
 export function makeInvestmentTrxController(): InvestmentTrxController {

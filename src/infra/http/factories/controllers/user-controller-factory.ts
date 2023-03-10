@@ -1,5 +1,5 @@
 import { UserService } from "../../../../application/services/user-service";
-import { UserRepository } from "../../../../infra/database";
+import { UserRepository } from "../../../database";
 import { UserController } from "../../controllers/user-controller";
 
 export function makeUserController(): UserController {

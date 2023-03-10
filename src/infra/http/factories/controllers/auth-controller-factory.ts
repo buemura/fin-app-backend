@@ -1,7 +1,7 @@
 import { AuthService } from "../../../../application/services/auth-service";
-import { UserRepository } from "../../../../infra/database";
-import { AccessTokenProviderImpl } from "../../../../providers/implementation/access-token-provider";
-import { PasswordHashProviderImpl } from "../../../../providers/implementation/password-hash-provider";
+import { UserRepository } from "../../../database";
+import { AccessTokenProviderImpl } from "../../../providers/access-token-provider";
+import { PasswordHashProviderImpl } from "../../../providers/password-hash-provider";
 import { AuthController } from "../../controllers/auth-controller";
 
 export function makeAuthController(): AuthController {

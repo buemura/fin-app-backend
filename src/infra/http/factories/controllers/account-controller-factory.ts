@@ -1,6 +1,6 @@
 import { AccountService } from "../../../../application/services/account-service";
-import { RedisRepository } from "../../../../infra/cache";
-import { AccountRepository, UserRepository } from "../../../../infra/database";
+import { RedisRepository } from "../../../cache";
+import { AccountRepository, UserRepository } from "../../../database";
 import { AccountController } from "../../controllers/account-controller";
 
 export function makeAccountController(): AccountController {

@@ -6,8 +6,8 @@ import {
   responseMock,
 } from "../../../../../tests/__mocks__/";
 import { AuthService } from "../../../../application/services/auth-service";
-import { AccessTokenProviderImpl } from "../../../../providers/implementation/access-token-provider";
-import { PasswordHashProviderImpl } from "../../../../providers/implementation/password-hash-provider";
+import { AccessTokenProviderImpl } from "../../../providers/access-token-provider";
+import { PasswordHashProviderImpl } from "../../../providers/password-hash-provider";
 import { AuthController } from "../auth-controller";
 
 describe("Auth controller test suite", () => {

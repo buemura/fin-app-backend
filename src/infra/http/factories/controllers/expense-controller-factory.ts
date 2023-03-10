@@ -1,6 +1,6 @@
 import { ExpenseService } from "../../../../application/services/expense-service";
-import { RedisRepository } from "../../../../infra/cache";
-import { ExpenseRepository, UserRepository } from "../../../../infra/database";
+import { RedisRepository } from "../../../cache";
+import { ExpenseRepository, UserRepository } from "../../../database";
 import { ExpenseController } from "../../controllers/expense-controller";
 
 export function makeExpenseController(): ExpenseController {

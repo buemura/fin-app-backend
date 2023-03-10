@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { PasswordHashProvider } from "../interfaces/password-hash-provider";
+import { PasswordHashProvider } from "../../providers/password-hash-provider";
 
 export class PasswordHashProviderImpl implements PasswordHashProvider {
   hash(password: string): string {

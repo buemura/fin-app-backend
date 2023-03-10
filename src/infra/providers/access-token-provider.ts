@@ -2,7 +2,7 @@ import jsonwebtoken from "jsonwebtoken";
 
 import { AppError } from "../../helpers/errors/app-error";
 import { ERROR_MESSAGE } from "../../helpers/errors/messages";
-import { AccessTokenProvider } from "../access-token-provider";
+import { AccessTokenProvider } from "../../providers/access-token-provider";
 
 export class AccessTokenProviderImpl implements AccessTokenProvider {
   generate(payload: string | object | Buffer, expiresIn: string): string {

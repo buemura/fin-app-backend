@@ -1,7 +1,7 @@
 import { InMemoryUserRepository } from "../../../../tests/__mocks__";
 import { ERROR_MESSAGE } from "../../../helpers/errors/messages";
-import { AccessTokenProviderImpl } from "../../../providers/implementation/access-token-provider";
-import { PasswordHashProviderImpl } from "../../../providers/implementation/password-hash-provider";
+import { AccessTokenProviderImpl } from "../../../infra/providers/access-token-provider";
+import { PasswordHashProviderImpl } from "../../../infra/providers/password-hash-provider";
 import { AuthService } from "../auth-service";
 
 describe("User service test suite", () => {
