@@ -1,9 +1,10 @@
 import { Request, Response, Router } from "express";
 
-import { investmentTrxController } from "../../../shared/containers";
+import { makeInvestmentTrxController } from "../factories/controllers/investment-trx-controller-factory";
 import { ensureAuthentication } from "../middlewares/auth-middleware";
 
 const router = Router();
+const investmentTrxController = makeInvestmentTrxController();
 
 async function findTrxByUserId(
   request: Request,

@@ -1,9 +1,10 @@
 import { Request, Response, Router } from "express";
 
-import { accountController } from "../../../shared/containers";
+import { makeAccountController } from "../factories/controllers/account-controller-factory";
 import { ensureAuthentication } from "../middlewares/auth-middleware";
 
 const router = Router();
+const accountController = makeAccountController();
 
 async function getAccountById(
   request: Request,

@@ -1,7 +1,7 @@
-import { StockPricesProvider } from "src/providers/stocks-price-provider";
 import { AppError } from "../../helpers/errors/app-error";
 import { ERROR_MESSAGE } from "../../helpers/errors/messages";
 import { PaginationHelper } from "../../helpers/pagination/functions";
+import { StockPricesProvider } from "../../providers/stocks-price-provider";
 import {
   CreateInvestmentDto,
   UpdateInvestmentDto,

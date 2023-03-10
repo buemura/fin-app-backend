@@ -6,6 +6,8 @@ import {
   responseMock,
 } from "../../../../../tests/__mocks__/";
 import { AuthService } from "../../../../application/services/auth-service";
+import { AccessTokenProviderImpl } from "../../../../providers/implementation/access-token-provider";
+import { PasswordHashProviderImpl } from "../../../../providers/implementation/password-hash-provider";
 import { AuthController } from "../auth-controller";
 
 describe("Auth controller test suite", () => {
@@ -20,7 +22,13 @@ describe("Auth controller test suite", () => {
     response = responseMock;
 
     const userRepository = new InMemoryUserRepository();
-    authService = new AuthService(userRepository);
+    const passwordHashProvider = new PasswordHashProviderImpl();
+    const accessTokenProvider = new AccessTokenProviderImpl();
+    authService = new AuthService(
+      userRepository,
+      passwordHashProvider,
+      accessTokenProvider
+    );
     authController = new AuthController(authService);
   });
 

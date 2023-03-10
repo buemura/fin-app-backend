@@ -1,9 +1,10 @@
 import { Request, Response, Router } from "express";
 
-import { investmentController } from "../../../shared/containers";
+import { makeInvestmentController } from "../factories/controllers/investment-controller-factory";
 import { ensureAuthentication } from "../middlewares/auth-middleware";
 
 const router = Router();
+const investmentController = makeInvestmentController();
 
 async function findByUserId(
   request: Request,

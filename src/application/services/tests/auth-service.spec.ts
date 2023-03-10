@@ -1,5 +1,7 @@
 import { InMemoryUserRepository } from "../../../../tests/__mocks__";
 import { ERROR_MESSAGE } from "../../../helpers/errors/messages";
+import { AccessTokenProviderImpl } from "../../../providers/implementation/access-token-provider";
+import { PasswordHashProviderImpl } from "../../../providers/implementation/password-hash-provider";
 import { AuthService } from "../auth-service";
 
 describe("User service test suite", () => {
@@ -7,7 +9,13 @@ describe("User service test suite", () => {
 
   beforeEach(() => {
     const userRepository = new InMemoryUserRepository();
-    authService = new AuthService(userRepository);
+    const passwordHashProvider = new PasswordHashProviderImpl();
+    const accessTokenProvider = new AccessTokenProviderImpl();
+    authService = new AuthService(
+      userRepository,
+      passwordHashProvider,
+      accessTokenProvider
+    );
   });
 
   describe("Register user", () => {

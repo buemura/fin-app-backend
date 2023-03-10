@@ -1,15 +1,18 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-
 import { AppError } from "../../helpers/errors/app-error";
 import { ERROR_MESSAGE } from "../../helpers/errors/messages";
 import { logger } from "../../helpers/logger";
+import { AccessTokenProvider } from "../../providers/access-token-provider";
+import { PasswordHashProvider } from "../../providers/password-hash-provider";
 import { LoginAuthDto, RegisterAuthDto } from "../dtos/auth-dto";
 import { ResponseDto } from "../dtos/response-dto";
 import { UserRepository } from "../repositories/user-repository";
 
 export class AuthService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly passwordHashProvider: PasswordHashProvider,
+    private readonly accessTokenProvider: AccessTokenProvider
+  ) {}
 
   async register({
     name,
@@ -27,7 +30,7 @@ export class AuthService {
       throw new AppError(ERROR_MESSAGE.USER_ALREADY_EXISTS);
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = this.passwordHashProvider.hash(password);
     const newUser = {
       name,
       email,
@@ -55,18 +58,16 @@ export class AuthService {
       throw new AppError(ERROR_MESSAGE.INVALID_CREDENTIALS, 401);
     }
 
-    const match = await bcrypt.compare(password, user.password ?? "");
+    const match = this.passwordHashProvider.compare(
+      password,
+      user.password ?? ""
+    );
     if (!match) {
       throw new AppError(ERROR_MESSAGE.INVALID_CREDENTIALS, 401);
     }
 
     const payload = { id: user.id };
-    const expiration = { expiresIn: "7d" };
-    const accessToken = jwt.sign(
-      payload,
-      String(process.env.TOKEN_SECRET),
-      expiration
-    );
+    const accessToken = this.accessTokenProvider.generate(payload, "7d");
     const { password: userPass, ...userToReturn } = user;
 
     logger.info(`Successfully authenticated`);

@@ -5,6 +5,7 @@ yarn.lock
 
 # Keep environment variables out of version control
 .env
+.env.dev
 .vercel
 
 .vercel

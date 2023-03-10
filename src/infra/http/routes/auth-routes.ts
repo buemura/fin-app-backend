@@ -1,8 +1,9 @@
 import { Request, Response, Router } from "express";
 
-import { authController } from "../../../shared/containers";
+import { makeAuthController } from "../factories/controllers/auth-controller-factory";
 
 const router = Router();
+const authController = makeAuthController();
 
 async function login(request: Request, response: Response): Promise<Response> {
   return authController.login(request, response);
