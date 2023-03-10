@@ -64,6 +64,21 @@ export class InvestmentController {
     }
   }
 
+  async updateInvestmentsCurrentPrices(
+    request: Request,
+    response: Response
+  ): Promise<Response> {
+    const { userId } = request.params;
+
+    try {
+      const result =
+        await this.investmentService.updateInvestmentsCurrentPrices(userId);
+      return handleHttpResponse(response, 200, result);
+    } catch (error: any) {
+      return handleHttpErrorResponse(response, error);
+    }
+  }
+
   async delete(request: Request, response: Response): Promise<Response> {
     const { investmentId } = request.params;
 

@@ -1,3 +1,4 @@
+import { StockPricesProvider } from "src/providers/stocks-price-provider";
 import { AppError } from "../../helpers/errors/app-error";
 import { ERROR_MESSAGE } from "../../helpers/errors/messages";
 import { PaginationHelper } from "../../helpers/pagination/functions";
@@ -15,7 +16,8 @@ export class InvestmentService {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly accountRepository: AccountRepository,
-    private readonly investmentRepository: InvestmentRepository
+    private readonly investmentRepository: InvestmentRepository,
+    private readonly stockPricesProvider: StockPricesProvider
   ) {}
 
   async findByUserId({
@@ -120,6 +122,49 @@ export class InvestmentService {
       data: {
         id: result?.id,
       },
+    };
+  }
+
+  async updateInvestmentsCurrentPrices(userId: string): Promise<ResponseDto> {
+    if (!userId) {
+      throw new AppError(ERROR_MESSAGE.MISSING_REQUIRED_PARAMETERS);
+    }
+
+    const investments = await this.investmentRepository.findByUserId(userId);
+    if (!investments) {
+      throw new AppError(ERROR_MESSAGE.INVESTMENT_NOT_FOUND);
+    }
+
+    const tickers = investments.map((investment) => investment.ticker);
+
+    const investmentsCurrentPeice =
+      await this.stockPricesProvider.getCurrentPrices(tickers);
+
+    const investmentUpdate = investments.map(async (investment) => {
+      const stock = investmentsCurrentPeice.data.find(
+        (stock) => investment.ticker === stock.ticker
+      );
+      if (!stock) {
+        return;
+      }
+
+      await this.investmentRepository.update({
+        investmentId: investment.id,
+        accountId: investment.accountId ?? "",
+        category: investment.category,
+        ticker: investment.ticker,
+        type: investment.type ?? "",
+        pricePerQuantity: stock.price ?? 0,
+        totalPrice: stock.price * investment.totalQuantity,
+      });
+
+      return investment.id;
+    });
+
+    const result = await Promise.allSettled(investmentUpdate);
+
+    return {
+      data: result,
     };
   }
 

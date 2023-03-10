@@ -12,6 +12,13 @@ async function findByUserId(
   return investmentController.findByUserId(request, response);
 }
 
+async function updateInvestmentsCurrentPrices(
+  request: Request,
+  response: Response
+): Promise<Response> {
+  return investmentController.updateInvestmentsCurrentPrices(request, response);
+}
+
 async function createInvestment(
   request: Request,
   response: Response
@@ -34,6 +41,11 @@ async function deleteInvestment(
 }
 
 router.get("/:userId/investments", ensureAuthentication, findByUserId);
+router.get(
+  "/:userId/investments-update",
+  ensureAuthentication,
+  updateInvestmentsCurrentPrices
+);
 // router.get("/:userId/investments/:investmentId", ensureAuthentication, findById);
 router.post("/:userId/investments", ensureAuthentication, createInvestment);
 router.patch(

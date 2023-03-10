@@ -18,6 +18,7 @@ import { ExpenseController } from "../infra/http/controllers/expense-controller"
 import { InvestmentController } from "../infra/http/controllers/investment-controller";
 import { InvestmentTrxController } from "../infra/http/controllers/investment-trx-controller";
 import { UserController } from "../infra/http/controllers/user-controller";
+import { StockPricesProvider } from "../providers/stocks-price-provider";
 
 const redisRepository = new RedisRepository();
 const userRepository = new UserRepository();
@@ -26,6 +27,8 @@ const expenseRepository = new ExpenseRepository(redisRepository);
 const investmentRepository = new InvestmentRepository(redisRepository);
 const investmentTrxRepository = new InvestmentTrxRepository(redisRepository);
 
+const stockPricesProvider = new StockPricesProvider();
+
 const authService = new AuthService(userRepository);
 const userService = new UserService(userRepository);
 const accountService = new AccountService(userRepository, accountRepository);
@@ -33,7 +36,8 @@ const expenseService = new ExpenseService(userRepository, expenseRepository);
 const investmentService = new InvestmentService(
   userRepository,
   accountRepository,
-  investmentRepository
+  investmentRepository,
+  stockPricesProvider
 );
 const investmentTrxService = new InvestmentTrxService(
   userRepository,
