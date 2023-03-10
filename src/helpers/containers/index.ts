@@ -1,3 +1,5 @@
+import { AccessTokenProviderImpl } from "src/infra/providers/access-token-provider";
+import { PasswordHashProviderImpl } from "src/infra/providers/password-hash-provider";
 import { AccountService } from "../../application/services/account-service";
 import { AuthService } from "../../application/services/auth-service";
 import { ExpenseService } from "../../application/services/expense-service";
@@ -18,7 +20,7 @@ import { ExpenseController } from "../../infra/http/controllers/expense-controll
 import { InvestmentController } from "../../infra/http/controllers/investment-controller";
 import { InvestmentTrxController } from "../../infra/http/controllers/investment-trx-controller";
 import { UserController } from "../../infra/http/controllers/user-controller";
-import { StockPricesProvider } from "../../providers/stocks-price-provider";
+import { StockPricesProviderImpl } from "../../infra/providers/stocks-price-provider";
 
 const redisRepository = new RedisRepository();
 const userRepository = new UserRepository();
@@ -27,9 +29,15 @@ const expenseRepository = new ExpenseRepository(redisRepository);
 const investmentRepository = new InvestmentRepository(redisRepository);
 const investmentTrxRepository = new InvestmentTrxRepository(redisRepository);
 
-const stockPricesProvider = new StockPricesProvider();
+const passwordHashProvider = new PasswordHashProviderImpl();
+const accessTokenProvider = new AccessTokenProviderImpl();
+const stockPricesProvider = new StockPricesProviderImpl();
 
-const authService = new AuthService(userRepository);
+const authService = new AuthService(
+  userRepository,
+  passwordHashProvider,
+  accessTokenProvider
+);
 const userService = new UserService(userRepository);
 const accountService = new AccountService(userRepository, accountRepository);
 const expenseService = new ExpenseService(userRepository, expenseRepository);
