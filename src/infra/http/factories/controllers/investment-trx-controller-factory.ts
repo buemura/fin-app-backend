@@ -1,4 +1,11 @@
-import { InvestmentTrxService } from "../../../../application/services/investment-trx-service";
+import {
+  CreateInvestmentTrxUsecase,
+  DeleteInvestmentTrxUsecase,
+  GetUserInvestmentTrxsUsecase,
+  InvestmentTotalsDecrementUsecase,
+  InvestmentTotalsIncrementUsecase,
+  UpdateInvestmentTrxUsecase,
+} from "../../../../application/usecases";
 import { RedisRepository } from "../../../cache";
 import {
   InvestmentRepository,
@@ -12,13 +19,41 @@ export function makeInvestmentTrxController(): InvestmentTrxController {
   const userRepository = new UserRepository();
   const investmentRepository = new InvestmentRepository(redisRepository);
   const investmentTrxRepository = new InvestmentTrxRepository(redisRepository);
-  const investmentTrxService = new InvestmentTrxService(
+
+  const investmentTotalsIncrementUsecase = new InvestmentTotalsIncrementUsecase(
+    investmentRepository
+  );
+  const investmentTotalsDecrementUsecase = new InvestmentTotalsDecrementUsecase(
+    investmentRepository
+  );
+
+  const getUserInvestmentTrxsUsecase = new GetUserInvestmentTrxsUsecase(
     userRepository,
-    investmentRepository,
     investmentTrxRepository
   );
+  const createInvestmentTrxUsecase = new CreateInvestmentTrxUsecase(
+    userRepository,
+    investmentRepository,
+    investmentTrxRepository,
+    investmentTotalsIncrementUsecase
+  );
+  const updateInvestmentTrxUsecase = new UpdateInvestmentTrxUsecase(
+    investmentRepository,
+    investmentTrxRepository,
+    investmentTotalsIncrementUsecase,
+    investmentTotalsDecrementUsecase
+  );
+  const deleteInvestmentTrxUsecase = new DeleteInvestmentTrxUsecase(
+    investmentRepository,
+    investmentTrxRepository,
+    investmentTotalsDecrementUsecase
+  );
+
   const investmentTrxController = new InvestmentTrxController(
-    investmentTrxService
+    getUserInvestmentTrxsUsecase,
+    createInvestmentTrxUsecase,
+    updateInvestmentTrxUsecase,
+    deleteInvestmentTrxUsecase
   );
   return investmentTrxController;
 }

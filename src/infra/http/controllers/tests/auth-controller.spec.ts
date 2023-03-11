@@ -5,16 +5,18 @@ import {
   requestMock,
   responseMock,
 } from "../../../../../tests/__mocks__/";
-import { AuthService } from "../../../../application/services/auth-service";
-import { AccessTokenProviderImpl } from "../../../providers/access-token-provider";
-import { PasswordHashProviderImpl } from "../../../providers/password-hash-provider";
+import {
+  LoginUserUsecase,
+  RegisterUserUsecase,
+} from "../../../../application/usecases";
 import { AuthController } from "../auth-controller";
 
 describe("Auth controller test suite", () => {
   let request: Request;
   let response: Response;
 
-  let authService: AuthService;
+  let registerUserUsecase: RegisterUserUsecase;
+  let loginUserUsecase: LoginUserUsecase;
   let authController: AuthController;
 
   beforeEach(() => {
@@ -22,14 +24,11 @@ describe("Auth controller test suite", () => {
     response = responseMock;
 
     const userRepository = new InMemoryUserRepository();
-    const passwordHashProvider = new PasswordHashProviderImpl();
-    const accessTokenProvider = new AccessTokenProviderImpl();
-    authService = new AuthService(
-      userRepository,
-      passwordHashProvider,
-      accessTokenProvider
-    );
-    authController = new AuthController(authService);
+
+    registerUserUsecase = new RegisterUserUsecase(userRepository);
+    loginUserUsecase = new LoginUserUsecase(userRepository);
+
+    authController = new AuthController(registerUserUsecase, loginUserUsecase);
   });
 
   afterEach(() => {

@@ -1,6 +1,12 @@
 import { Request, Response } from "express";
 
-import { ExpenseService } from "../../../application/services/expense-service";
+import {
+  CreateExpenseUsecase,
+  DeleteExpenseUsecase,
+  GetUserExpensesUsecase,
+  ResetExpensesPaymentStatusUsecase,
+  UpdateExpenseUsecase,
+} from "../../../application/usecases";
 import { DEFAULT_PAGINATION } from "../../../helpers/pagination/constants";
 import {
   handleHttpErrorResponse,
@@ -8,7 +14,13 @@ import {
 } from "../utils/response-handler";
 
 export class ExpenseController {
-  constructor(private readonly expenseService: ExpenseService) {}
+  constructor(
+    private readonly getUserExpensesUsecase: GetUserExpensesUsecase,
+    private readonly createExpenseUsecase: CreateExpenseUsecase,
+    private readonly updateExpenseUsecase: UpdateExpenseUsecase,
+    private readonly resetExpensesPaymentStatusUsecase: ResetExpensesPaymentStatusUsecase,
+    private readonly deleteExpenseUsecase: DeleteExpenseUsecase
+  ) {}
 
   async findByUserId(request: Request, response: Response): Promise<Response> {
     const { userId } = request.params;
@@ -18,7 +30,7 @@ export class ExpenseController {
     };
 
     try {
-      const result = await this.expenseService.findByUserId({
+      const result = await this.getUserExpensesUsecase.execute({
         pagination,
         userId,
       });
@@ -33,7 +45,7 @@ export class ExpenseController {
     const { title, imageUrl } = request.body;
 
     try {
-      const result = await this.expenseService.create({
+      const result = await this.createExpenseUsecase.execute({
         userId,
         title,
         imageUrl,
@@ -49,7 +61,7 @@ export class ExpenseController {
     const { title, isPaid, isActive } = request.body;
 
     try {
-      const result = await this.expenseService.update({
+      const result = await this.updateExpenseUsecase.execute({
         expenseId,
         title,
         isPaid,
@@ -67,7 +79,7 @@ export class ExpenseController {
     response: Response
   ): Promise<Response> {
     try {
-      const result = await this.expenseService.resetPaymentStatus();
+      const result = await this.resetExpensesPaymentStatusUsecase.execute();
       return handleHttpResponse(response, 200, result);
     } catch (error: any) {
       return handleHttpErrorResponse(response, error);
@@ -78,7 +90,7 @@ export class ExpenseController {
     const { expenseId } = request.params;
 
     try {
-      const result = await this.expenseService.delete(expenseId);
+      const result = await this.deleteExpenseUsecase.execute(expenseId);
       return handleHttpResponse(response, 200, result);
     } catch (error: any) {
       return handleHttpErrorResponse(response, error);

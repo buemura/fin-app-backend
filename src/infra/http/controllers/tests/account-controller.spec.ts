@@ -6,14 +6,24 @@ import {
   requestMock,
   responseMock,
 } from "../../../../../tests/__mocks__/";
-import { AccountService } from "../../../../application/services/account-service";
+import {
+  CreateAccountUsecase,
+  DeleteAccountUsecase,
+  GetAccountByIdUsecase,
+  GetUserAccountsUsecase,
+  UpdateAccountUsecase,
+} from "../../../../application/usecases";
 import { AccountController } from "../account-controller";
 
 describe("Account controller test suite", () => {
   let request: Request;
   let response: Response;
 
-  let accountService: AccountService;
+  let getAccountByIdUsecase: GetAccountByIdUsecase;
+  let getUserAccountsUsecase: GetUserAccountsUsecase;
+  let createAccountUsecase: CreateAccountUsecase;
+  let updateAccountUsecase: UpdateAccountUsecase;
+  let deleteAccountUsecase: DeleteAccountUsecase;
   let accountController: AccountController;
 
   beforeEach(() => {
@@ -22,8 +32,26 @@ describe("Account controller test suite", () => {
 
     const userRepository = new InMemoryUserRepository();
     const accountRepository = new InMemoryAccountRepository();
-    accountService = new AccountService(userRepository, accountRepository);
-    accountController = new AccountController(accountService);
+
+    getAccountByIdUsecase = new GetAccountByIdUsecase(accountRepository);
+    getUserAccountsUsecase = new GetUserAccountsUsecase(
+      userRepository,
+      accountRepository
+    );
+    createAccountUsecase = new CreateAccountUsecase(
+      userRepository,
+      accountRepository
+    );
+    updateAccountUsecase = new UpdateAccountUsecase(accountRepository);
+    deleteAccountUsecase = new DeleteAccountUsecase(accountRepository);
+
+    accountController = new AccountController(
+      getAccountByIdUsecase,
+      getUserAccountsUsecase,
+      createAccountUsecase,
+      updateAccountUsecase,
+      deleteAccountUsecase
+    );
   });
 
   afterEach(() => {

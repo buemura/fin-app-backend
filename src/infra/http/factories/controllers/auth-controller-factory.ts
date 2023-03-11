@@ -1,20 +1,19 @@
-import { AuthService } from "../../../../application/services/auth-service";
+import {
+  LoginUserUsecase,
+  RegisterUserUsecase,
+} from "../../../../application/usecases";
 import { UserRepository } from "../../../database";
-import { AccessTokenProviderImpl } from "../../../providers/access-token-provider";
-import { PasswordHashProviderImpl } from "../../../providers/password-hash-provider";
 import { AuthController } from "../../controllers/auth-controller";
 
 export function makeAuthController(): AuthController {
   const userRepository = new UserRepository();
 
-  const passwordHashProvider = new PasswordHashProviderImpl();
-  const accessTokenProvider = new AccessTokenProviderImpl();
+  const registerUserUsecase = new RegisterUserUsecase(userRepository);
+  const loginUserUsecase = new LoginUserUsecase(userRepository);
 
-  const authService = new AuthService(
-    userRepository,
-    passwordHashProvider,
-    accessTokenProvider
+  const authController = new AuthController(
+    registerUserUsecase,
+    loginUserUsecase
   );
-  const authController = new AuthController(authService);
   return authController;
 }

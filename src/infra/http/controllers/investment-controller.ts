@@ -1,6 +1,12 @@
 import { Request, Response } from "express";
 
-import { InvestmentService } from "../../../application/services/investment-service";
+import {
+  CreateInvestmentUsecase,
+  DeleteInvestmentUsecase,
+  GetUserInvestmentsUsecase,
+  UpdateInvestmentCurrentPriceUsecase,
+  UpdateInvestmentUsecase,
+} from "../../../application/usecases";
 import { DEFAULT_PAGINATION } from "../../../helpers/pagination/constants";
 import {
   handleHttpErrorResponse,
@@ -8,7 +14,13 @@ import {
 } from "../utils/response-handler";
 
 export class InvestmentController {
-  constructor(private readonly investmentService: InvestmentService) {}
+  constructor(
+    private readonly getUserInvestmentsUsecase: GetUserInvestmentsUsecase,
+    private readonly createInvestmentUsecase: CreateInvestmentUsecase,
+    private readonly updateInvestmentUsecase: UpdateInvestmentUsecase,
+    private readonly updateInvestmentCurrentPriceUsecase: UpdateInvestmentCurrentPriceUsecase,
+    private readonly deleteInvestmentUsecase: DeleteInvestmentUsecase
+  ) {}
 
   async findByUserId(request: Request, response: Response): Promise<Response> {
     const { userId } = request.params;
@@ -18,7 +30,7 @@ export class InvestmentController {
     };
 
     try {
-      const result = await this.investmentService.findByUserId({
+      const result = await this.getUserInvestmentsUsecase.execute({
         userId,
         pagination,
       });
@@ -33,7 +45,7 @@ export class InvestmentController {
     const { accountId, category, ticker, type } = request.body;
 
     try {
-      const result = await this.investmentService.create({
+      const result = await this.createInvestmentUsecase.execute({
         userId,
         accountId,
         category,
@@ -51,7 +63,7 @@ export class InvestmentController {
     const { accountId, category, ticker, type } = request.body;
 
     try {
-      const result = await this.investmentService.update({
+      const result = await this.updateInvestmentUsecase.execute({
         investmentId,
         accountId,
         category,
@@ -71,8 +83,9 @@ export class InvestmentController {
     const { userId } = request.params;
 
     try {
-      const result =
-        await this.investmentService.updateInvestmentsCurrentPrices(userId);
+      const result = await this.updateInvestmentCurrentPriceUsecase.execute(
+        userId
+      );
       return handleHttpResponse(response, 200, result);
     } catch (error: any) {
       return handleHttpErrorResponse(response, error);
@@ -83,7 +96,7 @@ export class InvestmentController {
     const { investmentId } = request.params;
 
     try {
-      const result = await this.investmentService.delete(investmentId);
+      const result = await this.deleteInvestmentUsecase.execute(investmentId);
       return handleHttpResponse(response, 200, result);
     } catch (error: any) {
       return handleHttpErrorResponse(response, error);

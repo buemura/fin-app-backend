@@ -1,5 +1,4 @@
 import { Request, Response, Router } from "express";
-
 import { makeUserController } from "../factories/controllers/user-controller-factory";
 import { ensureAuthentication } from "../middlewares/auth-middleware";
 

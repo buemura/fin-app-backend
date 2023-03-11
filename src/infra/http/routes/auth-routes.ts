@@ -1,5 +1,4 @@
 import { Request, Response, Router } from "express";
-
 import { makeAuthController } from "../factories/controllers/auth-controller-factory";
 
 const router = Router();

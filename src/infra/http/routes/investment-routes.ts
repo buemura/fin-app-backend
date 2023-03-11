@@ -1,5 +1,4 @@
 import { Request, Response, Router } from "express";
-
 import { makeInvestmentController } from "../factories/controllers/investment-controller-factory";
 import { ensureAuthentication } from "../middlewares/auth-middleware";
 

@@ -1,19 +1,25 @@
 import { Request, Response } from "express";
 
-import { AuthService } from "../../../application/services/auth-service";
+import {
+  LoginUserUsecase,
+  RegisterUserUsecase,
+} from "../../../application/usecases";
 import {
   handleHttpErrorResponse,
   handleHttpResponse,
 } from "../utils/response-handler";
 
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly registerUserUsecase: RegisterUserUsecase,
+    private readonly loginUserUsecase: LoginUserUsecase
+  ) {}
 
   async register(request: Request, response: Response): Promise<Response> {
     const { name, email, password } = request.body;
 
     try {
-      const result = await this.authService.register({
+      const result = await this.registerUserUsecase.execute({
         name,
         email,
         password,
@@ -28,7 +34,7 @@ export class AuthController {
     const { email, password } = request.body;
 
     try {
-      const result = await this.authService.login({ email, password });
+      const result = await this.loginUserUsecase.execute({ email, password });
       return handleHttpResponse(response, 200, result);
     } catch (error: any) {
       return handleHttpErrorResponse(response, error);

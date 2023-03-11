@@ -1,6 +1,11 @@
 import { Request, Response } from "express";
 
-import { InvestmentTrxService } from "../../../application/services/investment-trx-service";
+import {
+  CreateInvestmentTrxUsecase,
+  DeleteInvestmentTrxUsecase,
+  GetUserInvestmentTrxsUsecase,
+  UpdateInvestmentTrxUsecase,
+} from "../../../application/usecases";
 import { DEFAULT_PAGINATION } from "../../../helpers/pagination/constants";
 import {
   handleHttpErrorResponse,
@@ -8,7 +13,12 @@ import {
 } from "../utils/response-handler";
 
 export class InvestmentTrxController {
-  constructor(private readonly investmentTrxService: InvestmentTrxService) {}
+  constructor(
+    private readonly getUserInvestmentTrxsUsecase: GetUserInvestmentTrxsUsecase,
+    private readonly createInvestmentTrxUsecase: CreateInvestmentTrxUsecase,
+    private readonly updateInvestmentTrxUsecase: UpdateInvestmentTrxUsecase,
+    private readonly deleteInvestmentTrxUsecase: DeleteInvestmentTrxUsecase
+  ) {}
 
   async findByUserId(request: Request, response: Response): Promise<Response> {
     const { userId } = request.params;
@@ -18,7 +28,7 @@ export class InvestmentTrxController {
     };
 
     try {
-      const result = await this.investmentTrxService.findByUserId({
+      const result = await this.getUserInvestmentTrxsUsecase.execute({
         userId,
         pagination,
       });
@@ -34,7 +44,7 @@ export class InvestmentTrxController {
       request.body;
 
     try {
-      const result = await this.investmentTrxService.create({
+      const result = await this.createInvestmentTrxUsecase.execute({
         userId,
         investmentId,
         pricePerQuantity,
@@ -52,7 +62,7 @@ export class InvestmentTrxController {
     const { investmentId, pricePerQuantity, quantity } = request.body;
 
     try {
-      const result = await this.investmentTrxService.update({
+      const result = await this.updateInvestmentTrxUsecase.execute({
         investmentTrxId,
         investmentId,
         pricePerQuantity,
@@ -68,7 +78,9 @@ export class InvestmentTrxController {
     const { investmentTrxId } = request.params;
 
     try {
-      const result = await this.investmentTrxService.delete(investmentTrxId);
+      const result = await this.deleteInvestmentTrxUsecase.execute(
+        investmentTrxId
+      );
       return handleHttpResponse(response, 200, result);
     } catch (error: any) {
       return handleHttpErrorResponse(response, error);

@@ -1,5 +1,4 @@
 import { Request, Response, Router } from "express";
-
 import { makeExpenseController } from "../factories/controllers/expense-controller-factory";
 import { ensureAuthentication } from "../middlewares/auth-middleware";
 

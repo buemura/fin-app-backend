@@ -1,11 +1,16 @@
-import { InvestmentService } from "../../../../application/services/investment-service";
+import {
+  CreateInvestmentUsecase,
+  DeleteInvestmentUsecase,
+  GetUserInvestmentsUsecase,
+  UpdateInvestmentCurrentPriceUsecase,
+  UpdateInvestmentUsecase,
+} from "../../../../application/usecases";
 import { RedisRepository } from "../../../cache";
 import {
   AccountRepository,
   InvestmentRepository,
   UserRepository,
 } from "../../../database";
-import { StockPricesProviderImpl } from "../../../providers/stocks-price-provider";
 import { InvestmentController } from "../../controllers/investment-controller";
 
 export function makeInvestmentController(): InvestmentController {
@@ -14,14 +19,30 @@ export function makeInvestmentController(): InvestmentController {
   const accountRepository = new AccountRepository(redisRepository);
   const investmentRepository = new InvestmentRepository(redisRepository);
 
-  const stockPricesProvider = new StockPricesProviderImpl();
-
-  const investmentService = new InvestmentService(
+  const getUserInvestmentsUsecase = new GetUserInvestmentsUsecase(
+    userRepository,
+    investmentRepository
+  );
+  const createInvestmentUsecase = new CreateInvestmentUsecase(
     userRepository,
     accountRepository,
-    investmentRepository,
-    stockPricesProvider
+    investmentRepository
   );
-  const investmentController = new InvestmentController(investmentService);
+  const updateInvestmentUsecase = new UpdateInvestmentUsecase(
+    investmentRepository
+  );
+  const updateInvestmentCurrentPriceUsecase =
+    new UpdateInvestmentCurrentPriceUsecase(investmentRepository);
+  const deleteInvestmentUsecase = new DeleteInvestmentUsecase(
+    investmentRepository
+  );
+
+  const investmentController = new InvestmentController(
+    getUserInvestmentsUsecase,
+    createInvestmentUsecase,
+    updateInvestmentUsecase,
+    updateInvestmentCurrentPriceUsecase,
+    deleteInvestmentUsecase
+  );
   return investmentController;
 }

@@ -5,14 +5,14 @@ import {
   requestMock,
   responseMock,
 } from "../../../../../tests/__mocks__/";
-import { UserService } from "../../../../application/services/user-service";
+import { GetUserDetailsUsecase } from "../../../../application/usecases";
 import { UserController } from "../user-controller";
 
 describe("User controller test suite", () => {
   let request: Request;
   let response: Response;
 
-  let userService: UserService;
+  let getUserDetailsUsecase: GetUserDetailsUsecase;
   let userController: UserController;
 
   beforeEach(() => {
@@ -20,8 +20,8 @@ describe("User controller test suite", () => {
     response = responseMock;
 
     const userRepository = new InMemoryUserRepository();
-    userService = new UserService(userRepository);
-    userController = new UserController(userService);
+    getUserDetailsUsecase = new GetUserDetailsUsecase(userRepository);
+    userController = new UserController(getUserDetailsUsecase);
   });
 
   afterEach(() => {

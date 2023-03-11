@@ -6,14 +6,24 @@ import {
   requestMock,
   responseMock,
 } from "../../../../../tests/__mocks__/";
-import { ExpenseService } from "../../../../application/services/expense-service";
+import {
+  CreateExpenseUsecase,
+  DeleteExpenseUsecase,
+  GetUserExpensesUsecase,
+  ResetExpensesPaymentStatusUsecase,
+  UpdateExpenseUsecase,
+} from "../../../../application/usecases";
 import { ExpenseController } from "../expense-controller";
 
 describe("Expense controller test suite", () => {
   let request: Request;
   let response: Response;
 
-  let expenseService: ExpenseService;
+  let getUserExpensesUsecase: GetUserExpensesUsecase;
+  let createExpenseUsecase: CreateExpenseUsecase;
+  let updateExpenseUsecase: UpdateExpenseUsecase;
+  let resetExpensesPaymentStatusUsecase: ResetExpensesPaymentStatusUsecase;
+  let deleteExpenseUsecase: DeleteExpenseUsecase;
   let expenseController: ExpenseController;
 
   beforeEach(() => {
@@ -22,8 +32,28 @@ describe("Expense controller test suite", () => {
 
     const userRepository = new InMemoryUserRepository();
     const expenseRepository = new InMemoryExpenseRepository();
-    expenseService = new ExpenseService(userRepository, expenseRepository);
-    expenseController = new ExpenseController(expenseService);
+
+    getUserExpensesUsecase = new GetUserExpensesUsecase(
+      userRepository,
+      expenseRepository
+    );
+    createExpenseUsecase = new CreateExpenseUsecase(
+      userRepository,
+      expenseRepository
+    );
+    updateExpenseUsecase = new UpdateExpenseUsecase(expenseRepository);
+    resetExpensesPaymentStatusUsecase = new ResetExpensesPaymentStatusUsecase(
+      expenseRepository
+    );
+    deleteExpenseUsecase = new DeleteExpenseUsecase(expenseRepository);
+
+    expenseController = new ExpenseController(
+      getUserExpensesUsecase,
+      createExpenseUsecase,
+      updateExpenseUsecase,
+      resetExpensesPaymentStatusUsecase,
+      deleteExpenseUsecase
+    );
   });
 
   afterEach(() => {
@@ -97,7 +127,7 @@ describe("Expense controller test suite", () => {
   describe("Update All Expenses", () => {
     it("should not return 2xx status code", async () => {
       jest
-        .spyOn(expenseService, "resetPaymentStatus")
+        .spyOn(resetExpensesPaymentStatusUsecase, "execute")
         .mockImplementation(() => {
           throw new Error("error");
         });

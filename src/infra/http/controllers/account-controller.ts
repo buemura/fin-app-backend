@@ -1,6 +1,12 @@
 import { Request, Response } from "express";
 
-import { AccountService } from "../../../application/services/account-service";
+import {
+  CreateAccountUsecase,
+  DeleteAccountUsecase,
+  GetAccountByIdUsecase,
+  GetUserAccountsUsecase,
+  UpdateAccountUsecase,
+} from "../../../application/usecases";
 import { DEFAULT_PAGINATION } from "../../../helpers/pagination/constants";
 import {
   handleHttpErrorResponse,
@@ -8,13 +14,19 @@ import {
 } from "../utils/response-handler";
 
 export class AccountController {
-  constructor(private readonly accountService: AccountService) {}
+  constructor(
+    private readonly getAccountByIdUsecase: GetAccountByIdUsecase,
+    private readonly getUserAccountsUsecase: GetUserAccountsUsecase,
+    private readonly createAccountUsecase: CreateAccountUsecase,
+    private readonly updateAccountUsecase: UpdateAccountUsecase,
+    private readonly deleteAccountUsecase: DeleteAccountUsecase
+  ) {}
 
   async findById(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
 
     try {
-      const result = await this.accountService.findById(id);
+      const result = await this.getAccountByIdUsecase.execute(id);
       return handleHttpResponse(response, 200, result);
     } catch (error: any) {
       return handleHttpErrorResponse(response, error);
@@ -29,7 +41,7 @@ export class AccountController {
     };
 
     try {
-      const result = await this.accountService.findByUserId({
+      const result = await this.getUserAccountsUsecase.execute({
         pagination,
         userId,
       });
@@ -44,7 +56,7 @@ export class AccountController {
     const { name, balance, icon } = request.body;
 
     try {
-      const result = await this.accountService.create({
+      const result = await this.createAccountUsecase.execute({
         userId,
         name,
         balance,
@@ -61,7 +73,7 @@ export class AccountController {
     const { name, balance, icon } = request.body;
 
     try {
-      const result = await this.accountService.update({
+      const result = await this.updateAccountUsecase.execute({
         accountId: id,
         name,
         balance,
@@ -77,7 +89,7 @@ export class AccountController {
     const { id } = request.params;
 
     try {
-      const result = await this.accountService.delete(id);
+      const result = await this.deleteAccountUsecase.execute(id);
       return handleHttpResponse(response, 200, result);
     } catch (error: any) {
       return handleHttpErrorResponse(response, error);
