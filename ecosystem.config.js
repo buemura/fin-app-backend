@@ -1,6 +1,6 @@
 module.exports = [
   {
-    script: "./dist/src/main/index.js",
+    script: "./dist/src/main.js",
     name: "backend",
   },
 ];

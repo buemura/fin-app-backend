@@ -23,8 +23,8 @@
     "build": "npm run postinstall:prod && tsc --project tsconfig.build.json",
     "vercel-build": "prisma generate --schema=prisma/schema.prod.prisma",
     "build:tsup": "tsup src",
-    "start": "npm run postinstall:dev && node dist/src/main/index.js",
-    "start:dev": "npm run postinstall:dev && tsnd src/main/index.ts",
+    "start": "npm run postinstall:dev && node dist/src/main.js",
+    "start:dev": "npm run postinstall:dev && tsnd src/main.ts",
     "start:prod": "npm run postinstall:prod && pm2 start ecosystem.config.js"
   },
   "keywords": [],
