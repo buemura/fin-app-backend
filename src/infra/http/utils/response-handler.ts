@@ -33,5 +33,6 @@ export function handleHttpErrorResponse(
   return response.status(500).send({
     status: "error",
     message: "Internal Server Error",
+    details: error.message,
   });
 }
